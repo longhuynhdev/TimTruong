@@ -42,7 +42,7 @@ const Header = () => {
         <div className="flex items-center space-x-4">
           {/* Tim truong ngay button */}
           <Button asChild className="hover:bg-primary/80 hover:shadow-md transition-all duration-200">
-            <NavLink to="/">
+            <NavLink to="search">
               Tìm trường ngay
             </NavLink>
           </Button>
