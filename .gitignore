@@ -1,2 +1,3 @@
 .DS_Store
 client/.mcp.json
+server/.vscode/settings.json
