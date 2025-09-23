@@ -2,5 +2,4 @@
   <Project Path="TimTruong.ApiService/TimTruong.ApiService.csproj" />
   <Project Path="TimTruong.AppHost/TimTruong.AppHost.csproj" />
   <Project Path="TimTruong.ServiceDefaults/TimTruong.ServiceDefaults.csproj" />
-  <Project Path="TimTruong.Web/TimTruong.Web.csproj" />
 </Solution>
