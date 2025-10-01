@@ -5,7 +5,7 @@ namespace Core.Models;
 public class Major
 {
     [Key]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [Required]
     [MaxLength(200)]
@@ -35,7 +35,7 @@ public class Major
     public int? EnrollmentQuota { get; set; }
 
     [Required]
-    public Guid CampusId { get; set; }
+    public int CampusId { get; set; }
 
     // Navigation properties
     public Campus Campus { get; set; } = null!;

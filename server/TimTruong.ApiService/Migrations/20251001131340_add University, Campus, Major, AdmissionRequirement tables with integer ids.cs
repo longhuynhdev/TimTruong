@@ -1,29 +1,40 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace TimTruong.ApiService.Migrations
 {
     /// <inheritdoc />
-    public partial class updateUniversitytableaddCampusMajorAdmissionRequirementtable : Migration
+    public partial class addUniversityCampusMajorAdmissionRequirementtableswithintegerids : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ImageUrl",
-                table: "Universities",
-                type: "text",
-                nullable: true);
+            migrationBuilder.CreateTable(
+                name: "Universities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Code = table.Column<string>(type: "text", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Universities", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Campuses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    UniversityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UniversityId = table.Column<int>(type: "integer", nullable: false),
                     Address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     City = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     District = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
@@ -43,13 +54,14 @@ namespace TimTruong.ApiService.Migrations
                 name: "Majors",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Code = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     FieldOfStudy = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     TuitionFee = table.Column<decimal>(type: "numeric", nullable: true),
                     EnrollmentQuota = table.Column<int>(type: "integer", nullable: true),
-                    CampusId = table.Column<Guid>(type: "uuid", nullable: false)
+                    CampusId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,8 +78,9 @@ namespace TimTruong.ApiService.Migrations
                 name: "AdmissionRequirements",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    MajorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    MajorId = table.Column<int>(type: "integer", nullable: false),
                     ExamType = table.Column<int>(type: "integer", nullable: false),
                     Score = table.Column<decimal>(type: "numeric", nullable: false),
                     SubjectCombination = table.Column<int>(type: "integer", nullable: true),
@@ -112,9 +125,8 @@ namespace TimTruong.ApiService.Migrations
             migrationBuilder.DropTable(
                 name: "Campuses");
 
-            migrationBuilder.DropColumn(
-                name: "ImageUrl",
-                table: "Universities");
+            migrationBuilder.DropTable(
+                name: "Universities");
         }
     }
 }

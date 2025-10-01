@@ -5,7 +5,7 @@ namespace Core.Models;
 public class University
 {
     [Key]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     [Required]
     public string Name { get; set; } = String.Empty;
     /// <summary>
