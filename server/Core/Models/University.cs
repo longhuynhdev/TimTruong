@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Core.Models;
 
-namespace Core;
+namespace Core.Models;
 
 public class University
 {
@@ -9,7 +8,6 @@ public class University
     public Guid Id { get; set; }
     [Required]
     public string Name { get; set; } = String.Empty;
-
     /// <summary>
     /// Unique code for the university
     /// </summary>
@@ -24,6 +22,8 @@ public class University
     /// </summary>
     [Required]
     public UniType Type { get; set; }
+    public string? ImageUrl { get; set; }
 
-
+    // Navigation properties
+    public ICollection<Campus> Campuses { get; set; } = new List<Campus>();
 }

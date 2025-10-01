@@ -1,0 +1,43 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace Core.Models;
+
+public class Major
+{
+    [Key]
+    public Guid Id { get; set; }
+
+    [Required]
+    [MaxLength(200)]
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Major code used by the university (e.g., '7480201')
+    /// </summary>
+    [MaxLength(50)]
+    public string? Code { get; set; }
+
+    /// <summary>
+    /// Field of study category (e.g., 'CNTT', 'Điện - Điện tử', 'Y Dược')
+    /// </summary>
+    [Required]
+    [MaxLength(100)]
+    public string FieldOfStudy { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Annual tuition fee (in VND)
+    /// </summary>
+    public decimal? TuitionFee { get; set; }
+
+    /// <summary>
+    /// Total enrollment quota for this major
+    /// </summary>
+    public int? EnrollmentQuota { get; set; }
+
+    [Required]
+    public Guid CampusId { get; set; }
+
+    // Navigation properties
+    public Campus Campus { get; set; } = null!;
+    public ICollection<AdmissionRequirement> AdmissionRequirements { get; set; } = new List<AdmissionRequirement>();
+}
