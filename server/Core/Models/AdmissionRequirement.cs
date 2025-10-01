@@ -37,8 +37,4 @@ public class AdmissionRequirement
     public Major Major { get; set; } = null!;
 }
 
-public enum ExamType
-{
-    THPTQG,
-    ĐGNL
-}
+
