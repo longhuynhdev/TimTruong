@@ -1,15 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Core.Models;
 
-namespace Core;
+namespace Core.Models;
 
 public class University
 {
     [Key]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     [Required]
     public string Name { get; set; } = String.Empty;
-
     /// <summary>
     /// Unique code for the university
     /// </summary>
@@ -24,6 +22,8 @@ public class University
     /// </summary>
     [Required]
     public UniType Type { get; set; }
+    public string? ImageUrl { get; set; }
 
-
+    // Navigation properties
+    public ICollection<Campus> Campuses { get; set; } = new List<Campus>();
 }
