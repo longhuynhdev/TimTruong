@@ -1,7 +1,7 @@
 ```mermaid
 erDiagram
     University ||--o{ Campus : "has"
-    Campus ||--o{ Major : "offers"
+    University ||--o{ Major : "offers"
     Major ||--o{ AdmissionRequirement : "has"
 
     University {
@@ -23,7 +23,7 @@ erDiagram
 
     Major {
         int Id PK
-        int CampusId FK
+        int UniversityId FK
         string Name
         string Code "e.g. 7480201"
         string FieldOfStudy "e.g. CNTT, Y Dược"

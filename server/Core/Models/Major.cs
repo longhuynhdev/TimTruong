@@ -35,9 +35,9 @@ public class Major
     public int? EnrollmentQuota { get; set; }
 
     [Required]
-    public int CampusId { get; set; }
+    public int UniversityId { get; set; }
 
     // Navigation properties
-    public Campus Campus { get; set; } = null!;
+    public University University { get; set; } = null!;
     public ICollection<AdmissionRequirement> AdmissionRequirements { get; set; } = new List<AdmissionRequirement>();
 }
