@@ -50,16 +50,16 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-    
+
     try
     {
         var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
         if (pendingMigrations.Any())
         {
-            logger.LogInformation("Applying {Count} pending migrations: {Migrations}", 
-                pendingMigrations.Count(), 
+            logger.LogInformation("Applying {Count} pending migrations: {Migrations}",
+                pendingMigrations.Count(),
                 string.Join(", ", pendingMigrations));
-            
+
             await dbContext.Database.MigrateAsync();
             logger.LogInformation("Database migrations applied successfully");
         }
