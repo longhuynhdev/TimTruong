@@ -482,3 +482,22 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# ============================================
+# TimTruong Project Specific
+# ============================================
+
+# Production configuration with sensitive data
+appsettings.Production.json
+**/appsettings.Production.json
+
+# Database backups
+*.sql
+*.bak
+backup_*.sql
+
+# Connection string files
+*.connection
+
+# Local environment overrides
+appsettings.Local.json

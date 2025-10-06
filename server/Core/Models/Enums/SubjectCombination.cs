@@ -105,7 +105,7 @@ public enum SubjectCombination
     /// <summary>Văn, Toán, Sử (Literature, Math, Biology)</summary>
     C03 = 303,
 
-//TODO:
+    //TODO:
 
     // ==========================================
     // GROUP D - MATH & FOREIGN LANGUAGES 

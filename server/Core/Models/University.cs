@@ -26,4 +26,5 @@ public class University
 
     // Navigation properties
     public ICollection<Campus> Campuses { get; set; } = new List<Campus>();
+    public ICollection<Major> Majors { get; set; } = new List<Major>();
 }
