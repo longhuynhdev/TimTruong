@@ -1,13 +1,22 @@
-var builder = DistributedApplication.CreateBuilder(args);
+using Microsoft.Extensions.Hosting;
 
-var postgres = builder.AddPostgres("postgres")
+var builder = DistributedApplication.CreateBuilder(args);
+IResourceBuilder<IResourceWithConnectionString> database;
+
+if (builder.Environment.IsDevelopment())
+{
+    var postgres = builder.AddPostgres("postgres")
     .WithPgAdmin()
     .WithDataVolume();
-
-var timtruongDb = postgres.AddDatabase("timtruongdb");
+    database = postgres.AddDatabase("timtruongdb");
+}
+else
+{
+    database = builder.AddConnectionString("timtruongdb");
+}
 
 var apiService = builder.AddProject<Projects.TimTruong_ApiService>("apiservice")
-    .WithReference(timtruongDb)
+    .WithReference(database)
     .WithHttpHealthCheck("/health");
 
 builder.Build().Run();

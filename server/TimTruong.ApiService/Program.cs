@@ -1,5 +1,7 @@
 using Scalar.AspNetCore;
 using TimTruong.ApiService.DataAccess;
+using TimTruong.ApiService.Services;
+using TimTruong.ApiService.Endpoints;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,9 @@ builder.AddServiceDefaults();
 builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
 // Add services to the container.
 builder.Services.AddProblemDetails();
+
+// Register application services
+builder.Services.AddScoped<IRecommendationService, RecommendationService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -26,22 +31,8 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference(options => options.Title = "TimTruong API Documentation");
 }
 
-string[] summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
+// Map API endpoints
+app.MapRecommendationEndpoints();
 app.MapDefaultEndpoints();
 
 // Apply migrations automatically on startup
@@ -50,16 +41,16 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-    
+
     try
     {
         var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
         if (pendingMigrations.Any())
         {
-            logger.LogInformation("Applying {Count} pending migrations: {Migrations}", 
-                pendingMigrations.Count(), 
+            logger.LogInformation("Applying {Count} pending migrations: {Migrations}",
+                pendingMigrations.Count(),
                 string.Join(", ", pendingMigrations));
-            
+
             await dbContext.Database.MigrateAsync();
             logger.LogInformation("Database migrations applied successfully");
         }
@@ -75,11 +66,4 @@ if (app.Environment.IsDevelopment())
     }
 }
 
-
-
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
