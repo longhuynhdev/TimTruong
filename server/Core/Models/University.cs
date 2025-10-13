@@ -8,6 +8,11 @@ public class University
     public int Id { get; set; }
     [Required]
     public string Name { get; set; } = String.Empty;
+    
+    [MaxLength(50)]
+    public string? ShortName {get; set;} 
+
+    public string? EnglishName {get; set;}
     /// <summary>
     /// Unique code for the university
     /// </summary>
