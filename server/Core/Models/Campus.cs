@@ -10,7 +10,7 @@ public class Campus
     [Required]
     [MaxLength(200)]
     public string Name { get; set; } = string.Empty;
-
+    
     [Required]
     public int UniversityId { get; set; }
 

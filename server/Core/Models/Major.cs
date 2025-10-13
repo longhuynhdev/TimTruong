@@ -20,9 +20,8 @@ public class Major
     /// <summary>
     /// Field of study category (e.g., 'CNTT', 'Điện - Điện tử', 'Y Dược')
     /// </summary>
-    [Required]
     [MaxLength(100)]
-    public string FieldOfStudy { get; set; } = string.Empty;
+    public string? FieldOfStudy { get; set; }
 
     /// <summary>
     /// Annual tuition fee (in VND)

@@ -2,3 +2,6 @@
 client/.mcp.json
 server/.vscode/settings.json
 CLAUDE.md
+data/credentials.json
+data/venv
+data/universities.csv

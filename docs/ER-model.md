@@ -1,18 +1,20 @@
 ```mermaid
 erDiagram
-    University ||--o{ Campus : "has"
-    University ||--o{ Major : "offers"
-    Major ||--o{ AdmissionRequirement : "has"
+    Universities ||--o{ Campuses : "has"
+    Universities ||--o{ Majors : "offers"
+    Majors ||--o{ AdmissionRequirements : "has"
 
-    University {
+    Universities {
         int Id PK
         string Name
+        string EnglishName
+        string ShortName
         string Code "e.g. QST, QSB"
         UniType Type "Public/Private"
         string ImageUrl
     }
 
-    Campus {
+    Campuses {
         int Id PK
         int UniversityId FK
         string Name
@@ -21,7 +23,7 @@ erDiagram
         string District "e.g. Quận 5, Quận 1"
     }
 
-    Major {
+    Majors {
         int Id PK
         int UniversityId FK
         string Name
@@ -31,7 +33,7 @@ erDiagram
         int EnrollmentQuota
     }
 
-    AdmissionRequirement {
+    AdmissionRequirements {
         int Id PK
         int MajorId FK
         ExamType ExamType "THPTQG or ĐGNL"

@@ -120,6 +120,28 @@ The backend configuration is managed through:
 Connection strings and service configurations are automatically managed by Aspire.
 
 ---
+## ETL Process
+### Step 1: Navigate to the data directory
+```shell
+cd data
+```
+### Step 2: Activate the virtual environment (Do this BEFORE installing packages)
+```shell
+source venv/bin/activate
+```
+
+### Step 3: Install required Python dependencies
+```
+pip install -r requirements.txt
+```
+### Step 4: Add required data files to the data directory
+ - credentials.json: Contains database connection strings and API keys
+ - universities.csv: Source data file with university records
+### Step 5: Run the ETL pipeline
+```shell
+python3 etl.py
+```
+
 
 ## Troubleshooting
 

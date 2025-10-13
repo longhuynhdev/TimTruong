@@ -142,4 +142,29 @@ public enum SubjectCombination
     D10 = 410,
 
     //TODO:
+
+    // ==========================================
+    // GROUP X  
+    // ==========================================
+
+    /// <summary>Toán, Văn, Tin </summary>
+    X02 = 502,
+
+    /// <summary>Toán, Lí, Tin </summary>
+    X06 = 506,
+
+    /// <summary>Toán, Anh, GDKTPL </summary>
+    X25 = 525,
+
+    /// <summary>Toán, Anh, Tin </summary>
+    X26 = 526,
+
+    /// <summary>Văn, Sử, GDKTPL </summary>
+    X70 = 570,
+
+    /// <summary>Văn, Địa, GDKTPL </summary>
+    X74 = 574,
+
+    /// <summary>Văn, GDKTPL, Anh </summary>
+    X78 = 578
 }
