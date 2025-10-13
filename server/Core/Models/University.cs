@@ -10,9 +10,9 @@ public class University
     public string Name { get; set; } = String.Empty;
     
     [MaxLength(50)]
-    public string? ShortName {get; set;} 
+    public string? ShortName { get; set; } 
 
-    public string? EnglishName {get; set;}
+    public string? EnglishName { get; set; }
     /// <summary>
     /// Unique code for the university
     /// </summary>
