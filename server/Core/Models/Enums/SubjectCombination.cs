@@ -154,7 +154,7 @@ public enum SubjectCombination
     X06 = 506,
 
     /// <summary>Toán, Anh, GDKTPL </summary>
-    X25 =525,
+    X25 = 525,
 
     /// <summary>Toán, Anh, Tin </summary>
     X26 = 526,
