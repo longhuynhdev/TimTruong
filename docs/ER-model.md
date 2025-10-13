@@ -7,6 +7,8 @@ erDiagram
     University {
         int Id PK
         string Name
+        string EnglishName
+        string ShortName
         string Code "e.g. QST, QSB"
         UniType Type "Public/Private"
         string ImageUrl
