@@ -9,13 +9,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
 
-//
-builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
+// //
+// builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
+
+// Conditionally register DbContext - skip Aspire registration in test environment
+if (builder.Environment.EnvironmentName != "Testing")
+{
+    builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
+}
+// Note: In Testing environment, the TestWebApplicationFactory will register the DbContext
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
 // Register application services
 builder.Services.AddScoped<IRecommendationService, RecommendationService>();
+builder.Services.AddScoped<IUniversityService, UniversityService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -33,6 +42,7 @@ if (app.Environment.IsDevelopment())
 
 // Map API endpoints
 app.MapRecommendationEndpoints();
+app.MapUniversityEndpoints();
 app.MapDefaultEndpoints();
 
 // Apply migrations automatically on startup
@@ -67,3 +77,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.Run();
+
+// make Program.cs testable for E2E Testing
+public partial class Program { }

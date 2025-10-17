@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="Core/Core.csproj" />
+  <Project Path="TimTruong.ApiService.Tests/TimTruong.ApiService.Tests.csproj" />
   <Project Path="TimTruong.ApiService/TimTruong.ApiService.csproj" />
   <Project Path="TimTruong.AppHost/TimTruong.AppHost.csproj" />
   <Project Path="TimTruong.ServiceDefaults/TimTruong.ServiceDefaults.csproj" />
