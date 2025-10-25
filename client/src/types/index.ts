@@ -16,7 +16,7 @@ export interface UniversityResult {
   };
 }
 
-export type ScoreType = "THPTQG" | "ĐGNL";
+export type ScoreType = 0 | 1;
 
 export interface SubjectCombination {
   code: string;

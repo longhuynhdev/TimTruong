@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { HelpPopover } from "@/components/ui/help-popover";
 import UniversityResults from "@/components/UniversityResults";
-import { searchUniversities } from "@/utils/mockData";
+import { searchUniversities } from "@/services/api";
 import type { UniversityResult, ScoreType } from "@/types";
 import { z } from "zod";
 import { dgnlScoreSchema, thptqgScoreSchema } from "@/lib/validations";
@@ -14,7 +14,7 @@ import { SUBJECT_COMBINATIONS, HELP_ITEMS } from "@/constants";
 const SearchPage = () => {
   const [score, setScore] = useState("");
   const [selectedScoreType, setSelectedScoreType] = useState<ScoreType | null>(
-    "THPTQG"
+    0 // 0 = THPTQG, 1 = ĐGNL
   );
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -34,7 +34,7 @@ const SearchPage = () => {
     setScore("");
     setSearchResults([]);
     setHasSearched(false);
-    if (type === "ĐGNL") {
+    if (type === 1) { // ĐGNL
       setSelectedSubject(null);
     }
   };
@@ -69,13 +69,13 @@ const SearchPage = () => {
     }
 
     try {
-      if (selectedScoreType === "ĐGNL") {
+      if (selectedScoreType === 1) { // ĐGNL
         dgnlScoreSchema.parse(numericScore);
       } else {
         thptqgScoreSchema.parse(numericScore);
       }
 
-      if (selectedScoreType === "THPTQG" && !selectedSubject) {
+      if (selectedScoreType === 0 && !selectedSubject) { // THPTQG
         setValidationError("Vui lòng chọn tổ hợp môn");
         return false;
       }
@@ -117,7 +117,7 @@ const SearchPage = () => {
     if (isNaN(numericScore)) return false;
 
     try {
-      if (selectedScoreType === "ĐGNL") {
+      if (selectedScoreType === 1) { // ĐGNL
         dgnlScoreSchema.parse(numericScore);
       } else {
         thptqgScoreSchema.parse(numericScore);
@@ -141,7 +141,7 @@ const SearchPage = () => {
     }
 
     try {
-      if (selectedScoreType === "ĐGNL") {
+      if (selectedScoreType === 1) { // ĐGNL
         dgnlScoreSchema.parse(numericScore);
       } else {
         thptqgScoreSchema.parse(numericScore);
@@ -159,7 +159,7 @@ const SearchPage = () => {
   };
 
   const getScorePlaceholder = () => {
-    return selectedScoreType === "THPTQG" ? "9-30" : "300-1200";
+    return selectedScoreType === 0 ? "9-30" : "300-1200"; // 0 = THPTQG
   };
 
   return (
@@ -198,30 +198,30 @@ const SearchPage = () => {
             {/* Score Type Selection */}
             <div className="flex gap-3 justify-center">
               <Badge
-                variant={selectedScoreType === "THPTQG" ? "default" : "outline"}
+                variant={selectedScoreType === 0 ? "default" : "outline"}
                 className={`cursor-pointer px-6 py-3 text-base transition-colors ${
-                  selectedScoreType === "THPTQG"
+                  selectedScoreType === 0
                     ? "bg-primary hover:bg-primary/90 text-primary-foreground"
                     : "hover:bg-accent hover:text-accent-foreground border-border"
                 }`}
-                onClick={() => handleScoreTypeSelect("THPTQG")}
+                onClick={() => handleScoreTypeSelect(0)}
                 onKeyDown={(e) =>
-                  handleKeyDown(e, () => handleScoreTypeSelect("THPTQG"))
+                  handleKeyDown(e, () => handleScoreTypeSelect(0))
                 }
                 tabIndex={2}
               >
                 THPTQG
               </Badge>
               <Badge
-                variant={selectedScoreType === "ĐGNL" ? "default" : "outline"}
+                variant={selectedScoreType === 1 ? "default" : "outline"}
                 className={`cursor-pointer px-6 py-3 text-base transition-colors ${
-                  selectedScoreType === "ĐGNL"
+                  selectedScoreType === 1
                     ? "bg-primary hover:bg-primary/90 text-primary-foreground"
                     : "hover:bg-accent hover:text-accent-foreground border-border"
                 }`}
-                onClick={() => handleScoreTypeSelect("ĐGNL")}
+                onClick={() => handleScoreTypeSelect(1)}
                 onKeyDown={(e) =>
-                  handleKeyDown(e, () => handleScoreTypeSelect("ĐGNL"))
+                  handleKeyDown(e, () => handleScoreTypeSelect(1))
                 }
                 tabIndex={3}
               >
@@ -230,7 +230,7 @@ const SearchPage = () => {
             </div>
 
             {/* Subject Combinations (only show for THPTQG) */}
-            {selectedScoreType === "THPTQG" && (
+            {selectedScoreType === 0 && (
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <p className="text-base text-muted-foreground">

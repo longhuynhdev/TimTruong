@@ -5,3 +5,4 @@ CLAUDE.md
 data/credentials.json
 data/venv
 data/universities.csv
+.claude/settings.local.json
