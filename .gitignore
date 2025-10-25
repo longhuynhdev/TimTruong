@@ -6,3 +6,4 @@ data/credentials.json
 data/venv
 data/universities.csv
 .claude/settings.local.json
+docs/note-of-Huy.md
