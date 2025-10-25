@@ -25,6 +25,7 @@ builder.Services.AddProblemDetails();
 // Register application services
 builder.Services.AddScoped<IRecommendationService, RecommendationService>();
 builder.Services.AddScoped<IUniversityService, UniversityService>();
+builder.Services.AddScoped<ICampusService, CampusService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -43,6 +44,7 @@ if (app.Environment.IsDevelopment())
 // Map API endpoints
 app.MapRecommendationEndpoints();
 app.MapUniversityEndpoints();
+app.MapCampusEndpoints();
 app.MapDefaultEndpoints();
 
 // Apply migrations automatically on startup
