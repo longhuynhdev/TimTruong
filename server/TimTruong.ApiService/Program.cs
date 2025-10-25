@@ -4,7 +4,21 @@ using TimTruong.ApiService.Services;
 using TimTruong.ApiService.Endpoints;
 using Microsoft.EntityFrameworkCore;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:5173")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                      });
+});
+
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
@@ -34,6 +48,8 @@ if (app.Environment.IsDevelopment())
 // Map API endpoints
 app.MapRecommendationEndpoints();
 app.MapDefaultEndpoints();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 // Apply migrations automatically on startup
 if (app.Environment.IsDevelopment())
