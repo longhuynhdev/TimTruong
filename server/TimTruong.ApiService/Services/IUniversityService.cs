@@ -10,6 +10,7 @@ public interface IUniversityService
     /// <summary>
     /// Gets all universities with optional filtering
     /// </summary>
+    // TODO: do we need to search universities by city ? --> redesign later
     Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null);
 
     /// <summary>

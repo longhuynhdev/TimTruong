@@ -191,6 +191,8 @@ public class UniversityService : IUniversityService
         };
     }
 
+    // WARNING: This will CASCADE DELETE all campuses and majors
+    // TODO: Add safety checks before production (see note-of-Huy.md line 1042)
     public async Task<bool> DeleteUniversityAsync(int id)
     {
         _logger.LogInformation("Deleting university with ID: {Id}", id);
@@ -203,7 +205,7 @@ public class UniversityService : IUniversityService
         }
 
         _context.Universities.Remove(university);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(); // CASCADE DELETES ALL CHILDREN
 
         _logger.LogInformation("Successfully deleted university with ID: {Id}", id);
         return true;
