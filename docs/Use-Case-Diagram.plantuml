@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Học Sinh / Student" as Student
+
+rectangle "Hệ Thống Tìm Trường (TimTruong)" {
+usecase "Tìm trường\ntheo điểm" as UC1
+usecase "Tìm trường\ntheo tên" as UC2
+
+    usecase "Xem chi tiết trường" as UC3
+
+    usecase "Xem danh sách ngành\nvà điểm chuẩn" as UC4
+    usecase "Xem đề án\ntuyển sinh trường" as AUC2
+    usecase "Xem cơ sở\nvật chất trường" as UC5
+
+    usecase "Tư vấn ngành học" as AUC1
+
+    UC1 -[hidden]- UC3
+    UC2 -[hidden]- UC3
+    UC3 -[hidden]- AUC1
+
+}
+
+' --- Relationships ---
+
+Student --> UC1
+Student --> UC2
+Student --> UC3
+Student --> AUC1
+
+UC4 .> UC3 : <<extends>>
+AUC2 .> UC3 : <<extends>>
+UC5 .> UC3 : <<extends>>
+@enduml
