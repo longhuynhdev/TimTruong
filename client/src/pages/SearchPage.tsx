@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +10,7 @@ import type { UniversityResult, ExamType } from "@/types";
 import { z } from "zod";
 import { dgnlScoreSchema, thptqgScoreSchema } from "@/lib/validations";
 import { SUBJECT_COMBINATIONS, HELP_ITEMS } from "@/constants";
+import { toast } from "sonner";
 
 const SearchPage = () => {
   const [score, setScore] = useState("");
@@ -19,6 +20,56 @@ const SearchPage = () => {
   const [searchResults, setSearchResults] = useState<UniversityResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Validate score helper function
+  const validateScore = (scoreValue: string): string | null => {
+    if (!scoreValue.trim()) return null;
+
+    const numericScore = parseFloat(scoreValue);
+    if (isNaN(numericScore)) {
+      return "Vui lòng nhập số hợp lệ";
+    }
+
+    try {
+      if (examType === "ĐGNL") {
+        dgnlScoreSchema.parse(numericScore);
+      } else {
+        thptqgScoreSchema.parse(numericScore);
+      }
+      return null;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return error.issues[0].message;
+      }
+      return null;
+    }
+  };
+
+  // Debounced validation effect
+  useEffect(() => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    if (score.trim()) {
+      debounceTimerRef.current = setTimeout(() => {
+        const error = validateScore(score);
+        if (error) {
+          setValidationError(error);
+        }
+      }, 800);
+    }
+  }, [score, examType]);
 
   const handleExamTypeSelect = (type: ExamType) => {
     setExamType(type);
@@ -41,24 +92,11 @@ const SearchPage = () => {
       return;
     }
 
-    const numericScore = parseFloat(score);
-    if (isNaN(numericScore)) {
-      setValidationError("Vui lòng nhập số hợp lệ");
+    // Validate score
+    const scoreError = validateScore(score);
+    if (scoreError) {
+      setValidationError(scoreError);
       return;
-    }
-
-    // Validate score range
-    try {
-      if (examType === "ĐGNL") {
-        dgnlScoreSchema.parse(numericScore);
-      } else {
-        thptqgScoreSchema.parse(numericScore);
-      }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        setValidationError(error.issues[0].message);
-        return;
-      }
     }
 
     // Check subject combination for THPTQG
@@ -72,6 +110,7 @@ const SearchPage = () => {
     setValidationError("");
 
     try {
+      const numericScore = parseFloat(score);
       const results = await searchUniversities(
         numericScore,
         examType,
@@ -79,52 +118,27 @@ const SearchPage = () => {
       );
       setSearchResults(results);
       setHasSearched(true);
-    } catch {
-      setValidationError("Có lỗi xảy ra khi tìm kiếm. Vui lòng thử lại.");
+    } catch (error) {
+      toast.error("Có lỗi xảy ra khi tìm kiếm", {
+        description: "Vui lòng thử lại sau hoặc kiểm tra kết nối mạng.",
+      });
+      console.error("Search API error:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleScoreBlur = () => {
-    if (!score.trim()) return;
-
-    const numericScore = parseFloat(score);
-    if (isNaN(numericScore)) {
-      setValidationError("Vui lòng nhập số hợp lệ");
-      return;
-    }
-
-    try {
-      if (examType === "ĐGNL") {
-        dgnlScoreSchema.parse(numericScore);
-      } else {
-        thptqgScoreSchema.parse(numericScore);
-      }
+    const error = validateScore(score);
+    if (error) {
+      setValidationError(error);
+    } else if (score.trim()) {
       setValidationError("");
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        setValidationError(error.issues[0].message);
-      }
     }
   };
 
   const isValidScore = () => {
-    if (!score.trim()) return false;
-
-    const numericScore = parseFloat(score);
-    if (isNaN(numericScore)) return false;
-
-    try {
-      if (examType === "ĐGNL") {
-        dgnlScoreSchema.parse(numericScore);
-      } else {
-        thptqgScoreSchema.parse(numericScore);
-      }
-      return true;
-    } catch {
-      return false;
-    }
+    return score.trim() !== "" && validateScore(score) === null;
   };
 
   const getScorePlaceholder = () => {
