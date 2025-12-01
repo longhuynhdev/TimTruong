@@ -1,10 +1,10 @@
-import type { UniversityResult, ScoreType } from "@/types";
+import type { UniversityResult, ExamType } from "@/types";
 
-// API base URL - update this based on your environment
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5309";
 
+// API Request/Response types
 interface RecommendationRequest {
-  examType: 0 | 1; // 0 = THPTQG, 1 = ĐGNL
+  examType: ExamType;
   score: number;
   subjectCombination?: string;
 }
@@ -35,80 +35,55 @@ interface RecommendationResponse {
 }
 
 /**
- * Fetches university recommendations from the API
+ * Search for university recommendations
  */
-export const searchUniversities = async (
+export async function searchUniversities(
   score: number,
-  scoreType: ScoreType,
+  examType: ExamType,
   subjectCombination?: string
-): Promise<UniversityResult[]> => {
+): Promise<UniversityResult[]> {
   const requestBody: RecommendationRequest = {
-    examType: scoreType,
+    examType,
     score,
     subjectCombination,
   };
 
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/v1/recommendations`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    });
+  const response = await fetch(`${API_BASE_URL}/api/v1/recommendations`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody),
+  });
 
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-
-    const data: RecommendationResponse = await response.json();
-
-    // Transform API response to match UniversityResult interface
-    return transformRecommendations(data.recommendations, scoreType);
-  } catch (error) {
-    console.error("Error fetching recommendations:", error);
-    throw error;
-  }
-};
-
-/**
- * Transforms API response to UniversityResult format
- */
-function transformRecommendations(
-  recommendations: UniversityRecommendation[],
-  scoreType: ScoreType
-): UniversityResult[] {
-  const results: UniversityResult[] = [];
-
-  // Flatten university recommendations into individual university-major pairs
-  for (const university of recommendations) {
-    for (const major of university.majors) {
-      results.push({
-        id: `${university.universityId}-${major.majorId}`,
-        universityName: university.universityName,
-        major: major.majorName,
-        logo: university.universityImageUrl || "",
-        subjectCombinations:
-          scoreType === 0 ? [major.subjectCombination] : undefined,
-        thptScores:
-          scoreType === 0
-            ? {
-                year2025: major.admissionScore,
-                year2024: major.admissionScore,
-                year2023: major.admissionScore,
-              }
-            : undefined,
-        dgnlScores:
-          scoreType === 1
-            ? {
-                year2025: major.admissionScore,
-                year2024: major.admissionScore,
-                year2023: major.admissionScore,
-              }
-            : undefined,
-      });
-    }
+  if (!response.ok) {
+    throw new Error(`API request failed with status ${response.status}`);
   }
 
-  return results;
+  const data: RecommendationResponse = await response.json();
+
+  // Transform API response to UI format
+  return data.recommendations.flatMap((university) =>
+    university.majors.map((major) => ({
+      id: `${university.universityId}-${major.majorId}`,
+      universityName: university.universityName,
+      major: major.majorName,
+      logo: university.universityImageUrl || "",
+      subjectCombinations: examType === "THPTQG" ? [major.subjectCombination] : undefined,
+      thptScores: examType === "THPTQG"
+        ? {
+            year2025: major.admissionScore,
+            year2024: major.admissionScore,
+            year2023: major.admissionScore,
+          }
+        : undefined,
+      dgnlScores: examType === "ĐGNL"
+        ? {
+            year2025: major.admissionScore,
+            year2024: major.admissionScore,
+            year2023: major.admissionScore,
+          }
+        : undefined,
+    }))
+  );
 }

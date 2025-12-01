@@ -1,13 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import type { UniversityResult, ScoreType } from "@/types";
+import type { UniversityResult, ExamType } from "@/types";
 
 interface UniversityResultsProps {
   results: UniversityResult[];
-  scoreType: ScoreType;
+  examType: ExamType;
 }
 
-const UniversityResults = ({ results, scoreType }: UniversityResultsProps) => {
+const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-foreground mb-4">
@@ -51,7 +51,7 @@ const UniversityResults = ({ results, scoreType }: UniversityResultsProps) => {
                   </div>
 
                   {/* Subject Combinations (for THPTQG) */}
-                  {scoreType === "THPTQG" && result.subjectCombinations && (
+                  {examType === "THPTQG" && result.subjectCombinations && (
                     <div className="space-y-2">
                       <p className="text-sm font-medium text-foreground">Tổ hợp môn:</p>
                       <div className="flex flex-wrap gap-2">
@@ -67,10 +67,10 @@ const UniversityResults = ({ results, scoreType }: UniversityResultsProps) => {
                   {/* Scores */}
                   <div className="space-y-2">
                     <p className="text-sm font-medium text-foreground">
-                      Điểm {scoreType === "THPTQG" ? "THPT" : "ĐGNL"} các năm:
+                      Điểm {examType === "THPTQG" ? "THPT" : "ĐGNL"} các năm:
                     </p>
                     <div className="grid grid-cols-3 gap-3">
-                      {scoreType === "THPTQG" && result.thptScores && (
+                      {examType === "THPTQG" && result.thptScores && (
                         <>
                           <div className="text-center">
                             <p className="text-xs text-muted-foreground">2025</p>
@@ -92,7 +92,7 @@ const UniversityResults = ({ results, scoreType }: UniversityResultsProps) => {
                           </div>
                         </>
                       )}
-                      {scoreType === "ĐGNL" && result.dgnlScores && (
+                      {examType === "ĐGNL" && result.dgnlScores && (
                         <>
                           <div className="text-center">
                             <p className="text-xs text-muted-foreground">2025</p>
