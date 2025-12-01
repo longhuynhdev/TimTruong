@@ -3,8 +3,23 @@ using TimTruong.ApiService.DataAccess;
 using TimTruong.ApiService.Services;
 using TimTruong.ApiService.Endpoints;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:5173")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                      });
+});
+
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
@@ -30,6 +45,12 @@ builder.Services.AddScoped<ICampusService, CampusService>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// Configure JSON serialization to use string enums instead of numeric values
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,6 +67,8 @@ app.MapRecommendationEndpoints();
 app.MapUniversityEndpoints();
 app.MapCampusEndpoints();
 app.MapDefaultEndpoints();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 // Apply migrations automatically on startup
 if (app.Environment.IsDevelopment())

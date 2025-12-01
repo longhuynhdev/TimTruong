@@ -18,9 +18,13 @@ erDiagram
         int Id PK
         int UniversityId FK
         string Name
+        string OldAddress
+        string OldCity "e.g. TP HCM, Hà Nội"
+        string OldDistrict "e.g. Quận 5, Quận 1"
         string Address
         string City "e.g. TP HCM, Hà Nội"
-        string District "e.g. Quận 5, Quận 1"
+        string District "e.g. Huyện Chợ Quán"
+
     }
 
     Majors {
