@@ -3,6 +3,7 @@ using TimTruong.ApiService.DataAccess;
 using TimTruong.ApiService.Services;
 using TimTruong.ApiService.Endpoints;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -43,6 +44,12 @@ builder.Services.AddScoped<ICampusService, CampusService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Configure JSON serialization to use string enums instead of numeric values
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 var app = builder.Build();
 
