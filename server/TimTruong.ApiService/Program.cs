@@ -9,28 +9,57 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure CORS based on environment
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy  =>
-                      {
-                          policy.WithOrigins("http://localhost:5173")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                      });
+    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            // Development: Allow localhost
+            policy.WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+        else
+        {
+            // Production: Read from configuration
+            var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+                ?? Array.Empty<string>();
+
+            if (allowedOrigins.Length > 0)
+            {
+                policy.WithOrigins(allowedOrigins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            }
+        }
+    });
 });
 
+// Add service defaults & Aspire client integrations only in Development
+if (builder.Environment.IsDevelopment())
+{
+    builder.AddServiceDefaults();
+}
 
-// Add service defaults & Aspire client integrations.
-builder.AddServiceDefaults();
-
-// //
-// builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
-
-// Conditionally register DbContext - skip Aspire registration in test environment
+// Configure Database Context
 if (builder.Environment.EnvironmentName != "Testing")
 {
-    builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
+    if (builder.Environment.IsDevelopment())
+    {
+        // Development: Use Aspire service discovery
+        builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
+    }
+    else
+    {
+        // Production: Use standard connection string from environment variables
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(connectionString));
+    }
 }
 // Note: In Testing environment, the TestWebApplicationFactory will register the DbContext
 
@@ -56,17 +85,20 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference(options => options.Title = "TimTruong API Documentation");
-}
+app.MapOpenApi();
+app.MapScalarApiReference(options => options.Title = "TimTruong API Documentation");
+
 
 // Map API endpoints
 app.MapRecommendationEndpoints();
 app.MapUniversityEndpoints();
 app.MapCampusEndpoints();
-app.MapDefaultEndpoints();
+
+// Map default endpoints (health checks) only in Development
+if (app.Environment.IsDevelopment())
+{
+    app.MapDefaultEndpoints();
+}
 
 app.UseCors(MyAllowSpecificOrigins);
 
