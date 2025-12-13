@@ -1,6 +1,7 @@
 import Header from "@/components/home/Header";
 import Footer from "@/components/home/Footer";
 import { Outlet } from "react-router-dom";
+import { Toaster } from "sonner";
 
 const HomeLayout = () => {
   return (
@@ -10,6 +11,7 @@ const HomeLayout = () => {
         <Outlet />
       </main>
       <Footer />
+      <Toaster position="bottom-right" richColors />
     </div>
   );
 };
