@@ -5,65 +5,50 @@ using TimTruong.ApiService.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure CORS based on environment
+// Read feature flags from configuration
+var enableOpenApi = builder.Configuration.GetValue<bool>("Features:EnableOpenApi");
+var enableAutoMigrations = builder.Configuration.GetValue<bool>("Features:EnableAutoMigrations");
+
+// Configure CORS
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+    options.AddDefaultPolicy(policy =>
     {
-        if (builder.Environment.IsDevelopment())
+        if (allowedOrigins.Length > 0)
         {
-            // Development: Allow localhost
-            policy.WithOrigins("http://localhost:5173")
+            policy.WithOrigins(allowedOrigins)
                 .AllowAnyHeader()
                 .AllowAnyMethod();
-        }
-        else
-        {
-            // Production: Read from configuration
-            var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
-                ?? Array.Empty<string>();
-
-            if (allowedOrigins.Length > 0)
-            {
-                policy.WithOrigins(allowedOrigins)
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-            }
         }
     });
 });
 
-// Add service defaults & Aspire client integrations only in Development
+// Add Aspire service defaults (Development only)
 if (builder.Environment.IsDevelopment())
 {
     builder.AddServiceDefaults();
 }
 
-// Configure Database Context
-if (builder.Environment.EnvironmentName != "Testing")
+// Configure Database
+if (builder.Environment.IsDevelopment())
 {
-    if (builder.Environment.IsDevelopment())
-    {
-        // Development: Use Aspire service discovery
-        builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
-    }
-    else
-    {
-        // Production: Use standard connection string from environment variables
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(connectionString));
-    }
+    // Development: Use Aspire-managed PostgreSQL
+    builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
 }
-// Note: In Testing environment, the TestWebApplicationFactory will register the DbContext
+else
+{
+    // Production: Use connection string from environment
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-// Add services to the container.
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(connectionString));
+}
+
+// Add core services
 builder.Services.AddProblemDetails();
 
 // Register application services
@@ -71,10 +56,13 @@ builder.Services.AddScoped<IRecommendationService, RecommendationService>();
 builder.Services.AddScoped<IUniversityService, UniversityService>();
 builder.Services.AddScoped<ICampusService, CampusService>();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Configure OpenAPI
+if (enableOpenApi)
+{
+    builder.Services.AddOpenApi();
+}
 
-// Configure JSON serialization to use string enums instead of numeric values
+// Configure JSON serialization
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -82,28 +70,30 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure middleware pipeline
 app.UseExceptionHandler();
+app.UseCors();
 
-app.MapOpenApi();
-app.MapScalarApiReference(options => options.Title = "TimTruong API Documentation");
-
+// Configure OpenAPI documentation
+if (enableOpenApi)
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference(options => options.Title = "TimTruong API Documentation");
+}
 
 // Map API endpoints
 app.MapRecommendationEndpoints();
 app.MapUniversityEndpoints();
 app.MapCampusEndpoints();
 
-// Map default endpoints (health checks) only in Development
+// Map Aspire health checks (Development only)
 if (app.Environment.IsDevelopment())
 {
     app.MapDefaultEndpoints();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
-
-// Apply migrations automatically on startup
-if (app.Environment.IsDevelopment())
+// Apply database migrations automatically
+if (enableAutoMigrations)
 {
     using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -134,6 +124,3 @@ if (app.Environment.IsDevelopment())
 }
 
 app.Run();
-
-// make Program.cs testable for E2E Testing
-public partial class Program { }

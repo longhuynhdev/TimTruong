@@ -80,10 +80,12 @@ dotnet run --project TimTruong.AppHost
 ```
 
 This command will:
-- Start PostgreSQL database with persistent volume
+- Start PostgreSQL database with persistent volume (using Docker)
 - Launch pgAdmin for database management
 - Start the API service
 - Display the Aspire Dashboard
+
+**Note**: AppHost is for **local development only**. In production, only TimTruong.ApiService is deployed as a standalone ASP.NET Core application.
 
 ### 6. Access the Services
 Once running, you'll see the Aspire Dashboard URL in the terminal ( `http://localhost:17254`).
@@ -112,12 +114,86 @@ dotnet ef database update
 
 ## Environment Configuration
 
-### Backend Configuration
+### Backend (TimTruong.ApiService)
 The backend configuration is managed through:
-- `appsettings.json` - Production settings
-- `appsettings.Development.json` - Development settings
+- `appsettings.json` - Base configuration with production defaults
+  - CORS: Empty allowed origins (must be set via environment variables)
+  - Features: OpenAPI disabled, auto-migrations disabled
+- `appsettings.Development.json` - Development overrides
+  - CORS: `http://localhost:5173` (frontend)
+  - Features: OpenAPI enabled, auto-migrations enabled
 
-Connection strings and service configurations are automatically managed by Aspire.
+**Key Configuration Sections:**
+```json
+{
+  "Cors": {
+    "AllowedOrigins": ["http://localhost:5173"]
+  },
+  "Features": {
+    "EnableOpenApi": true,
+    "EnableAutoMigrations": true
+  }
+}
+```
+
+### AppHost (Development Only)
+By default, AppHost uses **local Docker PostgreSQL** - no configuration needed.
+
+**Optional: Connect to Remote Database**
+If you need to test against a production or shared database, use .NET user secrets:
+
+```shell
+cd server/TimTruong.AppHost
+
+# Set connection string via user secrets (one-time setup)
+dotnet user-secrets set "ConnectionStrings:timtruongdb" "Host=your-db-host;Database=your-db;Username=your-user;Password=your-password;SSL Mode=VerifyFull"
+```
+
+User secrets are stored securely in your user profile (`~/.microsoft/usersecrets/`) and persist across sessions.
+
+### Frontend
+Create a `.env` file in the `client` directory (optional):
+```
+VITE_API_URL=http://localhost:5309
+```
+
+If not set, the frontend defaults to `http://localhost:5309`.
+
+---
+
+## Production Deployment
+
+**Important**: Only `TimTruong.ApiService` is deployed to production. AppHost is a development-only orchestration tool.
+
+### Backend (TimTruong.ApiService)
+Set these environment variables in your production environment:
+
+```shell
+# Database connection
+ConnectionStrings__DefaultConnection="Host=your-db;Database=your-db;Username=your-user;Password=your-password"
+
+# CORS (add your frontend domains)
+Cors__AllowedOrigins__0="https://yourdomain.com"
+Cors__AllowedOrigins__1="https://www.yourdomain.com"
+
+# Features (auto-migrations should be false in production)
+Features__EnableOpenApi=false
+Features__EnableAutoMigrations=false
+```
+
+### Frontend
+Set the API URL environment variable:
+```shell
+VITE_API_URL=https://api.yourdomain.com
+```
+
+Then build:
+```shell
+cd client
+pnpm run build
+```
+
+The `dist` folder contains the static files ready for deployment (Azure Static Web Apps, Vercel, Netlify, etc.).
 
 ---
 ## ETL Process
@@ -161,7 +237,11 @@ python3 etl.py
 #### Database Connection Issues
 - Ensure Docker containers are running via Aspire Dashboard
 - Check PostgreSQL logs in the Aspire Dashboard
-- Verify connection string in appsettings
+- If using remote database with user secrets, verify the connection string:
+  ```shell
+  cd server/TimTruong.AppHost
+  dotnet user-secrets list
+  ```
 
 #### Aspire Workload Issues
 ```shell
