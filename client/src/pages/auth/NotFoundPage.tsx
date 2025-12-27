@@ -8,10 +8,13 @@ import {
 } from "@/components/ui/card";
 import { FileQuestion } from "lucide-react";
 import { Link } from "react-router-dom";
+import PageMetadata from "@/components/PageMetadata";
 
 const NotFoundPage = () => {
   return (
-    <div className="flex-1 flex items-center justify-center">
+    <>
+      <PageMetadata title="Không tìm thấy trang" />
+      <div className="flex-1 flex items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader>
           <div className="flex items-center justify-center w-20 h-20 rounded-full bg-muted mx-auto">
@@ -34,6 +37,7 @@ const NotFoundPage = () => {
         </CardFooter>
       </Card>
     </div>
+    </>
   );
 };
 

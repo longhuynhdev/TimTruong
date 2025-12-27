@@ -50,7 +50,7 @@ const Header = () => {
             asChild
             className="hidden sm:flex hover:bg-primary/80 hover:shadow-md transition-all duration-200"
           >
-            <NavLink to="search">
+            <NavLink to="tim-kiem">
               Tìm trường ngay
             </NavLink>
           </Button>
