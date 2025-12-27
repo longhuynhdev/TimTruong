@@ -1,6 +1,6 @@
 // Simple string enums matching the backend
 export type ExamType = "THPTQG" | "ĐGNL";
-export type SubjectCombination = "A00" | "A01" | "A02" | "B00" | "B01" | "C00" | "D01" | "D07";
+export type SubjectCombination = "A00" | "A01" | "B00" | "C00" | "D01" | "D07";
 
 // University search result
 export interface UniversityResult {
@@ -24,10 +24,16 @@ export interface UniversityResult {
 // Simple subject combination for display
 export interface SubjectCombo {
   code: string;
-  name: string;
 }
 
 export interface HelpItem {
   title: string;
-  description: string;
+}
+
+// Detailed subject combination with full information
+export interface SubjectCombinationDetail {
+  code: string;
+  name: string;
+  subjects: string[];
+  description?: string;
 }
