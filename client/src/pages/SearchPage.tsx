@@ -12,6 +12,7 @@ import { z } from "zod";
 import { dgnlScoreSchema, thptqgScoreSchema } from "@/lib/validations";
 import { SUBJECT_COMBINATIONS, HELP_ITEMS } from "@/constants";
 import { toast } from "sonner";
+import PageMetadata from "@/components/PageMetadata";
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -148,133 +149,142 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="flex-1 bg-background p-4 md:p-8">
-      <div className="max-w-2xl mx-auto">
-        <Card className="shadow-lg bg-card border-border">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-center text-foreground text-xl md:text-2xl">
-              Nhập tổng điểm tốt nghiệp hoặc điểm ĐGNL của bạn
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Score Input */}
-            <div className="space-y-2">
-              <Input
-                type="text"
-                value={score}
-                onChange={(e) => {
-                  setScore(e.target.value);
-                  setValidationError("");
-                }}
-                onBlur={handleScoreBlur}
-                placeholder={getScorePlaceholder()}
-                className={`text-center text-lg font-medium bg-input border-border text-foreground placeholder:text-muted-foreground ${
-                  validationError ? "border-red-500" : ""
-                }`}
-              />
-              {validationError && (
-                <p className="text-sm text-red-500 text-center">
-                  {validationError}
+    <>
+      <PageMetadata
+        title="Tìm trường"
+        description="Tìm trường đại học phù hợp dựa theo điểm thi trung học phổ thông quốc gia (THPTQG) hoặc điểm thi đánh giá năng lực (ĐGNL) của bạn"
+      />
+      <div className="flex-1 bg-background p-4 md:p-8">
+        <div className="max-w-2xl mx-auto">
+          <Card className="shadow-lg bg-card border-border">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-center text-foreground text-xl md:text-2xl">
+                Nhập tổng điểm tốt nghiệp hoặc điểm ĐGNL của bạn
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Score Input */}
+              <div className="space-y-2">
+                <Input
+                  type="text"
+                  value={score}
+                  onChange={(e) => {
+                    setScore(e.target.value);
+                    setValidationError("");
+                  }}
+                  onBlur={handleScoreBlur}
+                  placeholder={getScorePlaceholder()}
+                  className={`text-center text-lg font-medium bg-input border-border text-foreground placeholder:text-muted-foreground ${
+                    validationError ? "border-red-500" : ""
+                  }`}
+                />
+                {validationError && (
+                  <p className="text-sm text-red-500 text-center">
+                    {validationError}
+                  </p>
+                )}
+                <p className="text-sm text-muted-foreground text-center">
+                  Nhập loại điểm của bạn
                 </p>
-              )}
-              <p className="text-sm text-muted-foreground text-center">
-                Nhập loại điểm của bạn
-              </p>
-            </div>
-
-            {/* Score Type Selection */}
-            <div className="flex gap-3 justify-center">
-              <Badge
-                variant={examType === "THPTQG" ? "default" : "outline"}
-                className={`cursor-pointer px-6 py-3 text-base transition-colors ${
-                  examType === "THPTQG"
-                    ? "bg-primary hover:bg-primary/90 text-primary-foreground"
-                    : "hover:bg-accent hover:text-accent-foreground border-border"
-                }`}
-                onClick={() => handleExamTypeSelect("THPTQG")}
-              >
-                THPTQG
-              </Badge>
-              <Badge
-                variant={examType === "ĐGNL" ? "default" : "outline"}
-                className={`cursor-pointer px-6 py-3 text-base transition-colors ${
-                  examType === "ĐGNL"
-                    ? "bg-primary hover:bg-primary/90 text-primary-foreground"
-                    : "hover:bg-accent hover:text-accent-foreground border-border"
-                }`}
-                onClick={() => handleExamTypeSelect("ĐGNL")}
-              >
-                ĐGNL
-              </Badge>
-            </div>
-
-            {/* Subject Combinations (only show for THPTQG) */}
-            {examType === "THPTQG" && (
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <p className="text-base text-muted-foreground">
-                    Nhập tổ hợp của bạn
-                  </p>
-                  <HelpPopover
-                    title="Danh sách các tổ hợp môn phổ biến"
-                    note="Xem toàn bộ danh sách các tổ hợp môn"
-                    helpItems={HELP_ITEMS}
-                    align="start"
-                    onNoteClick={() => navigate('/')}
-                  />
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  {SUBJECT_COMBINATIONS.map((combo) => (
-                    <Badge
-                      key={combo.code}
-                      variant={
-                        selectedSubject === combo.code ? "default" : "outline"
-                      }
-                      className={`cursor-pointer px-4 py-2 text-base transition-colors ${
-                        selectedSubject === combo.code
-                          ? "bg-primary hover:bg-primary/90 text-primary-foreground"
-                          : "hover:bg-accent hover:text-accent-foreground border-border"
-                      }`}
-                      onClick={() => handleSubjectSelect(combo.code)}
-                    >
-                      {combo.code}
-                    </Badge>
-                  ))}
-                </div>
               </div>
-            )}
 
-            {/* Search Button */}
-            <Button
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 text-lg font-medium transition-colors"
-              disabled={!score.trim() || !isValidScore() || isLoading}
-              onClick={validateAndSearch}
-            >
-              {isLoading ? "Đang tìm kiếm..." : "Tìm trường phù hợp ngay"}
-            </Button>
-          </CardContent>
-        </Card>
+              {/* Score Type Selection */}
+              <div className="flex gap-3 justify-center">
+                <Badge
+                  variant={examType === "THPTQG" ? "default" : "outline"}
+                  className={`cursor-pointer px-6 py-3 text-base transition-colors ${
+                    examType === "THPTQG"
+                      ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                      : "hover:bg-accent hover:text-accent-foreground border-border"
+                  }`}
+                  onClick={() => handleExamTypeSelect("THPTQG")}
+                >
+                  THPTQG
+                </Badge>
+                <Badge
+                  variant={examType === "ĐGNL" ? "default" : "outline"}
+                  className={`cursor-pointer px-6 py-3 text-base transition-colors ${
+                    examType === "ĐGNL"
+                      ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                      : "hover:bg-accent hover:text-accent-foreground border-border"
+                  }`}
+                  onClick={() => handleExamTypeSelect("ĐGNL")}
+                >
+                  ĐGNL
+                </Badge>
+              </div>
 
-        {/* Results Section */}
-        {hasSearched && (
-          <div className="mt-8">
-            {searchResults.length > 0 ? (
-              <UniversityResults results={searchResults} examType={examType} />
-            ) : (
-              <Card className="shadow-sm border-border bg-card">
-                <CardContent className="p-6 text-center">
-                  <p className="text-muted-foreground">
-                    Không tìm thấy trường nào phù hợp với điểm số của bạn. Hãy
-                    thử điều chỉnh điểm số hoặc tổ hợp môn.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        )}
+              {/* Subject Combinations (only show for THPTQG) */}
+              {examType === "THPTQG" && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <p className="text-base text-muted-foreground">
+                      Nhập tổ hợp của bạn
+                    </p>
+                    <HelpPopover
+                      title="Danh sách các tổ hợp môn phổ biến"
+                      note="Xem toàn bộ danh sách các tổ hợp môn"
+                      helpItems={HELP_ITEMS}
+                      align="start"
+                      onNoteClick={() => navigate("/")}
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap gap-3">
+                    {SUBJECT_COMBINATIONS.map((combo) => (
+                      <Badge
+                        key={combo.code}
+                        variant={
+                          selectedSubject === combo.code ? "default" : "outline"
+                        }
+                        className={`cursor-pointer px-4 py-2 text-base transition-colors ${
+                          selectedSubject === combo.code
+                            ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                            : "hover:bg-accent hover:text-accent-foreground border-border"
+                        }`}
+                        onClick={() => handleSubjectSelect(combo.code)}
+                      >
+                        {combo.code}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Search Button */}
+              <Button
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 text-lg font-medium transition-colors"
+                disabled={!score.trim() || !isValidScore() || isLoading}
+                onClick={validateAndSearch}
+              >
+                {isLoading ? "Đang tìm kiếm..." : "Tìm trường phù hợp ngay"}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Results Section */}
+          {hasSearched && (
+            <div className="mt-8">
+              {searchResults.length > 0 ? (
+                <UniversityResults
+                  results={searchResults}
+                  examType={examType}
+                />
+              ) : (
+                <Card className="shadow-sm border-border bg-card">
+                  <CardContent className="p-6 text-center">
+                    <p className="text-muted-foreground">
+                      Không tìm thấy trường nào phù hợp với điểm số của bạn. Hãy
+                      thử điều chỉnh điểm số hoặc tổ hợp môn.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

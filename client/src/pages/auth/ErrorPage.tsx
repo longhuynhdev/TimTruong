@@ -1,6 +1,7 @@
 import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import PageMetadata from "@/components/PageMetadata";
 
 const ErrorPage = () => {
   const error = useRouteError();
@@ -28,7 +29,9 @@ const ErrorPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <>
+      <PageMetadata title="Lỗi" />
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="max-w-md w-full shadow-lg bg-card border-border">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-destructive">
@@ -57,6 +60,7 @@ const ErrorPage = () => {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 };
 
