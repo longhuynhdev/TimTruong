@@ -29,3 +29,11 @@ export interface SubjectCombo {
 export interface HelpItem {
   title: string;
 }
+
+// Detailed subject combination with full information
+export interface SubjectCombinationDetail {
+  code: string;
+  name: string;
+  subjects: string[];
+  description?: string;
+}

@@ -1,36 +1,50 @@
-import type { SubjectCombo, HelpItem } from "@/types";
+import type { SubjectCombo, HelpItem, SubjectCombinationDetail } from "@/types";
 
-// Available subject combinations for THPTQG
-export const SUBJECT_COMBINATIONS: SubjectCombo[] = [
-  { code: "A00" },
-  { code: "A01" },
-  { code: "B00" },
-  { code: "C00" },
-  { code: "D01" },
-  { code: "D07" },
+// Full subject combination data (single source of truth)
+export const SUBJECT_COMBINATIONS_FULL: SubjectCombinationDetail[] = [
+  {
+    code: "A00",
+    name: "Khối A00",
+    subjects: ["Toán", "Vật lý", "Hóa học"],
+  },
+  {
+    code: "A01",
+    name: "Khối A01",
+    subjects: ["Toán", "Vật lý", "Tiếng Anh"],
+  },
+  {
+    code: "B00",
+    name: "Khối B00",
+    subjects: ["Toán", "Hóa học", "Sinh học"],
+  },
+  {
+    code: "C00",
+    name: "Khối C00",
+    subjects: ["Ngữ văn", "Lịch sử", "Địa lý"],
+  },
+  {
+    code: "D01",
+    name: "Khối D01",
+    subjects: ["Toán", "Ngữ văn", "Tiếng Anh"],
+  },
+  {
+    code: "D07",
+    name: "Khối D07",
+    subjects: ["Toán", "Hóa học", "Tiếng Anh"],
+  },
 ];
 
-// Help items for subject combination popup
-export const HELP_ITEMS: HelpItem[] = [
-  {
-    title: "A00: Toán, Vật lý, Hóa học",
-  },
-  {
-    title: "A01: Toán, Vật lý, tiếng Anh",
-  },
-  {
-    title: "B00: Toán, Hóa học, Sinh học",
-  },
-  {
-    title: "C00: Ngữ văn, Lịch sử, Địa lý",
-  },
-  {
-    title: "D01: Toán, Ngữ Văn, tiếng Anh",
-  },
-  {
-    title: "D07: Toán, Hóa học, tiếng Anh",
-  },
-];
+// Available subject combinations for THPTQG (backward compatibility)
+export const SUBJECT_COMBINATIONS: SubjectCombo[] = SUBJECT_COMBINATIONS_FULL.map(
+  (combo) => ({ code: combo.code })
+);
+
+// Help items for subject combination popup (backward compatibility)
+export const HELP_ITEMS: HelpItem[] = SUBJECT_COMBINATIONS_FULL.map(
+  (combo) => ({
+    title: `${combo.code}: ${combo.subjects.join(", ")}`,
+  })
+);
 
 // Score ranges for validation
 export const SCORE_RANGES = {

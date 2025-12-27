@@ -226,7 +226,7 @@ const SearchPage = () => {
                       note="Xem toàn bộ danh sách các tổ hợp môn"
                       helpItems={HELP_ITEMS}
                       align="start"
-                      onNoteClick={() => navigate("/")}
+                      onNoteClick={() => navigate("/to-hop-mon")}
                     />
                   </div>
 
