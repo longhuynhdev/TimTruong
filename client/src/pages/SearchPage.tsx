@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +14,7 @@ import { SUBJECT_COMBINATIONS, HELP_ITEMS } from "@/constants";
 import { toast } from "sonner";
 
 const SearchPage = () => {
+  const navigate = useNavigate();
   const [score, setScore] = useState("");
   const [examType, setExamType] = useState<ExamType>("THPTQG");
   const [selectedSubject, setSelectedSubject] = useState<string>("");
@@ -214,9 +216,11 @@ const SearchPage = () => {
                     Nhập tổ hợp của bạn
                   </p>
                   <HelpPopover
-                    title="Hướng dẫn tổ hợp môn"
+                    title="Danh sách các tổ hợp môn phổ biến"
+                    note="Xem toàn bộ danh sách các tổ hợp môn"
                     helpItems={HELP_ITEMS}
                     align="start"
+                    onNoteClick={() => navigate('/')}
                   />
                 </div>
 
@@ -224,7 +228,9 @@ const SearchPage = () => {
                   {SUBJECT_COMBINATIONS.map((combo) => (
                     <Badge
                       key={combo.code}
-                      variant={selectedSubject === combo.code ? "default" : "outline"}
+                      variant={
+                        selectedSubject === combo.code ? "default" : "outline"
+                      }
                       className={`cursor-pointer px-4 py-2 text-base transition-colors ${
                         selectedSubject === combo.code
                           ? "bg-primary hover:bg-primary/90 text-primary-foreground"
