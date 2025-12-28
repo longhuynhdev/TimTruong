@@ -4,33 +4,63 @@ import type { SubjectCombo, HelpItem, SubjectCombinationDetail } from "@/types";
 export const SUBJECT_COMBINATIONS_FULL: SubjectCombinationDetail[] = [
   {
     code: "A00",
-    name: "Khối A00",
     subjects: ["Toán", "Vật lý", "Hóa học"],
   },
   {
     code: "A01",
-    name: "Khối A01",
     subjects: ["Toán", "Vật lý", "Tiếng Anh"],
   },
   {
     code: "B00",
-    name: "Khối B00",
     subjects: ["Toán", "Hóa học", "Sinh học"],
   },
   {
     code: "C00",
-    name: "Khối C00",
     subjects: ["Ngữ văn", "Lịch sử", "Địa lý"],
   },
   {
+    code: "C10",
+    subjects: ["Ngữ văn", "Lịch sử", "Hóa học"],
+  },
+  {
     code: "D01",
-    name: "Khối D01",
     subjects: ["Toán", "Ngữ văn", "Tiếng Anh"],
   },
   {
+    code: "D04",
+    subjects: ["Toán", "Ngữ văn", "Tiếng Trung"],
+  },
+  {
     code: "D07",
-    name: "Khối D07",
     subjects: ["Toán", "Hóa học", "Tiếng Anh"],
+  },
+  {
+    code: "D08",
+    subjects: ["Toán", "Sinh học", "Tiếng Anh"],
+  },
+  {
+    code: "D09",
+    subjects: ["Toán", "Lịch sử", "Tiếng Anh"],
+  },
+  {
+    code: "D14",
+    subjects: ["Ngữ văn", "Lịch sử", "Tiếng Anh"],
+  },
+  {
+    code: "D15",
+    subjects: ["Ngữ văn", "Địa lý", "Tiếng Anh"],
+  },
+  {
+    code: "X02",
+    subjects: ["Toán", "Ngữ văn", "Tin học"],
+  },
+  {
+    code: "X03",
+    subjects: ["Toán", "Ngữ văn", "Công nghệ công nghiệp"],
+  },
+  {
+    code: "X04",
+    subjects: ["Toán", "Ngữ văn", "Công nghệ nông nghiệp"],
   },
 ];
 

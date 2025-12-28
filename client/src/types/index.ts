@@ -33,7 +33,6 @@ export interface HelpItem {
 // Detailed subject combination with full information
 export interface SubjectCombinationDetail {
   code: string;
-  name: string;
   subjects: string[];
   description?: string;
 }

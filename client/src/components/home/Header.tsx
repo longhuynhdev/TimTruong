@@ -24,23 +24,12 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center space-x-8">
           <NavLink
-            to="/"
+            to="/to-hop-mon"
             className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-2 rounded-md transition-colors duration-200"
           >
-            Danh sách các trường đại học
+            Danh sách tổ hợp môn
           </NavLink>
-          <NavLink
-            to="/"
-            className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-2 rounded-md transition-colors duration-200"
-          >
-            Bảng xếp hạng các trường ĐH
-          </NavLink>
-          <NavLink
-            to="/"
-            className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-2 rounded-md transition-colors duration-200"
-          >
-            Tính điểm quy đổi tiếng Anh
-          </NavLink>
+          
         </nav>
 
         {/* Right side actions */}
@@ -61,7 +50,7 @@ const Header = () => {
             size="sm"
             className="sm:hidden hover:bg-primary/80 transition-all duration-200"
           >
-            <NavLink to="search">
+            <NavLink to="tim-kiem">
               Tìm trường
             </NavLink>
           </Button>
