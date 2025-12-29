@@ -26,16 +26,11 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Add Aspire service defaults (Development only)
-if (builder.Environment.IsDevelopment())
-{
-    builder.AddServiceDefaults();
-}
 
 // Configure Database
 if (builder.Environment.IsDevelopment())
 {
-    // Development: Use Aspire-managed PostgreSQL
+    builder.AddServiceDefaults();
     builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
 }
 else
