@@ -10,253 +10,152 @@ export interface LogoCloudProps {
   /** Array of logo items to display. Uses default tech logos if not provided. */
   logos?: LogoItem[];
   className?: string;
-  /** Size of each logo grid cell: 'lg'*/
-  gridSize?: "lg";
   /** Opacity of edge cells (0-100). Default: 60 */
   edgeOpacity?: number;
 }
-
-// Grid size configurations - responsive sizing
-const gridSizeClasses = {
-  lg: {
-    cell: "w-14 h-14 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-16 lg:h-16",
-    icon: "w-7 h-7 sm:w-7 sm:h-7 md:w-8 md:h-8",
-    gap: "gap-2.5 sm:gap-3 md:gap-3.5",
-  }
-};
-
-// Desktop grid pattern: 14 columns with edge cells for blur effect
-const desktopGridPattern = [
-  // Row 1: edge cells + 8 logo cells + edge cells
-  { type: "edge" }, { type: "edge" }, { type: "empty" },
-  { type: "logo", index: 0 },
-  { type: "logo", index: 1 },
-  { type: "logo", index: 2 },
-  { type: "logo", index: 3 },
-  { type: "logo", index: 4 },
-  { type: "logo", index: 5 },
-  { type: "logo", index: 6 },
-  { type: "logo", index: 7 },
-  { type: "empty" }, { type: "edge" }, { type: "edge" },
-  
-  // Row 2: edge cells + 8 logo cells + edge cells
-  { type: "edge" }, { type: "edge" }, { type: "empty" },
-  { type: "logo", index: 8 },
-  { type: "logo", index: 9 },
-  { type: "logo", index: 10 },
-  { type: "logo", index: 11 },
-  { type: "logo", index: 12 },
-  { type: "logo", index: 13 },
-  { type: "logo", index: 14 },
-  { type: "logo", index: 15 },
-  { type: "empty" }, { type: "edge" }, { type: "edge" },
-  
-  // Row 3: all edge/empty except 2 centered logos
-  { type: "edge" }, { type: "edge" }, { type: "empty" },
-  { type: "empty" }, { type: "empty" }, { type: "empty" },
-  { type: "logo", index: 16 },
-  { type: "logo", index: 17 },
-  { type: "empty" }, { type: "empty" }, { type: "empty" },
-  { type: "empty" }, { type: "edge" }, { type: "edge" },
-];
 
 export function LogoCloud({
   title = "Với thông tin của hơn",
   subtitle = "62 trường đại học",
   logos = defaultLogos,
   className,
-  gridSize = "lg",
-  edgeOpacity = 60,
+  edgeOpacity = 50,
 }: LogoCloudProps) {
-  const sizeConfig = gridSizeClasses[gridSize];
-  // Clamp edgeOpacity between 0 and 100
   const clampedOpacity = Math.max(0, Math.min(100, edgeOpacity));
   
+  const cellBase = "w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl transition-all duration-300";
+  const logoCellStyle = cn(
+    cellBase,
+    "bg-card dark:bg-[#181818] border border-border/70 dark:border-[rgba(38,38,38,0.7)]",
+    "flex items-center justify-center p-3 sm:p-4 md:p-5",
+    "hover:bg-accent dark:hover:bg-[#222] hover:border-ring cursor-pointer group"
+  );
+  const emptyCellStyle = cn(
+    cellBase,
+    "bg-muted/50 dark:bg-[#141414] border border-border/40 dark:border-[rgba(38,38,38,0.4)]"
+  );
+  const edgeCellStyle = cn(
+    cellBase,
+    "bg-muted/30 dark:bg-[#121212] border border-border/20 dark:border-[rgba(38,38,38,0.3)]"
+  );
+  
+  // Icon container with generous padding
+  const iconStyle = "w-full h-full transform group-hover:scale-110 transition-transform duration-300 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>img]:w-full [&>img]:h-full [&>img]:object-contain";
+  
   return (
-    <section className={cn("w-full py-12 md:py-16 bg-background overflow-hidden", className)}>
+    <section className={cn("w-full py-16 md:py-20 lg:py-24 bg-background overflow-hidden", className)}>
       <div className="w-full px-4">
         {/* Title */}
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-light text-foreground italic">
+        <div className="text-center mb-10 md:mb-14 lg:mb-16">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-foreground italic">
             {title}
             <br />
             {subtitle}
           </h2>
         </div>
 
-        {/* Mobile Grid - Simple 4-column layout without edge effects */}
-        <div className="md:hidden">
+        {/* Mobile Grid - Simple 3-column layout */}
+        <div className="sm:hidden">
           <div className="flex justify-center">
-            <div className={cn("grid grid-cols-4 max-w-sm mx-auto", sizeConfig.gap)}>
-              {logos.slice(0, 12).map((logo, index) => (
-                <div
-                  key={`mobile-logo-${index}`}
-                  className={cn(
-                    sizeConfig.cell,
-                    "rounded-xl bg-card border border-border flex items-center justify-center hover:bg-accent hover:border-ring transition-all duration-300 cursor-pointer group"
-                  )}
-                  title={logo.name}
-                >
-                  <div className={cn(
-                    sizeConfig.icon,
-                    "transform group-hover:scale-110 transition-transform duration-300 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
-                  )}>
-                    {logo.icon}
-                  </div>
+            <div className="grid grid-cols-3 gap-4 max-w-xs mx-auto">
+              {logos.slice(0, 6).map((logo, index) => (
+                <div key={`mobile-logo-${index}`} className={logoCellStyle} title={logo.name}>
+                  <div className={iconStyle}>{logo.icon}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Tablet Grid - 8-column layout with minimal edge effects */}
-        <div className="hidden md:block lg:hidden">
-          <div className="relative">
-            {/* Left blur gradient */}
-            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-            
-            {/* Right blur gradient */}
-            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-            
-            <div className="flex justify-center">
-              <div className={cn("grid grid-cols-8 max-w-3xl mx-auto", sizeConfig.gap)}>
-                {/* Row 1 */}
-                {logos.slice(0, 8).map((logo, index) => (
-                  <div
-                    key={`tablet-logo-1-${index}`}
-                    className={cn(
-                      sizeConfig.cell,
-                      "rounded-xl bg-card border border-border flex items-center justify-center hover:bg-accent hover:border-ring transition-all duration-300 cursor-pointer group"
-                    )}
-                    title={logo.name}
-                  >
-                    <div className={cn(
-                      sizeConfig.icon,
-                      "transform group-hover:scale-110 transition-transform duration-300 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
-                    )}>
-                      {logo.icon}
-                    </div>
-                  </div>
-                ))}
-                {/* Row 2 */}
-                {logos.slice(8, 16).map((logo, index) => (
-                  <div
-                    key={`tablet-logo-2-${index}`}
-                    className={cn(
-                      sizeConfig.cell,
-                      "rounded-xl bg-card border border-border flex items-center justify-center hover:bg-accent hover:border-ring transition-all duration-300 cursor-pointer group"
-                    )}
-                    title={logo.name}
-                  >
-                    <div className={cn(
-                      sizeConfig.icon,
-                      "transform group-hover:scale-110 transition-transform duration-300 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
-                    )}>
-                      {logo.icon}
-                    </div>
-                  </div>
-                ))}
-                {/* Row 3 - centered 2 logos with empty cells */}
-                <div className={cn(sizeConfig.cell, "rounded-xl bg-muted/60 dark:bg-muted/30 border border-border/50 dark:border-border/30")} />
-                <div className={cn(sizeConfig.cell, "rounded-xl bg-muted/60 dark:bg-muted/30 border border-border/50 dark:border-border/30")} />
-                <div className={cn(sizeConfig.cell, "rounded-xl bg-muted/60 dark:bg-muted/30 border border-border/50 dark:border-border/30")} />
-                {logos.slice(16, 18).map((logo, index) => (
-                  <div
-                    key={`tablet-logo-3-${index}`}
-                    className={cn(
-                      sizeConfig.cell,
-                      "rounded-xl bg-card border border-border flex items-center justify-center hover:bg-accent hover:border-ring transition-all duration-300 cursor-pointer group"
-                    )}
-                    title={logo.name}
-                  >
-                    <div className={cn(
-                      sizeConfig.icon,
-                      "transform group-hover:scale-110 transition-transform duration-300 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
-                    )}>
-                      {logo.icon}
-                    </div>
-                  </div>
-                ))}
-                <div className={cn(sizeConfig.cell, "rounded-xl bg-muted/60 dark:bg-muted/30 border border-border/50 dark:border-border/30")} />
-                <div className={cn(sizeConfig.cell, "rounded-xl bg-muted/60 dark:bg-muted/30 border border-border/50 dark:border-border/30")} />
-                <div className={cn(sizeConfig.cell, "rounded-xl bg-muted/60 dark:bg-muted/30 border border-border/50 dark:border-border/30")} />
-              </div>
+        {/* Tablet Grid - 4-column layout */}
+        <div className="hidden sm:block lg:hidden">
+          <div 
+            className="flex justify-center"
+            style={{
+              maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+              WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+            }}
+          >
+            <div className="grid grid-cols-4 gap-5 max-w-xl mx-auto">
+              {logos.map((logo, index) => (
+                <div key={`tablet-logo-${index}`} className={logoCellStyle} title={logo.name}>
+                  <div className={iconStyle}>{logo.icon}</div>
+                </div>
+              ))}
+              {/* Fill remaining empty cells to complete rows */}
+              {logos.length % 4 !== 0 && 
+                Array.from({ length: 4 - (logos.length % 4) }).map((_, i) => (
+                  <div key={`tablet-empty-${i}`} className={emptyCellStyle} />
+                ))
+              }
             </div>
           </div>
         </div>
 
-        {/* Desktop Grid - Full 14-column layout with edge blur effects */}
+        {/* Desktop Grid - Wide layout with CSS mask for edge fade */}
         <div className="hidden lg:block">
-          <div className="relative">
-            {/* Left blur gradient */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 xl:w-28 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-            
-            {/* Right blur gradient */}
-            <div className="absolute right-0 top-0 bottom-0 w-16 xl:w-28 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-            
-            <div className="flex justify-center">
-              <div className={cn("grid grid-cols-14 w-full max-w-6xl", sizeConfig.gap)}>
-                {desktopGridPattern.map((cell, index) => {
-                  // Edge cells - subtly visible boxes at the far edges
-                  if (cell.type === "edge") {
-                    return (
-                      <div
-                        key={`edge-${index}`}
-                        className={cn(
-                          sizeConfig.cell,
-                          "rounded-xl bg-muted/40 dark:bg-muted/20 border border-border/30 dark:border-border/20"
-                        )}
-                        style={{ opacity: clampedOpacity / 100 }}
-                      />
-                    );
-                  }
-                  
-                  // Empty placeholder cells
-                  if (cell.type === "empty") {
-                    return (
-                      <div
-                        key={`empty-${index}`}
-                        className={cn(
-                          sizeConfig.cell,
-                          "rounded-xl bg-muted/60 dark:bg-muted/30 border border-border/50 dark:border-border/30"
-                        )}
-                      />
-                    );
-                  }
-
-                  const logo = logos[cell.index as number];
-                  if (!logo) {
-                    return (
-                      <div
-                        key={`missing-${index}`}
-                        className={cn(
-                          sizeConfig.cell,
-                          "rounded-xl bg-muted/60 dark:bg-muted/30 border border-border/50 dark:border-border/30"
-                        )}
-                      />
-                    );
-                  }
-
-                  // Logo cells with icons
-                  return (
-                    <div
-                      key={`logo-${cell.index}`}
-                      className={cn(
-                        sizeConfig.cell,
-                        "rounded-xl bg-card border border-border flex items-center justify-center hover:bg-accent hover:border-ring transition-all duration-300 cursor-pointer group"
-                      )}
-                      title={logo.name}
-                    >
-                      <div className={cn(
-                        sizeConfig.icon,
-                        "transform group-hover:scale-110 transition-transform duration-300 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
-                      )}>
-                        {logo.icon}
-                      </div>
+          <div 
+            className="flex justify-center"
+            style={{
+              maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+              WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+            }}
+          >
+            <div className="grid grid-cols-10 gap-6 max-w-7xl mx-auto">
+              {/* Row 1: Edge + 6 logos + Edge */}
+              <div className={edgeCellStyle} style={{ opacity: clampedOpacity / 100 }} />
+              <div className={emptyCellStyle} />
+              {logos.slice(0, 6).map((logo, index) => (
+                <div key={`desktop-r1-${index}`} className={logoCellStyle} title={logo.name}>
+                  <div className={iconStyle}>{logo.icon}</div>
+                </div>
+              ))}
+              <div className={emptyCellStyle} />
+              <div className={edgeCellStyle} style={{ opacity: clampedOpacity / 100 }} />
+              
+              {/* Row 2: If more logos exist */}
+              {logos.length > 6 && (
+                <>
+                  <div className={edgeCellStyle} style={{ opacity: clampedOpacity / 100 }} />
+                  <div className={emptyCellStyle} />
+                  {logos.slice(6, 12).map((logo, index) => (
+                    <div key={`desktop-r2-${index}`} className={logoCellStyle} title={logo.name}>
+                      <div className={iconStyle}>{logo.icon}</div>
                     </div>
-                  );
-                })}
-              </div>
+                  ))}
+                  {/* Fill remaining with empty cells */}
+                  {logos.slice(6, 12).length < 6 &&
+                    Array.from({ length: 6 - logos.slice(6, 12).length }).map((_, i) => (
+                      <div key={`desktop-r2-empty-${i}`} className={emptyCellStyle} />
+                    ))
+                  }
+                  <div className={emptyCellStyle} />
+                  <div className={edgeCellStyle} style={{ opacity: clampedOpacity / 100 }} />
+                </>
+              )}
+              
+              {/* Row 3: If even more logos exist */}
+              {logos.length > 12 && (
+                <>
+                  <div className={edgeCellStyle} style={{ opacity: clampedOpacity / 100 }} />
+                  <div className={emptyCellStyle} />
+                  <div className={emptyCellStyle} />
+                  {logos.slice(12, 16).map((logo, index) => (
+                    <div key={`desktop-r3-${index}`} className={logoCellStyle} title={logo.name}>
+                      <div className={iconStyle}>{logo.icon}</div>
+                    </div>
+                  ))}
+                  {/* Fill remaining with empty cells */}
+                  {logos.slice(12, 16).length < 4 &&
+                    Array.from({ length: 4 - logos.slice(12, 16).length }).map((_, i) => (
+                      <div key={`desktop-r3-empty-${i}`} className={emptyCellStyle} />
+                    ))
+                  }
+                  <div className={emptyCellStyle} />
+                  <div className={emptyCellStyle} />
+                  <div className={edgeCellStyle} style={{ opacity: clampedOpacity / 100 }} />
+                </>
+              )}
             </div>
           </div>
         </div>
