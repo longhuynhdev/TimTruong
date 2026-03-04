@@ -1,7 +1,9 @@
 ## Get University Recommendations
 
 **Endpoint:** `POST /api/v1/recommendations`
+
 **Description:** Gợi ý các trường đại học và ngành học phù hợp dựa trên điểm thi và các tiêu chí lọc
+
 **Authentication:** Not Required (Public API)
 
 ### Request Body
@@ -26,15 +28,12 @@
 
 ### Success Response (200 OK)
 
-//TODO
-
 ```json
 
 ```
 
 ### Error Responses
 
-//TODO
 
 ```json
 
@@ -43,7 +42,9 @@
 ## Get All Universities
 
 **Endpoint:** `GET /api/v1/universities`
+
 **Description:** Lấy danh sách tất cả trường đại học
+
 **Authentication:** Not Required
 
 ### Query Parameters
