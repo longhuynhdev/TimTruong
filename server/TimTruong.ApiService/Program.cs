@@ -27,10 +27,12 @@ builder.Services.AddCors(options =>
 });
 
 
+// Configure OpenTelemetry and health checks (all environments)
+builder.AddServiceDefaults();
+
 // Configure Database
 if (builder.Environment.IsDevelopment())
 {
-    builder.AddServiceDefaults();
     builder.AddNpgsqlDbContext<ApplicationDbContext>("timtruongdb");
 }
 else
@@ -81,11 +83,8 @@ app.MapRecommendationEndpoints();
 app.MapUniversityEndpoints();
 app.MapCampusEndpoints();
 
-// Map Aspire health checks (Development only)
-if (app.Environment.IsDevelopment())
-{
-    app.MapDefaultEndpoints();
-}
+// Map health check endpoints
+app.MapDefaultEndpoints();
 
 // Apply database migrations automatically
 if (enableAutoMigrations)
