@@ -7,17 +7,15 @@ This guide will help you set up and run the TimTruong application on your local 
 Before you begin, ensure you have the following installed:
 
 ### Required Software
-1. **Node.js** (v18 or higher) - [Download](https://nodejs.org/en/download)
-2. **.NET 9.0 SDK** - [Download](https://dotnet.microsoft.com/download/dotnet/9.0)
-3. **pnpm** (Package Manager) - [Installation Guide](https://pnpm.io/installation)
-4. **Docker Desktop** - [Download](https://www.docker.com/products/docker-desktop/)
+1. **Bun** (v1.0 or higher) - [Download](https://bun.sh)
+2. **.NET 10.0 SDK** - [Download](https://dotnet.microsoft.com/download/dotnet/10.0)
+3. **Docker Desktop** - [Download](https://www.docker.com/products/docker-desktop/)
 
 ### Verify Installation
 Run these commands to verify your setup:
 ```shell
-node --version    # Should show v18+ or higher
-dotnet --version  # Should show 9.0.x
-pnpm --version    # Should show 8.x or higher
+bun --version     # Should show 1.0+
+dotnet --version  # Should show 10.0.x
 docker --version  # Should show Docker version
 ```
 
@@ -25,22 +23,22 @@ docker --version  # Should show Docker version
 
 ## Client - Frontend
 
-### 1. Install pnpm (if not already installed)
+### 1. Install Bun (if not already installed)
 ```shell
-npm install -g pnpm
+curl -fsSL https://bun.sh/install | bash
 ```
 
 ### 2. Install Dependencies
 Navigate to the client directory and install all required packages:
 ```shell
 cd client
-pnpm install
+bun install
 ```
 
 ### 3. Start Development Server
 Launch the frontend application:
 ```shell
-pnpm run dev
+bun run dev
 ```
 
 The application will be available at `http://localhost:5173` (default Vite port).
@@ -51,7 +49,7 @@ The application will be available at `http://localhost:5173` (default Vite port)
 The backend uses **.NET Aspire** for orchestration, which automatically manages PostgreSQL and the API service.
 
 ### 1. Verify .NET Installation
-Ensure you have .NET 9.0 SDK installed:
+Ensure you have .NET 10.0 SDK installed:
 ```shell
 dotnet --version
 ```
@@ -190,7 +188,7 @@ VITE_API_URL=https://api.yourdomain.com
 Then build:
 ```shell
 cd client
-pnpm run build
+bun run build
 ```
 
 The `dist` folder contains the static files ready for deployment (Azure Static Web Apps, Vercel, Netlify, etc.).
@@ -224,12 +222,12 @@ python3 etl.py
 ### Common Issues
 
 #### Frontend Not Starting
-- Ensure Node.js and pnpm are installed correctly
-- Delete `node_modules` and `pnpm-lock.yaml`, then run `pnpm install` again
+- Ensure Bun is installed correctly
+- Delete `node_modules` and `bun.lock`, then run `bun install` again
 - Check if port 5173 is already in use
 
 #### Backend Not Starting
-- Ensure .NET 9.0 SDK is installed
+- Ensure .NET 10.0 SDK is installed
 - Verify Docker Desktop is running
 - Check if required ports are available ( 7356 for API, 50380 for PostgreSQL)
 - Run `dotnet clean` and `dotnet restore` to clean and restore packages
