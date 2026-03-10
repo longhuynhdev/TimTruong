@@ -1,9 +1,10 @@
 services:
   api:
     build:
-      context: ./server
+      context: ./
       dockerfile: Dockerfile
     restart: unless-stopped
+    container_name: timtruong-api
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://+:8080
@@ -22,6 +23,7 @@ services:
   aspire-dashboard:
     image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
     restart: unless-stopped
+    container_name: timtruong-aspire-dashboard
     environment:
       DASHBOARD__OTLP__AUTHMODE: Unsecured
       DASHBOARD__FRONTEND__AUTHMODE: BrowserToken
