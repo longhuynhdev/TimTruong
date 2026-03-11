@@ -7,7 +7,10 @@ import {
   flexRender,
   type ColumnDef,
   type SortingState,
+  type FilterFn,
 } from "@tanstack/react-table";
+import { normalizeVi } from "@/lib/utils";
+import type { SubjectCombinationDetail } from "@/types";
 import {
   Table,
   TableBody,
@@ -21,7 +24,15 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import PageMetadata from "@/components/PageMetadata";
 import { SUBJECT_COMBINATIONS_FULL } from "@/constants";
-import type { SubjectCombinationDetail } from "@/types";
+
+const subjectFilter: FilterFn<SubjectCombinationDetail> = (row, _columnId, filterValue: string) => {
+  const q = normalizeVi(filterValue);
+  if (!q) return true;
+  return (
+    normalizeVi(row.original.code).includes(q) ||
+    row.original.subjects.some((s) => normalizeVi(s).includes(q))
+  );
+};
 
 const SubjectCombinationsPage = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -68,6 +79,7 @@ const SubjectCombinationsPage = () => {
     },
     onSortingChange: setSorting,
     onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: subjectFilter,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
