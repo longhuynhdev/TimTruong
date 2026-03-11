@@ -10,7 +10,14 @@ import { searchUniversities } from "@/services/api";
 import type { UniversityResult, ExamType } from "@/types";
 import { z } from "zod";
 import { dgnlScoreSchema, thptqgScoreSchema } from "@/lib/validations";
-import { SUBJECT_COMBINATIONS, HELP_ITEMS } from "@/constants";
+import { SUBJECT_COMBINATIONS_FULL, HELP_ITEMS } from "@/constants";
+import { normalizeVi } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Check, ChevronsUpDown, Search } from "lucide-react";
 import { toast } from "sonner";
 import PageMetadata from "@/components/PageMetadata";
 
@@ -23,6 +30,8 @@ const SearchPage = () => {
   const [searchResults, setSearchResults] = useState<UniversityResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [comboOpen, setComboOpen] = useState(false);
+  const [comboSearch, setComboSearch] = useState("");
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Cleanup debounce timer on unmount
@@ -230,24 +239,93 @@ const SearchPage = () => {
                     />
                   </div>
 
-                  <div className="flex flex-wrap gap-3">
-                    {SUBJECT_COMBINATIONS.map((combo) => (
-                      <Badge
-                        key={combo.code}
-                        variant={
-                          selectedSubject === combo.code ? "default" : "outline"
-                        }
-                        className={`cursor-pointer px-4 py-2 text-base transition-colors ${
-                          selectedSubject === combo.code
-                            ? "bg-primary hover:bg-primary/90 text-primary-foreground"
-                            : "hover:bg-accent hover:text-accent-foreground border-border"
-                        }`}
-                        onClick={() => handleSubjectSelect(combo.code)}
+                  <Popover open={comboOpen} onOpenChange={setComboOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={comboOpen}
+                        className="w-full justify-between bg-input border-border text-foreground hover:bg-accent hover:text-accent-foreground"
                       >
-                        {combo.code}
-                      </Badge>
-                    ))}
-                  </div>
+                        {selectedSubject
+                          ? (() => {
+                              const combo = SUBJECT_COMBINATIONS_FULL.find(
+                                (c) => c.code === selectedSubject
+                              );
+                              return combo
+                                ? `${combo.code}: ${combo.subjects.join(", ")}`
+                                : selectedSubject;
+                            })()
+                          : "Chọn tổ hợp môn..."}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="p-0 w-[--radix-popover-trigger-width]"
+                      align="start"
+                    >
+                      <div className="flex items-center border-b border-border px-3">
+                        <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+                        <input
+                          className="flex h-10 w-full bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground"
+                          placeholder="Tìm tổ hợp..."
+                          value={comboSearch}
+                          onChange={(e) => setComboSearch(e.target.value)}
+                        />
+                      </div>
+                      <div className="max-h-60 overflow-y-auto">
+                        {SUBJECT_COMBINATIONS_FULL.filter((combo) => {
+                          const q = normalizeVi(comboSearch);
+                          return (
+                            normalizeVi(combo.code).includes(q) ||
+                            combo.subjects.some((s) =>
+                              normalizeVi(s).includes(q)
+                            )
+                          );
+                        }).length === 0 ? (
+                          <p className="py-6 text-center text-sm text-muted-foreground">
+                            Không tìm thấy tổ hợp.
+                          </p>
+                        ) : (
+                          SUBJECT_COMBINATIONS_FULL.filter((combo) => {
+                            const q = normalizeVi(comboSearch);
+                            return (
+                              normalizeVi(combo.code).includes(q) ||
+                              combo.subjects.some((s) =>
+                                normalizeVi(s).includes(q)
+                              )
+                            );
+                          }).map((combo) => (
+                            <div
+                              key={combo.code}
+                              className={`flex items-center gap-2 cursor-pointer px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground ${
+                                selectedSubject === combo.code
+                                  ? "bg-accent text-accent-foreground"
+                                  : ""
+                              }`}
+                              onClick={() => {
+                                handleSubjectSelect(combo.code);
+                                setComboSearch("");
+                                setComboOpen(false);
+                              }}
+                            >
+                              <Check
+                                className={`h-4 w-4 shrink-0 ${
+                                  selectedSubject === combo.code
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                }`}
+                              />
+                              <span className="font-medium">{combo.code}</span>
+                              <span className="text-muted-foreground">
+                                {combo.subjects.join(", ")}
+                              </span>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               )}
 
