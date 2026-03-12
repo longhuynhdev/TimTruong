@@ -176,6 +176,7 @@ const SearchPage = () => {
 							<div className="space-y-2">
 								<Input
 									type="text"
+									inputMode="decimal"
 									value={score}
 									onChange={(e) => {
 										setScore(e.target.value);
