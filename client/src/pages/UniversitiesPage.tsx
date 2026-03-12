@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import PageMetadata from "@/components/PageMetadata";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { fetchAllUniversities } from "@/services/api";
 import type { UniversityListItem } from "@/types";
-import PageMetadata from "@/components/PageMetadata";
 
 const ALL = "__all__";
 

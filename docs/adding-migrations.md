@@ -38,10 +38,3 @@ To revert the database to a previous migration:
 ```bash
 dotnet ef database update <PreviousMigrationName> --project TimTruong.ApiService
 ```
-
-## Checklist
-
-- [ ] Model updated in `Core/Models/`
-- [ ] Migration generated and reviewed
-- [ ] `UniversityDto` / other DTOs updated if new fields are exposed via API
-- [ ] `docs/ER-model.md` updated to reflect schema changes
