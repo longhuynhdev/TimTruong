@@ -20,17 +20,17 @@ const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
             <div className="flex items-start gap-4">
               {/* University Logo */}
               <div className="flex-shrink-0">
-                <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center overflow-hidden border-2 border-border">
+                <div className="w-16 h-16 rounded-xl bg-card dark:bg-[#181818] border border-border/70 flex items-center justify-center overflow-hidden p-3">
                   <img
                     src={result.logo}
                     alt={`${result.universityName} logo`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
                       const parent = target.parentElement;
                       if (parent) {
-                        parent.innerHTML = `<span class="text-xs font-medium text-muted-foreground text-center">${result.universityName.charAt(0)}</span>`;
+                        parent.innerHTML = `<span class="text-sm font-medium text-muted-foreground">${result.universityName.charAt(0)}</span>`;
                       }
                     }}
                   />
