@@ -24,14 +24,14 @@ public class UniversityService : IUniversityService
         _logger.LogInformation("Getting all universities with filters - Search: {Search}, Type: {Type}, City: {City}", 
             search, type, city);
 
-        var query = _context.Universities.AsQueryable();
+        var query = _context.Universities.Include(u => u.Campuses).AsQueryable();
 
         // Apply search filter (name or code)
         if (!string.IsNullOrWhiteSpace(search))
         {
             search = search.Trim().ToLower();
-            query = query.Where(u => 
-                u.Name.ToLower().Contains(search) || 
+            query = query.Where(u =>
+                u.Name.ToLower().Contains(search) ||
                 u.Code.ToLower().Contains(search));
         }
 
@@ -44,11 +44,10 @@ public class UniversityService : IUniversityService
             }
         }
 
-        // Apply city filter (via campuses - if needed)
+        // Apply city filter 
         if (!string.IsNullOrWhiteSpace(city))
         {
-            query = query.Include(u => u.Campuses)
-                        .Where(u => u.Campuses.Any(c => c.City != null && c.City.ToLower().Contains(city.ToLower())));
+            query = query.Where(u => u.Campuses.Any(c => c.City != null && c.City.ToLower().Contains(city.ToLower())));
         }
 
         var universities = await query
@@ -61,7 +60,9 @@ public class UniversityService : IUniversityService
                 EnglishName = u.EnglishName,
                 Code = u.Code,
                 Type = u.Type.ToString(),
-                ImageUrl = u.ImageUrl
+                ImageUrl = u.ImageUrl,
+                IsFinanciallyAutonomous = u.IsFinanciallyAutonomous,
+                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList()
             })
             .ToListAsync();
 
@@ -91,6 +92,7 @@ public class UniversityService : IUniversityService
         _logger.LogInformation("Getting university with ID: {Id}", id);
 
         var university = await _context.Universities
+            .Include(u => u.Campuses)
             .Where(u => u.Id == id)
             .Select(u => new UniversityDto
             {
@@ -100,7 +102,9 @@ public class UniversityService : IUniversityService
                 EnglishName = u.EnglishName,
                 Code = u.Code,
                 Type = u.Type.ToString(),
-                ImageUrl = u.ImageUrl
+                ImageUrl = u.ImageUrl,
+                IsFinanciallyAutonomous = u.IsFinanciallyAutonomous,
+                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList()
             })
             .FirstOrDefaultAsync();
 

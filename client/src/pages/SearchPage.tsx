@@ -339,28 +339,28 @@ const SearchPage = () => {
               </Button>
             </CardContent>
           </Card>
-
-          {/* Results Section */}
-          {hasSearched && (
-            <div className="mt-8">
-              {searchResults.length > 0 ? (
-                <UniversityResults
-                  results={searchResults}
-                  examType={examType}
-                />
-              ) : (
-                <Card className="shadow-sm border-border bg-card">
-                  <CardContent className="p-6 text-center">
-                    <p className="text-muted-foreground">
-                      Không tìm thấy trường nào phù hợp với điểm số của bạn. Hãy
-                      thử điều chỉnh điểm số hoặc tổ hợp môn.
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          )}
         </div>
+
+        {/* Results Section — wider than the form */}
+        {hasSearched && (
+          <div className="max-w-4xl mx-auto mt-8">
+            {searchResults.length > 0 ? (
+              <UniversityResults
+                results={searchResults}
+                examType={examType}
+              />
+            ) : (
+              <Card className="shadow-sm border-border bg-card">
+                <CardContent className="p-6 text-center">
+                  <p className="text-muted-foreground">
+                    Không tìm thấy trường nào phù hợp với điểm số của bạn. Hãy
+                    thử điều chỉnh điểm số hoặc tổ hợp môn.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

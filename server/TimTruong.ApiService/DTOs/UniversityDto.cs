@@ -12,11 +12,8 @@ public record UniversityDto
     public string Code { get; init; } = string.Empty;
     public string Type { get; init; } = string.Empty; // "Public" or "Private"
     public string? ImageUrl { get; init; }
+    public bool IsFinanciallyAutonomous { get; init; }
+    public List<CampusLocationDto> Campuses { get; init; } = new();
 }
 
-
-// TODO: why do we need to create many files for DTOs that are related to one component ???
-// [ ] DTOs/UniversityDto.cs
-// [ ] DTOs/UniversitySimpleDto.cs
-// [ ] DTOs/CreateUniversityRequest.cs
-// [ ] DTOs/UpdateUniversityRequest.cs
+public record CampusLocationDto(string City, string? District);

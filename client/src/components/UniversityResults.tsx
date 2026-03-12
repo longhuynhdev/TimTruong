@@ -16,24 +16,30 @@ const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
 
       {results.map((result) => (
         <Card key={result.id} className="shadow-sm hover:shadow-md transition-shadow border-border bg-card">
-          <CardContent className="p-4">
-            <div className="flex items-start gap-4">
+          <CardContent className="p-5 sm:p-6">
+            <div className="flex items-start gap-5">
               {/* University Logo */}
               <div className="flex-shrink-0">
-                <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center overflow-hidden border-2 border-border">
-                  <img
-                    src={result.logo}
-                    alt={`${result.universityName} logo`}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span class="text-xs font-medium text-muted-foreground text-center">${result.universityName.charAt(0)}</span>`;
-                      }
-                    }}
-                  />
+                <div className="w-20 h-20 rounded-xl bg-card dark:bg-[#181818] border border-border/70 flex items-center justify-center overflow-hidden p-3">
+                  {result.logo ? (
+                    <img
+                      src={result.logo}
+                      alt={`${result.universityName} logo`}
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.innerHTML = `<span class="text-base font-medium text-muted-foreground">${result.universityName.charAt(0)}</span>`;
+                        }
+                      }}
+                    />
+                  ) : (
+                    <span className="text-base font-medium text-muted-foreground">
+                      {result.universityName.charAt(0)}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -42,10 +48,10 @@ const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
                 <div className="space-y-3">
                   {/* University Name and Major */}
                   <div>
-                    <h3 className="font-semibold text-foreground text-lg leading-tight">
+                    <h3 className="font-semibold text-foreground text-xl leading-tight">
                       {result.universityName}
                     </h3>
-                    <p className="text-muted-foreground text-sm mt-1">
+                    <p className="text-muted-foreground text-base mt-1">
                       {result.major}
                     </p>
                   </div>
@@ -56,7 +62,7 @@ const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
                       <p className="text-sm font-medium text-foreground">Tổ hợp môn:</p>
                       <div className="flex flex-wrap gap-2">
                         {result.subjectCombinations.map((combo) => (
-                          <Badge key={combo} variant="outline" className="text-xs border-border">
+                          <Badge key={combo} variant="outline" className="text-sm border-border">
                             {combo}
                           </Badge>
                         ))}
@@ -69,24 +75,24 @@ const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
                     <p className="text-sm font-medium text-foreground">
                       Điểm {examType === "THPTQG" ? "THPT" : "ĐGNL"} các năm:
                     </p>
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-3 gap-4 max-w-xs">
                       {examType === "THPTQG" && result.thptScores && (
                         <>
                           <div className="text-center">
                             <p className="text-xs text-muted-foreground">2025</p>
-                            <p className="text-sm font-semibold text-foreground">
+                            <p className="text-base font-semibold text-foreground">
                               {result.thptScores.year2025}
                             </p>
                           </div>
                           <div className="text-center">
                             <p className="text-xs text-muted-foreground">2024</p>
-                            <p className="text-sm font-semibold text-foreground">
+                            <p className="text-base font-semibold text-foreground">
                               {result.thptScores.year2024}
                             </p>
                           </div>
                           <div className="text-center">
                             <p className="text-xs text-muted-foreground">2023</p>
-                            <p className="text-sm font-semibold text-foreground">
+                            <p className="text-base font-semibold text-foreground">
                               {result.thptScores.year2023}
                             </p>
                           </div>
@@ -96,19 +102,19 @@ const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
                         <>
                           <div className="text-center">
                             <p className="text-xs text-muted-foreground">2025</p>
-                            <p className="text-sm font-semibold text-foreground">
+                            <p className="text-base font-semibold text-foreground">
                               {result.dgnlScores.year2025}
                             </p>
                           </div>
                           <div className="text-center">
                             <p className="text-xs text-muted-foreground">2024</p>
-                            <p className="text-sm font-semibold text-foreground">
+                            <p className="text-base font-semibold text-foreground">
                               {result.dgnlScores.year2024}
                             </p>
                           </div>
                           <div className="text-center">
                             <p className="text-xs text-muted-foreground">2023</p>
-                            <p className="text-sm font-semibold text-foreground">
+                            <p className="text-base font-semibold text-foreground">
                               {result.dgnlScores.year2023}
                             </p>
                           </div>

@@ -1,4 +1,4 @@
-import type { UniversityResult, ExamType } from "@/types";
+import type { UniversityResult, UniversityListItem, ExamType } from "@/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5309";
 
@@ -35,6 +35,19 @@ interface RecommendationResponse {
 }
 
 /**
+ * Fetch all universities for the universities listing page
+ */
+export async function fetchAllUniversities(): Promise<UniversityListItem[]> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/universities`);
+
+  if (!response.ok) {
+    throw new Error(`API request failed with status ${response.status}`);
+  }
+
+  return response.json();
+}
+
+/**
  * Search for university recommendations
  */
 export async function searchUniversities(
@@ -68,7 +81,7 @@ export async function searchUniversities(
       id: `${university.universityId}-${major.majorId}`,
       universityName: university.universityName,
       major: major.majorName,
-      logo: university.universityImageUrl || "",
+      logo: university.universityImageUrl ?? null,
       subjectCombinations: examType === "THPTQG" ? [major.subjectCombination] : undefined,
       thptScores: examType === "THPTQG"
         ? {

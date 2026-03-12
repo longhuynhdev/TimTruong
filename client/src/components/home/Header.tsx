@@ -25,10 +25,16 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center space-x-8">
           <NavLink
+            to="/truong-dai-hoc"
+            className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-2 rounded-md transition-colors duration-200"
+          >
+            Danh sách trường
+          </NavLink>
+          <NavLink
             to="/to-hop-mon"
             className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-2 rounded-md transition-colors duration-200"
           >
-            Danh sách tổ hợp môn
+            Tổ hợp môn
           </NavLink>
         </nav>
 
@@ -73,11 +79,18 @@ const Header = () => {
         <div className="lg:hidden border-t border-border">
           <nav className="flex flex-col space-y-1 px-4 py-3 bg-background">
             <NavLink
+              to="/truong-dai-hoc"
+              className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-3 rounded-md transition-colors duration-200"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Danh sách trường
+            </NavLink>
+            <NavLink
               to="/to-hop-mon"
               className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-3 rounded-md transition-colors duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Danh sách tổ hợp môn
+              Tổ hợp môn
             </NavLink>
           </nav>
         </div>
