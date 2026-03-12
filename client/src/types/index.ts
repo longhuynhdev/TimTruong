@@ -7,7 +7,7 @@ export interface UniversityResult {
   id: string;
   universityName: string;
   major: string;
-  logo: string;
+  logo: string | null;
   subjectCombinations?: string[];
   thptScores?: {
     year2025: number;
@@ -19,6 +19,24 @@ export interface UniversityResult {
     year2024: number;
     year2023: number;
   };
+}
+
+// University list item (for the universities listing page)
+export interface CampusLocation {
+  city: string;
+  district: string | null;
+}
+
+export interface UniversityListItem {
+  id: number;
+  name: string;
+  shortName: string | null;
+  englishName: string | null;
+  code: string;
+  type: "Public" | "Private";
+  imageUrl: string | null;
+  isFinanciallyAutonomous: boolean;
+  campuses: CampusLocation[];
 }
 
 // Simple subject combination for display

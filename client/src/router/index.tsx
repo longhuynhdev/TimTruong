@@ -5,6 +5,7 @@ import HomePage from "@/pages/HomePage";
 import HomeLayout from "@/layouts/HomeLayout";
 import SearchPage from "@/pages/SearchPage";
 import SubjectCombinationsPage from "@/pages/SubjectCombinationsPage";
+import UniversitiesPage from "@/pages/UniversitiesPage";
 import ErrorPage from "@/pages/auth/ErrorPage";
 
 export const router = createBrowserRouter([
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
         element: <SubjectCombinationsPage />,
         errorElement: <ErrorPage />,
       },
+      { path: "truong-dai-hoc", element: <UniversitiesPage />, errorElement: <ErrorPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },
