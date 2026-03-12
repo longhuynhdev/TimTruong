@@ -9,3 +9,4 @@ data/universities.csv
 docs/note-of-Huy.md
 client/.env
 data/.env
+server/TimTruong.ApiService/bin
