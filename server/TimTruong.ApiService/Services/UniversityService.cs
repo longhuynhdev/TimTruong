@@ -195,6 +195,48 @@ public class UniversityService : IUniversityService
         };
     }
 
+    public async Task<UniversityMajorsDto?> GetUniversityMajorsAsync(int id)
+    {
+        _logger.LogInformation("Getting majors for university with ID: {Id}", id);
+
+        var university = await _context.Universities
+            .Where(u => u.Id == id)
+            .Select(u => new UniversityMajorsDto(
+                u.Id,
+                u.Name,
+                u.Code,
+                u.Majors
+                    .OrderBy(m => m.Name)
+                    .Select(m => new MajorWithRequirementsDto(
+                        m.Id,
+                        m.Name,
+                        m.Code,
+                        m.TuitionFee,
+                        m.EnrollmentQuota,
+                        m.AdmissionRequirements
+                            .OrderByDescending(r => r.Year)
+                            .ThenBy(r => r.ExamType)
+                            .Select(r => new AdmissionRequirementDto(
+                                r.Id,
+                                r.ExamType.ToString(),
+                                r.Score,
+                                r.SubjectCombination.HasValue ? r.SubjectCombination.Value.ToString() : null,
+                                r.Year
+                            ))
+                            .ToList()
+                    ))
+                    .ToList()
+            ))
+            .FirstOrDefaultAsync();
+
+        if (university == null)
+        {
+            _logger.LogWarning("University with ID {Id} not found", id);
+        }
+
+        return university;
+    }
+
     // WARNING: This will CASCADE DELETE all campuses and majors
     // TODO: Add safety checks before production (see note-of-Huy.md line 1042)
     public async Task<bool> DeleteUniversityAsync(int id)
