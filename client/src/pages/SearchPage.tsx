@@ -46,7 +46,7 @@ const SearchPage = () => {
 			if (!scoreValue.trim()) return null;
 
 			const numericScore = parseFloat(scoreValue);
-			if (isNaN(numericScore)) {
+			if (Number.isNaN(numericScore)) {
 				return "Vui lòng nhập số hợp lệ";
 			}
 
