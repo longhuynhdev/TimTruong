@@ -13,7 +13,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { SUBJECT_COMBINATIONS_FULL } from "@/constants";
+import { SUBJECT_COMBINATIONS } from "@/constants";
 import { normalizeVi } from "@/lib/utils";
 import { dgnlScoreSchema, thptqgScoreSchema } from "@/lib/validations";
 import { Route } from "@/routes/tim-kiem";
@@ -256,7 +256,7 @@ const SearchPage = () => {
 											>
 												{selectedSubject
 													? (() => {
-															const combo = SUBJECT_COMBINATIONS_FULL.find(
+															const combo = SUBJECT_COMBINATIONS.find(
 																(c) => c.code === selectedSubject,
 															);
 															return combo
@@ -282,7 +282,7 @@ const SearchPage = () => {
 												/>
 											</div>
 											<div className="max-h-60 overflow-y-auto">
-												{SUBJECT_COMBINATIONS_FULL.filter((combo) => {
+												{SUBJECT_COMBINATIONS.filter((combo) => {
 													const q = normalizeVi(comboSearch);
 													return (
 														normalizeVi(combo.code).includes(q) ||
@@ -295,7 +295,7 @@ const SearchPage = () => {
 														Không tìm thấy tổ hợp.
 													</p>
 												) : (
-													SUBJECT_COMBINATIONS_FULL.filter((combo) => {
+													SUBJECT_COMBINATIONS.filter((combo) => {
 														const q = normalizeVi(comboSearch);
 														return (
 															normalizeVi(combo.code).includes(q) ||
