@@ -40,6 +40,14 @@ public static class UniversityEndpoints
             .WithDescription("Returns a single university by its ID")
             .Produces<UniversityDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
+
+        // GET /api/v1/universities/{id}/majors
+        group.MapGet("/{id:int}/majors", GetUniversityMajors)
+            .WithName("GetUniversityMajors")
+            .WithSummary("Get majors for a university")
+            .WithDescription("Returns all majors and their admission requirements for a given university")
+            .Produces<UniversityMajorsDto>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> GetAllUniversities(
@@ -91,7 +99,7 @@ public static class UniversityEndpoints
         try
         {
             var university = await universityService.GetUniversityByIdAsync(id);
-            
+
             if (university == null)
             {
                 return Results.NotFound(new { message = $"University with ID {id} not found" });
@@ -105,6 +113,32 @@ public static class UniversityEndpoints
             return Results.Problem(
                 title: "Error getting university",
                 detail: "An error occurred while retrieving the university",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    private static async Task<IResult> GetUniversityMajors(
+        int id,
+        IUniversityService universityService,
+        ILogger<IUniversityService> logger)
+    {
+        try
+        {
+            var result = await universityService.GetUniversityMajorsAsync(id);
+
+            if (result == null)
+            {
+                return Results.NotFound(new { message = $"University with ID {id} not found" });
+            }
+
+            return Results.Ok(result);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error getting majors for university with ID {Id}", id);
+            return Results.Problem(
+                title: "Error getting university majors",
+                detail: "An error occurred while retrieving the university majors",
                 statusCode: StatusCodes.Status500InternalServerError);
         }
     }

@@ -34,6 +34,11 @@ public interface IUniversityService
     Task<UniversityDto?> UpdateUniversityAsync(int id, UpdateUniversityRequest request);
 
     /// <summary>
+    /// Gets all majors and their admission requirements for a university
+    /// </summary>
+    Task<UniversityMajorsDto?> GetUniversityMajorsAsync(int id);
+
+    /// <summary>
     /// Deletes a university (soft delete - not implemented yet, or hard delete)
     /// </summary>
     Task<bool> DeleteUniversityAsync(int id);
