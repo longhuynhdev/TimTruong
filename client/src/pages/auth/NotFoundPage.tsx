@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import { FileQuestion } from "lucide-react";
-import { Link } from "react-router-dom";
 import PageMetadata from "@/components/PageMetadata";
 import { Button } from "@/components/ui/button";
 import {

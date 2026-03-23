@@ -16,72 +16,109 @@ import {
 import { SUBJECT_COMBINATIONS_FULL } from "@/constants";
 import { normalizeVi } from "@/lib/utils";
 import { dgnlScoreSchema, thptqgScoreSchema } from "@/lib/validations";
+import { Route } from "@/routes/tim-kiem";
 import { searchUniversities } from "@/services/api";
 import type { ExamType, UniversityResult } from "@/types";
 
 const SearchPage = () => {
-	const [score, setScore] = useState("");
-	const [examType, setExamType] = useState<ExamType>("THPTQG");
-	const [selectedSubject, setSelectedSubject] = useState<string>("");
-	const [validationError, setValidationError] = useState<string>("");
+	// Read URL search params — typed and validated by the schema in tim-kiem.tsx
+	const search = Route.useSearch();
+	const navigate = Route.useNavigate();
+
+	// Form state — initialized from URL so back/forward navigation restores the form
+	const [score, setScore] = useState(search.score ?? "");
+	// examType defaults to THPTQG when not in URL
+	const [examType, setExamType] = useState<ExamType>(
+		search.examType ?? "THPTQG",
+	);
+	const [selectedSubject, setSelectedSubject] = useState(
+		search.subject ?? "",
+	);
+
+	// UI-only state (not in URL)
+	const [validationError, setValidationError] = useState("");
 	const [searchResults, setSearchResults] = useState<UniversityResult[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasSearched, setHasSearched] = useState(false);
 	const [comboOpen, setComboOpen] = useState(false);
 	const [comboSearch, setComboSearch] = useState("");
+
 	const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-	// Cleanup debounce timer on unmount
 	useEffect(() => {
 		return () => {
-			if (debounceTimerRef.current) {
-				clearTimeout(debounceTimerRef.current);
-			}
+			if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
 		};
 	}, []);
 
-	// Validate score helper function
+	// validateScore takes examType as a parameter (no closure dependency)
 	const validateScore = useCallback(
-		(scoreValue: string): string | null => {
+		(scoreValue: string, type: ExamType): string | null => {
 			if (!scoreValue.trim()) return null;
-
 			const numericScore = parseFloat(scoreValue);
-			if (Number.isNaN(numericScore)) {
-				return "Vui lòng nhập số hợp lệ";
-			}
-
+			if (Number.isNaN(numericScore)) return "Vui lòng nhập số hợp lệ";
 			try {
-				if (examType === "ĐGNL") {
+				if (type === "ĐGNL") {
 					dgnlScoreSchema.parse(numericScore);
 				} else {
 					thptqgScoreSchema.parse(numericScore);
 				}
 				return null;
 			} catch (error) {
-				if (error instanceof z.ZodError) {
-					return error.issues[0].message;
-				}
+				if (error instanceof z.ZodError) return error.issues[0].message;
 				return null;
 			}
 		},
-		[examType],
+		[],
 	);
 
-	// Debounced validation effect
-	useEffect(() => {
-		if (debounceTimerRef.current) {
-			clearTimeout(debounceTimerRef.current);
-		}
+	// Extracted so it can be called both on submit and on auto-search
+	const performSearch = useCallback(
+		async (
+			scoreVal: string,
+			examTypeVal: ExamType,
+			subjectVal: string | undefined,
+		) => {
+			setIsLoading(true);
+			try {
+				const results = await searchUniversities(
+					parseFloat(scoreVal),
+					examTypeVal,
+					subjectVal,
+				);
+				setSearchResults(results);
+				setHasSearched(true);
+			} catch (error) {
+				toast.error("Có lỗi xảy ra khi tìm kiếm", {
+					description: "Vui lòng thử lại sau hoặc kiểm tra kết nối mạng.",
+				});
+				console.error("Search API error:", error);
+			} finally {
+				setIsLoading(false);
+			}
+		},
+		[],
+	);
 
+	// Auto-search on mount when URL already has valid params (e.g. shared/bookmarked URL)
+	// biome-ignore lint/correctness/useExhaustiveDependencies: intentionally mount-only
+	useEffect(() => {
+		const et = search.examType ?? "THPTQG";
+		if (search.score && !validateScore(search.score, et)) {
+			performSearch(search.score, et, search.subject);
+		}
+	}, []);
+
+	// Debounced score validation while typing
+	useEffect(() => {
+		if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
 		if (score.trim()) {
 			debounceTimerRef.current = setTimeout(() => {
-				const error = validateScore(score);
-				if (error) {
-					setValidationError(error);
-				}
+				const error = validateScore(score, examType);
+				if (error) setValidationError(error);
 			}, 800);
 		}
-	}, [score, validateScore]);
+	}, [score, examType, validateScore]);
 
 	const handleExamTypeSelect = (type: ExamType) => {
 		setExamType(type);
@@ -97,64 +134,42 @@ const SearchPage = () => {
 		setValidationError("");
 	};
 
-	const validateAndSearch = async () => {
-		// Check if score is entered
+	const isValidScore = () =>
+		score.trim() !== "" && validateScore(score, examType) === null;
+
+	const handleSearch = async () => {
 		if (!score.trim()) {
 			setValidationError("Vui lòng nhập điểm");
 			return;
 		}
-
-		// Validate score
-		const scoreError = validateScore(score);
+		const scoreError = validateScore(score, examType);
 		if (scoreError) {
 			setValidationError(scoreError);
 			return;
 		}
-
-		// Check subject combination for THPTQG
 		if (examType === "THPTQG" && !selectedSubject) {
 			setValidationError("Vui lòng chọn tổ hợp môn");
 			return;
 		}
-
-		// Call API
-		setIsLoading(true);
 		setValidationError("");
 
-		try {
-			const numericScore = parseFloat(score);
-			const results = await searchUniversities(
-				numericScore,
+		// Update URL — makes this search shareable and bookmarkable
+		// e.g. /tim-kiem?score=24.5&examType=THPTQG&subject=A00
+		navigate({
+			search: {
+				score,
 				examType,
-				selectedSubject || undefined,
-			);
-			setSearchResults(results);
-			setHasSearched(true);
-		} catch (error) {
-			toast.error("Có lỗi xảy ra khi tìm kiếm", {
-				description: "Vui lòng thử lại sau hoặc kiểm tra kết nối mạng.",
-			});
-			console.error("Search API error:", error);
-		} finally {
-			setIsLoading(false);
-		}
+				subject: selectedSubject || undefined,
+			},
+		});
+
+		await performSearch(score, examType, selectedSubject || undefined);
 	};
 
 	const handleScoreBlur = () => {
-		const error = validateScore(score);
-		if (error) {
-			setValidationError(error);
-		} else if (score.trim()) {
-			setValidationError("");
-		}
-	};
-
-	const isValidScore = () => {
-		return score.trim() !== "" && validateScore(score) === null;
-	};
-
-	const getScorePlaceholder = () => {
-		return examType === "THPTQG" ? "9-30" : "300-1200";
+		const error = validateScore(score, examType);
+		if (error) setValidationError(error);
+		else if (score.trim()) setValidationError("");
 	};
 
 	return (
@@ -183,7 +198,7 @@ const SearchPage = () => {
 										setValidationError("");
 									}}
 									onBlur={handleScoreBlur}
-									placeholder={getScorePlaceholder()}
+									placeholder={examType === "THPTQG" ? "9-30" : "300-1200"}
 									className={`text-center text-lg font-medium bg-input border-border text-foreground placeholder:text-muted-foreground ${
 										validationError ? "border-red-500" : ""
 									}`}
@@ -228,8 +243,8 @@ const SearchPage = () => {
 							{examType === "THPTQG" && (
 								<div className="space-y-4">
 									<p className="text-base text-muted-foreground">
-									Nhập tổ hợp của bạn
-								</p>
+										Nhập tổ hợp của bạn
+									</p>
 
 									<Popover open={comboOpen} onOpenChange={setComboOpen}>
 										<PopoverTrigger asChild>
@@ -326,7 +341,7 @@ const SearchPage = () => {
 							<Button
 								className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 text-lg font-medium transition-colors"
 								disabled={!score.trim() || !isValidScore() || isLoading}
-								onClick={validateAndSearch}
+								onClick={handleSearch}
 							>
 								{isLoading ? "Đang tìm kiếm..." : "Tìm trường phù hợp ngay"}
 							</Button>

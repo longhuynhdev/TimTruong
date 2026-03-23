@@ -6,7 +6,7 @@ const Footer = () => {
 			<div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 				{/* Copyright */}
 				<div className="text-sm text-muted-foreground">
-					© 2025 TimTruong. All rights reserved
+					© 2026 TimTruong. All rights reserved
 				</div>
 
 				{/* Right side links and theme toggle */}

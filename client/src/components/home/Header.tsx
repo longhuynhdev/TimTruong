@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { Button } from "../ui/button";
 
 const Header = () => {
@@ -11,7 +11,7 @@ const Header = () => {
 			<div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 				{/* Logo */}
 				<div className="flex items-center">
-					<NavLink
+					<Link
 						to="/"
 						className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
 					>
@@ -19,23 +19,23 @@ const Header = () => {
 						<span className="text-lg sm:text-xl font-semibold text-foreground">
 							TimTruong
 						</span>
-					</NavLink>
+					</Link>
 				</div>
 
 				{/* Desktop Navigation */}
 				<nav className="hidden lg:flex items-center space-x-8">
-					<NavLink
-						to="/truong-dai-hoc"
+					<Link
+						to="/danh-sach-truong"
 						className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-2 rounded-md transition-colors duration-200"
 					>
 						Danh sách trường
-					</NavLink>
-					<NavLink
+					</Link>
+					<Link
 						to="/to-hop-mon"
 						className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-2 rounded-md transition-colors duration-200"
 					>
 						Tổ hợp môn
-					</NavLink>
+					</Link>
 				</nav>
 
 				{/* Right side actions */}
@@ -45,7 +45,7 @@ const Header = () => {
 						asChild
 						className="hidden sm:flex hover:bg-primary/80 hover:shadow-md transition-all duration-200"
 					>
-						<NavLink to="tim-kiem">Tìm trường ngay</NavLink>
+						<Link to="/tim-kiem">Tìm trường ngay</Link>
 					</Button>
 
 					{/* Mobile CTA button (icon only on very small screens) */}
@@ -54,7 +54,7 @@ const Header = () => {
 						size="sm"
 						className="sm:hidden hover:bg-primary/80 transition-all duration-200"
 					>
-						<NavLink to="tim-kiem">Tìm trường</NavLink>
+						<Link to="/tim-kiem">Tìm trường</Link>
 					</Button>
 
 					{/* Mobile menu toggle button */}
@@ -78,20 +78,20 @@ const Header = () => {
 			{mobileMenuOpen && (
 				<div className="lg:hidden border-t border-border">
 					<nav className="flex flex-col space-y-1 px-4 py-3 bg-background">
-						<NavLink
-							to="/truong-dai-hoc"
+						<Link
+							to="/danh-sach-truong"
 							className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-3 rounded-md transition-colors duration-200"
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							Danh sách trường
-						</NavLink>
-						<NavLink
+						</Link>
+						<Link
 							to="/to-hop-mon"
 							className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-3 rounded-md transition-colors duration-200"
 							onClick={() => setMobileMenuOpen(false)}
 						>
 							Tổ hợp môn
-						</NavLink>
+						</Link>
 					</nav>
 				</div>
 			)}
