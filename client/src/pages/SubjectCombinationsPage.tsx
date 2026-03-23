@@ -21,7 +21,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { SUBJECT_COMBINATIONS_FULL } from "@/constants";
+import { SUBJECT_COMBINATIONS } from "@/constants";
 import { normalizeVi } from "@/lib/utils";
 import type { SubjectCombinationDetail } from "@/types";
 
@@ -75,7 +75,9 @@ const SubjectCombinationsPage = () => {
 	);
 
 	const table = useReactTable({
-		data: SUBJECT_COMBINATIONS_FULL,
+		// Cast needed: useReactTable expects TData[] (mutable), but our constant is readonly.
+		// Safe because TanStack Table only reads data — it never mutates it.
+		data: SUBJECT_COMBINATIONS as unknown as SubjectCombinationDetail[],
 		columns,
 		state: {
 			sorting,
