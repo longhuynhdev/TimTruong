@@ -183,12 +183,15 @@ const SearchPage = () => {
 					<Card className="shadow-lg bg-card border-border">
 						<CardHeader className="pb-4">
 							<CardTitle className="text-center text-foreground text-xl md:text-2xl">
-								Nhập tổng điểm tốt nghiệp hoặc điểm ĐGNL của bạn
+								Tìm trường đại học phù hợp theo điểm
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-6">
 							{/* Score Input */}
 							<div className="space-y-2">
+								<p className="text-base text-muted-foreground">
+									Nhập điểm thi dự kiến của bạn
+								</p>
 								<Input
 									type="text"
 									inputMode="decimal"
@@ -208,8 +211,8 @@ const SearchPage = () => {
 										{validationError}
 									</p>
 								)}
-								<p className="text-sm text-muted-foreground text-center">
-									Nhập loại điểm của bạn
+								<p className="text-base text-muted-foreground">
+									Nhập loại kỳ thi của bạn
 								</p>
 							</div>
 
@@ -243,7 +246,7 @@ const SearchPage = () => {
 							{examType === "THPTQG" && (
 								<div className="space-y-4">
 									<p className="text-base text-muted-foreground">
-										Nhập tổ hợp của bạn
+										Nhập tổ hợp môn của bạn
 									</p>
 
 									<Popover open={comboOpen} onOpenChange={setComboOpen}>
