@@ -33,7 +33,8 @@ erDiagram
         string Name
         string Code "e.g. 7480201"
         string FieldOfStudy "e.g. CNTT, Y Dược"
-        decimal TuitionFee "VND"
+        decimal TuitionFeeAmount "VND"
+        enum TuitionFeeUnit "e.g. PerCredit, PerSemester, PerYear"
         int EnrollmentQuota
     }
 
