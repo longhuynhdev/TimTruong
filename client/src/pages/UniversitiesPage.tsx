@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import PageMetadata from "@/components/PageMetadata";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -122,7 +123,8 @@ const UniversityCard = ({
 }: {
 	university: UniversityListItem;
 }) => (
-	<Card className="shadow-sm hover:shadow-md transition-shadow border-border bg-card">
+	<Link to="/danh-sach-truong/$universityId" params={{ universityId: String(u.id) }} className="block">
+		<Card className="shadow-sm hover:shadow-md transition-shadow border-border bg-card cursor-pointer">
 		<CardContent className="p-4">
 			<div className="flex items-center gap-4">
 				{/* Logo */}
@@ -175,6 +177,7 @@ const UniversityCard = ({
 			</div>
 		</CardContent>
 	</Card>
+	</Link>
 );
 
 export default UniversitiesPage;

@@ -38,6 +38,31 @@ export interface UniversityListItem {
 	campuses: CampusLocation[];
 }
 
+// University detail — admission requirements and majors
+export interface AdmissionRequirement {
+	id: number;
+	examType: string;
+	score: number;
+	subjectCombination: string | null;
+	year: number;
+}
+
+export interface MajorWithRequirements {
+	id: number;
+	name: string;
+	code: string | null;
+	tuitionFee: number | null;
+	enrollmentQuota: number | null;
+	admissionRequirements: AdmissionRequirement[];
+}
+
+export interface UniversityMajors {
+	universityId: number;
+	universityName: string;
+	universityCode: string;
+	majors: MajorWithRequirements[];
+}
+
 // Subject combination with full display information
 export interface SubjectCombinationDetail {
 	code: string;
