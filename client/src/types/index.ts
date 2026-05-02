@@ -1,5 +1,6 @@
 // Simple string enums matching the backend
 export type ExamType = "THPTQG" | "ĐGNL";
+export type TuitionFeeUnit = "PerCredit" | "PerSemester" | "PerYear";
 
 // University search result
 export interface UniversityResult {
@@ -51,7 +52,8 @@ export interface MajorWithRequirements {
 	id: number;
 	name: string;
 	code: string | null;
-	tuitionFee: number | null;
+	tuitionFeeAmount: number | null;
+	tuitionFeeUnit: TuitionFeeUnit | null;
 	enrollmentQuota: number | null;
 	admissionRequirements: AdmissionRequirement[];
 }

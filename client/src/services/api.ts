@@ -1,4 +1,4 @@
-import type { ExamType, UniversityListItem, UniversityMajors, UniversityResult } from "@/types";
+import type { ExamType, TuitionFeeUnit, UniversityListItem, UniversityMajors, UniversityResult } from "@/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5309";
 
@@ -14,7 +14,8 @@ interface MajorRecommendation {
 	majorName: string;
 	majorCode: string | null;
 	fieldOfStudy: string;
-	tuitionFee: number | null;
+	tuitionFeeAmount: number | null;
+	tuitionFeeUnit: TuitionFeeUnit | null;
 	enrollmentQuota: number | null;
 	admissionScore: number;
 	subjectCombination: string;

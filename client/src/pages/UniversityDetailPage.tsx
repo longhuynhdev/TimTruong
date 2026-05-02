@@ -18,12 +18,19 @@ function formatScore(score: number): string {
 	return score % 1 === 0 ? score.toFixed(0) : score.toFixed(2).replace(/\.?0+$/, "");
 }
 
-function formatTuition(fee: number): string {
+const TUITION_UNIT_LABEL: Record<string, string> = {
+	PerCredit: "tín chỉ",
+	PerSemester: "học kỳ",
+	PerYear: "năm",
+};
+
+function formatTuition(fee: number, unit: string | null): string {
+	const suffix = unit ? TUITION_UNIT_LABEL[unit] ?? "năm" : "năm";
 	if (fee >= 1_000_000) {
 		const millions = fee / 1_000_000;
-		return `${millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1)} triệu đồng/năm`;
+		return `${millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1)} triệu đồng/${suffix}`;
 	}
-	return fee.toLocaleString("vi-VN") + " đồng/năm";
+	return `${fee.toLocaleString("vi-VN")} đồng/${suffix}`;
 }
 
 /** Group requirements by examType, then build a year × combo grid */
@@ -237,9 +244,9 @@ const MajorCard = ({ major: m }: { major: MajorWithRequirements }) => (
 					)}
 				</div>
 				<div className="flex flex-wrap gap-2 text-xs text-muted-foreground shrink-0">
-					{m.tuitionFee != null && (
+					{m.tuitionFeeAmount != null && (
 						<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
-							💰 {formatTuition(m.tuitionFee)}
+							💰 {formatTuition(m.tuitionFeeAmount, m.tuitionFeeUnit)}
 						</span>
 					)}
 					{m.enrollmentQuota != null && (
