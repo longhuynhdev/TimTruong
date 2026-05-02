@@ -24,9 +24,14 @@ public class Major
     public string? FieldOfStudy { get; set; }
 
     /// <summary>
-    /// Annual tuition fee (in VND)
+    /// Tuition fee amount (in VND)
     /// </summary>
-    public decimal? TuitionFee { get; set; }
+    public decimal? TuitionFeeAmount { get; set; }
+
+    /// <summary>
+    /// Unit of measurement for the tuition fee (e.g., per credit, per semester, per year)
+    /// </summary>
+    public TuitionFeeUnit? TuitionFeeUnit { get; set; }
 
     /// <summary>
     /// Total enrollment quota for this major

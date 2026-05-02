@@ -211,7 +211,8 @@ public class UniversityService : IUniversityService
                         m.Id,
                         m.Name,
                         m.Code,
-                        m.TuitionFee,
+                        m.TuitionFeeAmount,
+                        m.TuitionFeeUnit.HasValue ? m.TuitionFeeUnit.Value.ToString() : null,
                         m.EnrollmentQuota,
                         m.AdmissionRequirements
                             .OrderByDescending(r => r.Year)
