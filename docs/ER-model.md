@@ -7,6 +7,7 @@ erDiagram
     Universities {
         int Id PK
         string Name
+        string OldName
         string EnglishName
         string ShortName
         string Code "e.g. QST, QSB"
