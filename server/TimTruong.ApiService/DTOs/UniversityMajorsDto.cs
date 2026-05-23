@@ -7,7 +7,8 @@ public record MajorWithRequirementsDto(
     int Id,
     string Name,
     string? Code,
-    decimal? TuitionFee,
+    decimal? TuitionFeeAmount,
+    string? TuitionFeeUnit,
     int? EnrollmentQuota,
     List<AdmissionRequirementDto> AdmissionRequirements
 );

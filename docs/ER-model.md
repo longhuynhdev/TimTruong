@@ -7,6 +7,7 @@ erDiagram
     Universities {
         int Id PK
         string Name
+        string OldName
         string EnglishName
         string ShortName
         string Code "e.g. QST, QSB"
@@ -33,7 +34,8 @@ erDiagram
         string Name
         string Code "e.g. 7480201"
         string FieldOfStudy "e.g. CNTT, Y Dược"
-        decimal TuitionFee "VND"
+        decimal TuitionFeeAmount "VND"
+        enum TuitionFeeUnit "e.g. PerCredit, PerSemester, PerYear"
         int EnrollmentQuota
     }
 

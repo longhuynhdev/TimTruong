@@ -1,4 +1,4 @@
-import type { ExamType, UniversityListItem, UniversityResult } from "@/types";
+import type { ExamType, TuitionFeeUnit, UniversityListItem, UniversityMajors, UniversityResult } from "@/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5309";
 
@@ -14,7 +14,8 @@ interface MajorRecommendation {
 	majorName: string;
 	majorCode: string | null;
 	fieldOfStudy: string;
-	tuitionFee: number | null;
+	tuitionFeeAmount: number | null;
+	tuitionFeeUnit: TuitionFeeUnit | null;
 	enrollmentQuota: number | null;
 	admissionScore: number;
 	subjectCombination: string;
@@ -39,6 +40,34 @@ interface RecommendationResponse {
  */
 export async function fetchAllUniversities(): Promise<UniversityListItem[]> {
 	const response = await fetch(`${API_BASE_URL}/api/v1/universities`);
+
+	if (!response.ok) {
+		throw new Error(`API request failed with status ${response.status}`);
+	}
+
+	return response.json();
+}
+
+/**
+ * Fetch a single university by ID
+ */
+export async function fetchUniversityById(id: number): Promise<UniversityListItem> {
+	const response = await fetch(`${API_BASE_URL}/api/v1/universities/${id}`);
+
+	if (!response.ok) {
+		throw new Error(`API request failed with status ${response.status}`);
+	}
+
+	return response.json();
+}
+
+/**
+ * Fetch all majors with admission requirements for a university
+ */
+export async function fetchUniversityMajors(id: number): Promise<UniversityMajors> {
+	const response = await fetch(
+		`${API_BASE_URL}/api/v1/universities/${id}/majors`,
+	);
 
 	if (!response.ok) {
 		throw new Error(`API request failed with status ${response.status}`);

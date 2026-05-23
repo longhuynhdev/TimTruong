@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import PageMetadata from "@/components/PageMetadata";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -27,9 +28,9 @@ const UniversitiesPage = () => {
 	const filtered = useMemo(() => {
 		return universities.filter((u) => {
 			if (selectedType !== ALL && u.type !== selectedType) return false;
-			if (selectedAutonomy === "autonomous" && !u.isFinanciallyAutonomous)
+			if (selectedAutonomy === "autonomous" && u.isFinanciallyAutonomous !== true)
 				return false;
-			if (selectedAutonomy === "non-autonomous" && u.isFinanciallyAutonomous)
+			if (selectedAutonomy === "non-autonomous" && u.isFinanciallyAutonomous !== false)
 				return false;
 			return true;
 		});
@@ -122,7 +123,8 @@ const UniversityCard = ({
 }: {
 	university: UniversityListItem;
 }) => (
-	<Card className="shadow-sm hover:shadow-md transition-shadow border-border bg-card">
+	<Link to="/danh-sach-truong/$universityId" params={{ universityId: String(u.id) }} className="block">
+		<Card className="shadow-sm hover:shadow-md transition-shadow border-border bg-card cursor-pointer">
 		<CardContent className="p-4">
 			<div className="flex items-center gap-4">
 				{/* Logo */}
@@ -158,15 +160,13 @@ const UniversityCard = ({
 						<Badge variant="outline" className="text-xs border-border">
 							{u.type === "Public" ? "Trường công" : "Trường tư"}
 						</Badge>
-						{u.isFinanciallyAutonomous ? (
+						{u.isFinanciallyAutonomous === true && (
 							<Badge variant="outline" className="text-xs border-border">
 								Tự chủ tài chính
 							</Badge>
-						) : (
-							<Badge
-								variant="outline"
-								className="text-xs border-border text-muted-foreground"
-							>
+						)}
+						{u.isFinanciallyAutonomous === false && (
+							<Badge variant="outline" className="text-xs border-border text-muted-foreground">
 								Chưa tự chủ tài chính
 							</Badge>
 						)}
@@ -175,6 +175,7 @@ const UniversityCard = ({
 			</div>
 		</CardContent>
 	</Card>
+	</Link>
 );
 
 export default UniversitiesPage;
