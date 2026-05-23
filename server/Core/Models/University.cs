@@ -29,7 +29,7 @@ public class University
     public UniType Type { get; set; }
     public string? ImageUrl { get; set; }
 
-    public bool IsFinanciallyAutonomous { get; set; } = false;
+    public bool? IsFinanciallyAutonomous { get; set; }
 
     // Navigation properties
     public ICollection<Campus> Campuses { get; set; } = new List<Campus>();

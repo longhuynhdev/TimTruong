@@ -12,7 +12,7 @@ public record UniversityDto
     public string Code { get; init; } = string.Empty;
     public string Type { get; init; } = string.Empty; // "Public" or "Private"
     public string? ImageUrl { get; init; }
-    public bool IsFinanciallyAutonomous { get; init; }
+    public bool? IsFinanciallyAutonomous { get; init; }
     public List<CampusLocationDto> Campuses { get; init; } = new();
 }
 

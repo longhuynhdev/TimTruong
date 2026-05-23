@@ -35,7 +35,7 @@ export interface UniversityListItem {
 	code: string;
 	type: "Public" | "Private";
 	imageUrl: string | null;
-	isFinanciallyAutonomous: boolean;
+	isFinanciallyAutonomous: boolean | null;
 	campuses: CampusLocation[];
 }
 

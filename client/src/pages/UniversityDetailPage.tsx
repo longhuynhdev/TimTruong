@@ -100,17 +100,16 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 						<Badge variant="outline" className="text-xs border-border">
 							{u.type === "Public" ? "Trường công" : "Trường tư"}
 						</Badge>
-						<Badge
-							variant="outline"
-							className={cn(
-								"text-xs border-border",
-								!u.isFinanciallyAutonomous && "text-muted-foreground",
-							)}
-						>
-							{u.isFinanciallyAutonomous
-								? "Tự chủ tài chính"
-								: "Chưa tự chủ tài chính"}
-						</Badge>
+						{u.isFinanciallyAutonomous === true && (
+							<Badge variant="outline" className="text-xs border-border">
+								Tự chủ tài chính
+							</Badge>
+						)}
+						{u.isFinanciallyAutonomous === false && (
+							<Badge variant="outline" className="text-xs border-border text-muted-foreground">
+								Chưa tự chủ tài chính
+							</Badge>
+						)}
 					</div>
 
 					{u.campuses.length > 0 && (
