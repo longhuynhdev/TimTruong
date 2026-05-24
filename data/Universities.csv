@@ -1,0 +1,63 @@
+No.,Name,OldName,EnglishName,ShortName,Code,Type,IsFinanciallyAutonomous,ImageUrl
+1,"Trường Đại học Khoa học Tự nhiên, Đại học Quốc gia Thành phố Hồ Chí Minh",,VNUHCM-University of Science,HCMUS,QST,0,,/universities-logo/hcmus.png
+2,"Trường Đại học Bách Khoa, Đại học Quốc gia Thành phố Hồ Chí Minh ",,Ho Chi Minh City University of Technology,HCMUT,QSB,0,,/universities-logo/hcmut.png
+3,"Trường Đại học Công nghệ Thông tin, Đại học Quốc gia Thành phố Hồ Chí Minh",,University of Information Technology,UIT,QSC,0,,/universities-logo/uit.svg
+4,"Trường Đại học Quốc tế, Đại học Quốc gia Thành phố Hồ Chí Minh",,VNU-HCM International University,HCMIU,QSQ,0,,/universities-logo/iu.png
+5,"Trường Đại học Xã hội và Nhân văn, Đại học Quốc gia Thành phố Hồ Chí Minh",,"University of Social Sciences and Humanities, Vietnam National University Ho Chi Minh City",HCMUSSH,QSX,0,,/universities-logo/ussh.png
+6,"Trường Đại học Kinh tế - Luật, Đại học Quốc gia Thành phố Hồ Chí Minh",,VNU-HCM University of Economics and Law,UEL,QSK,0,,/universities-logo/uel.png
+7,Trường Đại học Khoa học Sức khỏe,Khoa Y - Đại học Quốc gia Thành phố Hồ Chí Minh,"University of Health Sciences, Viet Nam National University Ho Chi Minh City",QSY,QSY,0,,/universities-logo/uhs.svg
+8,Học viện Kỹ thuật Mật mã ,,Vietnam Academy of Cryptography Techniques,KMA,KMA,0,,/universities-logo/kma.png
+9,Trường Đại học Giao thông Vận tải TPHCM,,Ho Chi Minh City University of Transport,UTH,GTS,0,,/universities-logo/uth.png
+10,Phân hiệu trường ĐH GTVT tại TP.Hồ Chí Minh,,University of Transport and Communications - Campus in Ho Chi Minh City ,UTC2,GSA,0,,/universities-logo/utc.png
+11,Trường Đại học Gia Định,,Gia Dinh University,GDU,GDU,1,,/universities-logo/gdu.png
+12,Trường Đại Học Công nghệ Kỹ Thuật TP. HCM,Trường Đại học Sư phạm Kỹ thuật Thành phố Hồ Chí Minh ,Ho Chi Minh City University of Technology and Engineering,HCMUTE,UTE,0,,/universities-logo/hcmus.png
+13,Học viện Hành chính và Quản trị Công Phân hiệu TPHCM,,Academy of Public Administration and Governance - Ho Chi Minh City Campus,APAG,HCH,0,,/universities-logo/apag.jpg
+14,Trường Đại học Công Thương Thành phố Hồ Chí Minh,Trường Đại học Công nghiệp Thực phẩm Thành phố Hồ Chí Minh,Ho Chi Minh City University of Industry and Trade,HUIT,DCT,0,,/universities-logo/huit.png
+15,Trường Đại học Công nghiệp TP.HCM,,Industrial University of Ho Chi Minh City,IUH,IUH,0,,/universities-logo/iuh.png
+16,Trường Đại học Hoa Sen,,Hoa Sen University,HSU,HSU,0,,/universities-logo/hsu.webp
+17,Trường Đại học Hùng Vương TP.HCM,,Hung Vuong University of Ho Chi Minh City,DHV,DHV,1,,/universities-logo/dhv.png
+18,Trường Đại học Lao động – Xã hội (Cơ sở 2),,University of Labour Social Affairs 2),ULSA2,DLS,0,,/universities-logo/ulsa2.jpg
+19,Trường Đại học Luật Thành phố Hồ Chí Minh,,Ho Chi Minh City University of Law,ULAW,LPS,0,,/universities-logo/ulaw.webp
+20,Học viện Công nghệ Bưu chính Viễn thông (cơ sở 2) ,,Posts and Telecommunications Institute of Technology,PTIT,BVS,0,,/universities-logo/ptit.jpg
+21,Trường Đại học Ngân hàng TPHCM,,Ho Chi Minh University of Banking,HUB,NHS,0,,/universities-logo/hub.jpg
+22,Trường Đại học Công nghệ Sài Gòn,,Saigon Technology University,STU,DSG,1,,/universities-logo/stu.png
+23,Trường Đại học Tôn Đức Thắng,,Ton Duc Thang University,TDTU,DTT,0,,/universities-logo/tdtu.png
+24,Trường Đại học Văn Hiến,,Van Hien University,VHU,DVH,1,,/universities-logo/vhu.png
+25,Trường Đại học Việt - Đức,,Vietnamese–German University,VGU,VGU,0,,/universities-logo/vgu.avif
+26,Trường Đại học Nguyễn Tất Thành,,Nguyen Tat Thanh University,NTTU,NTT,1,,/universities-logo/nttu.jpg
+27,Trường Đại học An ninh nhân dân (Thành phố Hồ Chí Minh),,People's Security University,VPSU,ANS,0,,/universities-logo/annd.png
+28,Trường Đại học Cảnh sát Nhân dân,,Vietnam People's Police University,VPPU,CCS,0,,/universities-logo/csnd.png
+29,Trường Đại học Kiến trúc Thành phố Hồ Chí Minh,,University of Architecture Ho Chi Minh City,UAH,KTS,0,,/universities-logo/uah.webp
+30,Trường Đại học Mở Thành phố Hồ Chí Minh ,,Ho Chi Minh City Open University,OU,MBS,0,,"/universities-logo/ou.png
+"
+31,Trường Đại học Mỹ thuật Thành phố Hồ Chí Minh,,Ho Chi Minh City University of Fine Arts,HCMUFA,MTS,0,,/universities-logo/hcmufa.png
+32,Phân hiệu Trường Đại học Ngoại thương tại Thành phố Hồ Chí Minh,,"Foreign Trade University, Ho Chi Minh City Branch",FTU2,NTS,0,,/universities-logo/ftu.png
+33,Trường Đại học Nông Lâm Thành phố Hồ Chí Minh,,Nong Lam University,NLU,NLS,0,,/universities-logo/hcmuaf.svg
+34,Trường Đại học Sài Gòn,,Saigon University,SGU,SGD,0,,/universities-logo/sgu.png
+35,Trường Đại học Sân khấu – Điện ảnh Thành phố Hồ Chí Minh,,,SKDAHCM,DSD,0,,/universities-logo/skdahcm.png
+36,Trường Đại học Sư phạm Thành phố Hồ Chí Minh ,,Ho Chi Minh City University of Education,HCMUE,SPS,0,,/universities-logo/hcmue.svg
+37,Trường Đại học Thể dục Thể thao Thành phố Hồ Chí Minh ,,University of Sport Ho Chi Minh City,USH,TDS,0,,/universities-logo/ush.jpg
+38,Phân hiệu trường Đại học Thủy lợi,,Thuyloi University - Southern Campus,TLU,TLS,0,,/universities-logo/ush.jpg
+39,Trường Đại học Trần Đại Nghĩa,,Tran Dai Nghia University,TDNU,ZPH,0,,/universities-logo/tdnu.png
+40,Trường Đại học Tài chính – Marketing,,University of Finance - Marketing,UFM,DMS,0,,/universities-logo/ufm.png
+41,Trường Đại học Tài nguyên và Môi trường Thành phố Hồ Chí Minh ,,Ho Chi Minh University of Natural Resources and Environment,HCMUNRE,DTM,0,,/universities-logo/hcmunre.png
+42,Trường Đại học Văn hóa Thành phố Hồ Chí Minh,,Ho Chi Minh City University of Culture,HCMUC,VHS,0,,/universities-logo/hcmuc.png
+43,Trường Đại học Thủ Dầu Một,,Thu Dau Mot University,TDMU,TDM,0,,/universities-logo/tdmu
+44,Trường Đại học Y Dược Thành phố Hồ Chí Minh,,University of Medicine and Pharmacy at Ho Chi Minh City,UMP,YDS,0,,/universities-logo/ump.svg
+45,Trường Đại học Y khoa Phạm Ngọc Thạch,,Pham Ngoc Thach University of Medicine,PNT,TYS,0,,/universities-logo/pnt.png
+46,Học viện Cán bộ Thành phố Hồ Chí Minh,,Ho Chi Minh City Cadre Academy,HCA,HVC,0,,/universities-logo/hca.jpg
+47,Học viện Hàng không Việt Nam,,Vietnam Aviation Academy,VAA,HHK,0,,/universities-logo/vaa.svg
+48,Học viện Kỹ thuật Quân sự (cơ sở 3),,Military Technical Academy,MTA,KQH,0,,/universities-logo/mta.png
+49,Nhạc viện Thành phố Hồ Chí Minh,,"Conservatory of Ho Chi Minh City
+Ho Chi Minh Conservatory of Music",HCMCONS,NVS,0,,/universities-logo/hcmcons.svg
+50,Học viện Thanh Thiếu niên Việt Nam Phân hiệu Thành phố Hồ Chí Minh,,Vietnam Youth Academy,VYA,HTN,0,,/universities-logo/vya.webp
+51,Trường Đại học Ngoại Ngữ – Tin Học Thành Phố Hồ Chí Minh,,Ho Chi Minh City University of Foreign Languages – Information Technology,HUFLIT,DNT,1,,/universities-logo/huflit.png
+52,Trường Đại học Văn Lang,,Van Lang University,VLU,DVL,1,,/universities-logo/vlu.jpg
+53,Trường Đại học Công nghệ Thành phố Hồ Chí Minh,,University of Technology,HUTECH,DKC,1,,/universities-logo/hutech.png
+54,Trường Đại học Quốc tế Hồng Bàng,,Hong Bang International University,HIU,HIU,1,,/universities-logo/hiu.png
+55,Trường Đại học FPT,,FPT University,FPT,FPT,1,,/universities-logo/fpt.png
+56,Trường Đại học Kinh tế - Tài chính thành phố Hồ Chí Minh,,Ho Chi Minh City University of Economics and Finance,UEF,UEF,1,,/universities-logo/uef.png
+57,Trường Đại học Tư thục Quốc tế Sài Gòn,,The Saigon International University,SIU,SIU,1,,/universities-logo/siu.jpg
+58,Trường Đại học Quản lý và Công nghệ TP.HCM,,Ho Chi Minh City University of Management and Technology,UMT,UMT,1,,/universities-logo/umt.jpeg
+59,Đại học Kinh tế Thành phố Hồ Chí Minh,,University of Economics Ho Chi Minh City,UEH,KSA,0,,"/universities-logo/ueh.png
+"
