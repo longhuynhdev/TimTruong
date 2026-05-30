@@ -14,7 +14,7 @@ import { Route as TimKiemRouteImport } from './routes/tim-kiem'
 import { Route as DanhSachTruongRouteImport } from './routes/danh-sach-truong'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DanhSachTruongIndexRouteImport } from './routes/danh-sach-truong.index'
-import { Route as DanhSachTruongUniversityIdRouteImport } from './routes/danh-sach-truong.$universityId'
+import { Route as DanhSachTruongSlugRouteImport } from './routes/danh-sach-truong.$slug'
 
 const ToHopMonRoute = ToHopMonRouteImport.update({
   id: '/to-hop-mon',
@@ -41,26 +41,25 @@ const DanhSachTruongIndexRoute = DanhSachTruongIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DanhSachTruongRoute,
 } as any)
-const DanhSachTruongUniversityIdRoute =
-  DanhSachTruongUniversityIdRouteImport.update({
-    id: '/$universityId',
-    path: '/$universityId',
-    getParentRoute: () => DanhSachTruongRoute,
-  } as any)
+const DanhSachTruongSlugRoute = DanhSachTruongSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => DanhSachTruongRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/danh-sach-truong': typeof DanhSachTruongRouteWithChildren
   '/tim-kiem': typeof TimKiemRoute
   '/to-hop-mon': typeof ToHopMonRoute
-  '/danh-sach-truong/$universityId': typeof DanhSachTruongUniversityIdRoute
+  '/danh-sach-truong/$slug': typeof DanhSachTruongSlugRoute
   '/danh-sach-truong/': typeof DanhSachTruongIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/tim-kiem': typeof TimKiemRoute
   '/to-hop-mon': typeof ToHopMonRoute
-  '/danh-sach-truong/$universityId': typeof DanhSachTruongUniversityIdRoute
+  '/danh-sach-truong/$slug': typeof DanhSachTruongSlugRoute
   '/danh-sach-truong': typeof DanhSachTruongIndexRoute
 }
 export interface FileRoutesById {
@@ -69,7 +68,7 @@ export interface FileRoutesById {
   '/danh-sach-truong': typeof DanhSachTruongRouteWithChildren
   '/tim-kiem': typeof TimKiemRoute
   '/to-hop-mon': typeof ToHopMonRoute
-  '/danh-sach-truong/$universityId': typeof DanhSachTruongUniversityIdRoute
+  '/danh-sach-truong/$slug': typeof DanhSachTruongSlugRoute
   '/danh-sach-truong/': typeof DanhSachTruongIndexRoute
 }
 export interface FileRouteTypes {
@@ -79,14 +78,14 @@ export interface FileRouteTypes {
     | '/danh-sach-truong'
     | '/tim-kiem'
     | '/to-hop-mon'
-    | '/danh-sach-truong/$universityId'
+    | '/danh-sach-truong/$slug'
     | '/danh-sach-truong/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/tim-kiem'
     | '/to-hop-mon'
-    | '/danh-sach-truong/$universityId'
+    | '/danh-sach-truong/$slug'
     | '/danh-sach-truong'
   id:
     | '__root__'
@@ -94,7 +93,7 @@ export interface FileRouteTypes {
     | '/danh-sach-truong'
     | '/tim-kiem'
     | '/to-hop-mon'
-    | '/danh-sach-truong/$universityId'
+    | '/danh-sach-truong/$slug'
     | '/danh-sach-truong/'
   fileRoutesById: FileRoutesById
 }
@@ -142,23 +141,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DanhSachTruongIndexRouteImport
       parentRoute: typeof DanhSachTruongRoute
     }
-    '/danh-sach-truong/$universityId': {
-      id: '/danh-sach-truong/$universityId'
-      path: '/$universityId'
-      fullPath: '/danh-sach-truong/$universityId'
-      preLoaderRoute: typeof DanhSachTruongUniversityIdRouteImport
+    '/danh-sach-truong/$slug': {
+      id: '/danh-sach-truong/$slug'
+      path: '/$slug'
+      fullPath: '/danh-sach-truong/$slug'
+      preLoaderRoute: typeof DanhSachTruongSlugRouteImport
       parentRoute: typeof DanhSachTruongRoute
     }
   }
 }
 
 interface DanhSachTruongRouteChildren {
-  DanhSachTruongUniversityIdRoute: typeof DanhSachTruongUniversityIdRoute
+  DanhSachTruongSlugRoute: typeof DanhSachTruongSlugRoute
   DanhSachTruongIndexRoute: typeof DanhSachTruongIndexRoute
 }
 
 const DanhSachTruongRouteChildren: DanhSachTruongRouteChildren = {
-  DanhSachTruongUniversityIdRoute: DanhSachTruongUniversityIdRoute,
+  DanhSachTruongSlugRoute: DanhSachTruongSlugRoute,
   DanhSachTruongIndexRoute: DanhSachTruongIndexRoute,
 }
 

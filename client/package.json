@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "sitemap": "bun run scripts/generate-sitemap.ts",
+    "build": "bun run sitemap && tsc -b && vite build",
     "lint": "biome lint .",
     "preview": "bun run build && wrangler dev",
     "deploy": "bun run build && wrangler deploy"
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.6",
+    "@cloudflare/workers-types": "^4.20260530.1",
     "@tanstack/router-plugin": "^1.167.3",
     "@types/node": "^24.5.1",
     "@types/react": "^19.1.10",

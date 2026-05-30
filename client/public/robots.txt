@@ -1,0 +1,8 @@
+# Giai đoạn hoàn thiện: chặn mọi crawler để tránh index nội dung còn sơ khai.
+# Khi sẵn sàng launch, thay toàn bộ khối dưới bằng:
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://timtruong.app/sitemap.xml
+
+User-agent: *
+Disallow: /

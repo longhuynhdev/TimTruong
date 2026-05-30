@@ -22,6 +22,12 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // Unique slug per university (Postgres allows multiple NULLs, so rows
+        // can be backfilled by the ETL pipeline without violating the index).
+        modelBuilder.Entity<University>()
+            .HasIndex(u => u.Slug)
+            .IsUnique();
+
         // Seed data
     }
 }

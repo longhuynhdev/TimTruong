@@ -41,6 +41,14 @@ public static class UniversityEndpoints
             .Produces<UniversityDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
 
+        // GET /api/v1/universities/by-slug/{slug}
+        group.MapGet("/by-slug/{slug}", GetUniversityBySlug)
+            .WithName("GetUniversityBySlug")
+            .WithSummary("Get university by slug")
+            .WithDescription("Returns a single university by its URL slug")
+            .Produces<UniversityDto>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
         // GET /api/v1/universities/{id}/majors
         group.MapGet("/{id:int}/majors", GetUniversityMajors)
             .WithName("GetUniversityMajors")
@@ -110,6 +118,32 @@ public static class UniversityEndpoints
         catch (Exception ex)
         {
             logger.LogError(ex, "Error getting university with ID {Id}", id);
+            return Results.Problem(
+                title: "Error getting university",
+                detail: "An error occurred while retrieving the university",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    private static async Task<IResult> GetUniversityBySlug(
+        string slug,
+        IUniversityService universityService,
+        ILogger<IUniversityService> logger)
+    {
+        try
+        {
+            var university = await universityService.GetUniversityBySlugAsync(slug);
+
+            if (university == null)
+            {
+                return Results.NotFound(new { message = $"University with slug '{slug}' not found" });
+            }
+
+            return Results.Ok(university);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error getting university with slug {Slug}", slug);
             return Results.Problem(
                 title: "Error getting university",
                 detail: "An error occurred while retrieving the university",

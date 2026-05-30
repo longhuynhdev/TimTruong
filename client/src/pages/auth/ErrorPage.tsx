@@ -10,7 +10,7 @@ const ErrorPage = ({ error, reset }: { error: Error; reset: () => void }) => {
 
 	return (
 		<>
-			<PageMetadata title="Lỗi" />
+			<PageMetadata title="Lỗi" noindex />
 			<div className="min-h-screen flex items-center justify-center bg-background p-4">
 				<Card className="max-w-md w-full shadow-lg bg-card border-border">
 					<CardHeader className="text-center">

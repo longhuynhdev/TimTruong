@@ -1,6 +1,7 @@
 import csv
 import os
 from db import get_connection
+from slugify import slugify
 
 CSV_FILE = os.path.join(os.path.dirname(__file__), "Universities.csv")
 
@@ -21,8 +22,8 @@ UNI_TYPE_MAP = {
 }
 
 INSERT_SQL = """
-    INSERT INTO "Universities" ("Name", "ShortName", "EnglishName", "Code", "Type", "ImageUrl", "IsFinanciallyAutonomous")
-    VALUES (%(name)s, %(short_name)s, %(english_name)s, %(code)s, %(type)s, %(image_url)s, %(is_financially_autonomous)s)
+    INSERT INTO "Universities" ("Name", "ShortName", "EnglishName", "Code", "Type", "ImageUrl", "IsFinanciallyAutonomous", "Slug")
+    VALUES (%(name)s, %(short_name)s, %(english_name)s, %(code)s, %(type)s, %(image_url)s, %(is_financially_autonomous)s, %(slug)s)
 """
 
 UPDATE_SQL = """
@@ -32,7 +33,8 @@ UPDATE_SQL = """
         "EnglishName"            = %(english_name)s,
         "Type"                   = %(type)s,
         "ImageUrl"               = %(image_url)s,
-        "IsFinanciallyAutonomous" = %(is_financially_autonomous)s
+        "IsFinanciallyAutonomous" = %(is_financially_autonomous)s,
+        "Slug"                   = %(slug)s
     WHERE "Code" = %(code)s
 """
 
@@ -40,6 +42,7 @@ UPDATE_SQL = """
 def load_universities():
     rows = []
     seen_codes = set()
+    seen_slugs = set()
 
     with open(CSV_FILE, encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -49,14 +52,24 @@ def load_universities():
                 continue
             seen_codes.add(code)
 
+            name = row["Name"].strip()
+            short_name = row["ShortName"].strip() or None
+
+            # Build a unique slug; on collision append the (unique) code.
+            slug = slugify(name, short_name)
+            if slug in seen_slugs:
+                slug = f"{slug}-{code.lower()}"
+            seen_slugs.add(slug)
+
             rows.append({
-                "name": row["Name"].strip(),
-                "short_name": row["ShortName"].strip() or None,
+                "name": name,
+                "short_name": short_name,
                 "english_name": row["EnglishName"].strip() or None,
                 "code": code,
                 "type": UNI_TYPE_MAP.get(row["Type"].strip(), 0),
                 "image_url": row["ImageUrl"].strip() or None,
                 "is_financially_autonomous": _parse_bool(row.get("IsFinanciallyAutonomous", "")),
+                "slug": slug,
             })
 
     return rows

@@ -30,6 +30,7 @@ export interface CampusLocation {
 export interface UniversityListItem {
 	id: number;
 	name: string;
+	slug: string | null;
 	shortName: string | null;
 	englishName: string | null;
 	code: string;
