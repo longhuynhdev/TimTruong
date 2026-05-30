@@ -1,9 +1,6 @@
 import csv
 import os
-import psycopg2
-from dotenv import load_dotenv
-
-load_dotenv()
+from db import get_connection
 
 CSV_FILE = os.path.join(os.path.dirname(__file__), "Universities.csv")
 
@@ -38,16 +35,6 @@ UPDATE_SQL = """
         "IsFinanciallyAutonomous" = %(is_financially_autonomous)s
     WHERE "Code" = %(code)s
 """
-
-
-def get_connection():
-    return psycopg2.connect(
-        host=os.environ["POSTGRES_HOST"],
-        port=int(os.environ.get("POSTGRES_PORT", 5432)),
-        dbname=os.environ["POSTGRES_DATABASE"],
-        user=os.environ["POSTGRES_USER"],
-        password=os.environ["POSTGRES_PASSWORD"],
-    )
 
 
 def load_universities():
