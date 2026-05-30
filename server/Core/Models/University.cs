@@ -10,9 +10,20 @@ public class University
     public string Name { get; set; } = String.Empty;
     
     [MaxLength(50)]
-    public string? ShortName { get; set; } 
+    public string? ShortName { get; set; }
 
     public string? EnglishName { get; set; }
+
+    /// <summary>
+    /// URL-friendly, ASCII slug derived from the name (+ short name).
+    /// Used for SEO-friendly detail URLs, e.g. "dai-hoc-khoa-hoc-tu-nhien-hcmus".
+    /// </summary>
+    /// <remarks>
+    /// Nullable so the column can be added to existing rows; populated by the ETL
+    /// pipeline and on create/update. A unique index is configured in ApplicationDbContext.
+    /// </remarks>
+    [MaxLength(160)]
+    public string? Slug { get; set; }
     /// <summary>
     /// Unique code for the university
     /// </summary>

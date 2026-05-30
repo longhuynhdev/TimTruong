@@ -7,6 +7,7 @@ public record UniversityDto
 {
     public int Id { get; init; }
     public string Name { get; init; } = string.Empty;
+    public string? Slug { get; init; }
     public string? ShortName { get; init; }
     public string? EnglishName { get; init; }
     public string Code { get; init; } = string.Empty;

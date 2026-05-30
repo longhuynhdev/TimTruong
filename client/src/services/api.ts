@@ -62,6 +62,21 @@ export async function fetchUniversityById(id: number): Promise<UniversityListIte
 }
 
 /**
+ * Fetch a single university by its URL slug (used by the SEO-friendly detail route)
+ */
+export async function fetchUniversityBySlug(slug: string): Promise<UniversityListItem> {
+	const response = await fetch(
+		`${API_BASE_URL}/api/v1/universities/by-slug/${encodeURIComponent(slug)}`,
+	);
+
+	if (!response.ok) {
+		throw new Error(`API request failed with status ${response.status}`);
+	}
+
+	return response.json();
+}
+
+/**
  * Fetch all majors with admission requirements for a university
  */
 export async function fetchUniversityMajors(id: number): Promise<UniversityMajors> {

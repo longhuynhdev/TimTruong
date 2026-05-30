@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Models;
 using TimTruong.ApiService.DataAccess;
 using TimTruong.ApiService.DTOs;
+using TimTruong.ApiService.Utils;
 
 namespace TimTruong.ApiService.Services;
 
@@ -56,6 +57,7 @@ public class UniversityService : IUniversityService
             {
                 Id = u.Id,
                 Name = u.Name,
+                Slug = u.Slug,
                 ShortName = u.ShortName,
                 EnglishName = u.EnglishName,
                 Code = u.Code,
@@ -98,6 +100,7 @@ public class UniversityService : IUniversityService
             {
                 Id = u.Id,
                 Name = u.Name,
+                Slug = u.Slug,
                 ShortName = u.ShortName,
                 EnglishName = u.EnglishName,
                 Code = u.Code,
@@ -116,6 +119,36 @@ public class UniversityService : IUniversityService
         return university;
     }
 
+    public async Task<UniversityDto?> GetUniversityBySlugAsync(string slug)
+    {
+        _logger.LogInformation("Getting university with slug: {Slug}", slug);
+
+        var university = await _context.Universities
+            .Include(u => u.Campuses)
+            .Where(u => u.Slug == slug)
+            .Select(u => new UniversityDto
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Slug = u.Slug,
+                ShortName = u.ShortName,
+                EnglishName = u.EnglishName,
+                Code = u.Code,
+                Type = u.Type.ToString(),
+                ImageUrl = u.ImageUrl,
+                IsFinanciallyAutonomous = u.IsFinanciallyAutonomous,
+                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList()
+            })
+            .FirstOrDefaultAsync();
+
+        if (university == null)
+        {
+            _logger.LogWarning("University with slug {Slug} not found", slug);
+        }
+
+        return university;
+    }
+
     public async Task<UniversityDto> CreateUniversityAsync(CreateUniversityRequest request)
     {
         _logger.LogInformation("Creating university with code: {Code}", request.Code);
@@ -126,13 +159,18 @@ public class UniversityService : IUniversityService
             throw new ArgumentException($"Invalid university type: {request.Type}");
         }
 
+        var name = request.Name.Trim();
+        var shortName = request.ShortName?.Trim();
+        var code = request.Code.ToUpper().Trim();
+
         // Create entity
         var university = new University
         {
-            Name = request.Name.Trim(),
-            ShortName = request.ShortName?.Trim(),
+            Name = name,
+            ShortName = shortName,
             EnglishName = request.EnglishName?.Trim(),
-            Code = request.Code.ToUpper().Trim(),
+            Code = code,
+            Slug = await GenerateUniqueSlugAsync(name, shortName, code),
             Type = uniType,
             ImageUrl = request.ImageUrl
         };
@@ -146,12 +184,25 @@ public class UniversityService : IUniversityService
         {
             Id = university.Id,
             Name = university.Name,
+            Slug = university.Slug,
             ShortName = university.ShortName,
             EnglishName = university.EnglishName,
             Code = university.Code,
             Type = university.Type.ToString(),
             ImageUrl = university.ImageUrl
         };
+    }
+
+    /// <summary>
+    /// Builds a slug from name (+ short name) and guarantees uniqueness by
+    /// appending the (already unique) university code on collision.
+    /// </summary>
+    private async Task<string> GenerateUniqueSlugAsync(string name, string? shortName, string code, int? excludeId = null)
+    {
+        var slug = SlugGenerator.Generate(name, shortName);
+        var exists = await _context.Universities
+            .AnyAsync(u => u.Slug == slug && (excludeId == null || u.Id != excludeId));
+        return exists ? $"{slug}-{code.ToLowerInvariant()}" : slug;
     }
 
     public async Task<UniversityDto?> UpdateUniversityAsync(int id, UpdateUniversityRequest request)
@@ -176,6 +227,7 @@ public class UniversityService : IUniversityService
         university.ShortName = request.ShortName?.Trim();
         university.EnglishName = request.EnglishName?.Trim();
         university.Code = request.Code.ToUpper().Trim();
+        university.Slug = await GenerateUniqueSlugAsync(university.Name, university.ShortName, university.Code, id);
         university.Type = uniType;
         university.ImageUrl = request.ImageUrl;
 
@@ -187,6 +239,7 @@ public class UniversityService : IUniversityService
         {
             Id = university.Id,
             Name = university.Name,
+            Slug = university.Slug,
             ShortName = university.ShortName,
             EnglishName = university.EnglishName,
             Code = university.Code,

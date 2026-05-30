@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "@tanstack/react-router";
+import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { fetchUniversityById, fetchUniversityMajors } from "@/services/api";
+import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
 	AdmissionRequirement,
 	MajorWithRequirements,
@@ -282,8 +283,7 @@ const TABS: { id: TabId; label: string }[] = [
 // ─── page ─────────────────────────────────────────────────────────────────────
 
 const UniversityDetailPage = () => {
-	const { universityId } = useParams({ from: "/danh-sach-truong/$universityId" });
-	const id = Number(universityId);
+	const { slug } = useParams({ from: "/danh-sach-truong/$slug" });
 
 	const [university, setUniversity] = useState<UniversityListItem | null>(null);
 	const [majorsData, setMajorsData] = useState<UniversityMajors | null>(null);
@@ -295,17 +295,25 @@ const UniversityDetailPage = () => {
 
 	useEffect(() => {
 		setLoadingInfo(true);
-		fetchUniversityById(id)
-			.then(setUniversity)
-			.catch(() => setErrorInfo("Không thể tải thông tin trường. Vui lòng thử lại."))
-			.finally(() => setLoadingInfo(false));
-
 		setLoadingMajors(true);
-		fetchUniversityMajors(id)
+
+		fetchUniversityBySlug(slug)
+			.then((uni) => {
+				setUniversity(uni);
+				setLoadingInfo(false);
+				// Majors are keyed by id, which we only learn from the university response.
+				return fetchUniversityMajors(uni.id);
+			})
 			.then(setMajorsData)
-			.catch(() => setErrorMajors("Không thể tải danh sách ngành. Vui lòng thử lại."))
-			.finally(() => setLoadingMajors(false));
-	}, [id]);
+			.catch(() => {
+				setErrorInfo("Không thể tải thông tin trường. Vui lòng thử lại.");
+				setErrorMajors("Không thể tải danh sách ngành. Vui lòng thử lại.");
+			})
+			.finally(() => {
+				setLoadingInfo(false);
+				setLoadingMajors(false);
+			});
+	}, [slug]);
 
 	return (
 		<>
@@ -313,10 +321,23 @@ const UniversityDetailPage = () => {
 				title={university ? university.name : "Chi tiết trường đại học"}
 				description={
 					university
-						? `Thông tin và danh sách ngành học của ${university.name}`
+						? `Thông tin tuyển sinh, học phí và danh sách ngành học của ${university.name}`
 						: "Chi tiết trường đại học"
 				}
+				image={university?.imageUrl ?? undefined}
 			/>
+			{university && (
+				<JsonLd
+					data={{
+						"@context": "https://schema.org",
+						"@type": "CollegeOrUniversity",
+						name: university.name,
+						...(university.englishName && { alternateName: university.englishName }),
+						url: `https://timtruong.app/danh-sach-truong/${slug}`,
+						...(university.imageUrl && { logo: university.imageUrl }),
+					}}
+				/>
+			)}
 
 			<div className="flex-1 bg-background p-4 md:p-8">
 				<div className="max-w-4xl mx-auto space-y-6">

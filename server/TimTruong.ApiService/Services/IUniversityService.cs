@@ -24,6 +24,11 @@ public interface IUniversityService
     Task<UniversityDto?> GetUniversityByIdAsync(int id);
 
     /// <summary>
+    /// Gets a single university by its URL slug
+    /// </summary>
+    Task<UniversityDto?> GetUniversityBySlugAsync(string slug);
+
+    /// <summary>
     /// Creates a new university
     /// </summary>
     Task<UniversityDto> CreateUniversityAsync(CreateUniversityRequest request);

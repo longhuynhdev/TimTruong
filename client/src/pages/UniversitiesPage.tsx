@@ -123,7 +123,7 @@ const UniversityCard = ({
 }: {
 	university: UniversityListItem;
 }) => (
-	<Link to="/danh-sach-truong/$universityId" params={{ universityId: String(u.id) }} className="block">
+	<Link to="/danh-sach-truong/$slug" params={{ slug: u.slug ?? String(u.id) }} className="block">
 		<Card className="shadow-sm hover:shadow-md transition-shadow border-border bg-card cursor-pointer">
 		<CardContent className="p-4">
 			<div className="flex items-center gap-4">
