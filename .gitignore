@@ -3,7 +3,10 @@ server/TimTruong.ApiService/bin
 server/.vscode/settings.json
 
 data/venv
-data/.env
+data/.venv
+data/.env*
+data/__pycache__/
+*.pyc
 
 .claude/settings.local.json
 CLAUDE.md

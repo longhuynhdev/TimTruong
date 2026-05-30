@@ -1,0 +1,32 @@
+STT,Mã ngành xét tuyển,"Tên ngành/nhóm ngành, chương trình"
+1,7140103,Công nghệ giáo dục
+2,7420101,Sinh học
+3,7420101_DKD,Sinh học (CT TCTA)
+4,7420201,Công nghệ Sinh học
+5,7420201_DKD,Công nghệ Sinh học (CT TCTA)
+6,7440102_DKD,Vật lý học (CT TCTA)
+7,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)"
+8,7440112,Hóa học
+9,7440112_DKD,Hóa học (CT TCTA)
+10,7440122,Khoa học Vật liệu
+11,7440122_DKD,Khoa học Vật liệu (CT TCTA)
+12,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)"
+13,7440228,Hải dương học
+14,7440301,Khoa học Môi trường
+15,7440301_DKD,Khoa học Môi trường (CT TCTA)
+16,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)"
+17,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)"
+18,7480101_TT,Khoa học máy tính (CT Tiên tiến)
+19,7480107,Trí tuệ nhân tạo
+20,7480201_DKD,Công nghệ thông tin (CT TCTA)
+21,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính)
+22,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA)
+23,7510402,Công nghệ Vật liệu
+24,7510406,Công nghệ Kỹ thuật Môi trường
+25,7520207,Kỹ thuật điện tử - viễn thông
+26,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA)
+27,75202a1,Thiết kế vi mạch
+28,7520402,Kỹ thuật hạt nhân
+29,7520403,Vật lý y khoa
+30,7520501,Kỹ thuật địa chất
+31,7850101,Quản lý tài nguyên và môi trường
