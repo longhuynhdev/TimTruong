@@ -5,6 +5,7 @@ import type { SubjectCombinationDetail } from "@/types";
 export const SUBJECT_COMBINATIONS = [
 	{ code: "A00", subjects: ["Toán", "Vật lý", "Hóa học"] },
 	{ code: "A01", subjects: ["Toán", "Vật lý", "Tiếng Anh"] },
+	{ code: "A02", subjects: ["Toán", "Vật lý", "Sinh học"] },
 	{ code: "B00", subjects: ["Toán", "Hóa học", "Sinh học"] },
 	{ code: "C00", subjects: ["Ngữ văn", "Lịch sử", "Địa lý"] },
 	{ code: "C10", subjects: ["Ngữ văn", "Lịch sử", "Hóa học"] },
@@ -18,6 +19,8 @@ export const SUBJECT_COMBINATIONS = [
 	{ code: "X02", subjects: ["Toán", "Ngữ văn", "Tin học"] },
 	{ code: "X03", subjects: ["Toán", "Ngữ văn", "Công nghệ công nghiệp"] },
 	{ code: "X04", subjects: ["Toán", "Ngữ văn", "Công nghệ nông nghiệp"] },
+	{ code: "X06", subjects: ["Toán", "Vật lý", "Tin Học"] },
+	{ code: "X26", subjects: ["Toán", "Tiếng Anh", "Tin Học"] }
 ] as const satisfies SubjectCombinationDetail[];
 
 // Derived from the constant — automatically stays in sync when entries are added/removed.

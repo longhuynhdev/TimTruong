@@ -8,5 +8,8 @@ data/.env*
 data/__pycache__/
 *.pyc
 
+data/admissionrequirements/images/
+data/admissionrequirements/*.review.md
+
 .claude/settings.local.json
 CLAUDE.md
