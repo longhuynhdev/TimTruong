@@ -2,21 +2,23 @@
 
 Quy trình:
   data/admissionrequirements/images/{Code}-{ShortName}-{Year}/*.png|jpg
-    → gọi Gemini 2 lần (temperature 0) với TẤT CẢ ảnh trong thư mục
+    → gọi Gemini 2 lần (temperature 0, response_mime_type=JSON) với TẤT CẢ ảnh trong thư mục
+    → model trả JSON array (an toàn với dấu phẩy trong tên ngành); MÌNH tự ghi CSV
     → diff theo key (Mã ngành, Phương thức, Tổ hợp)
     → validate (range điểm theo thang, tổ hợp ∈ enum)
     → ghi data/admissionrequirements/{Code}-{ShortName}-{Year}.csv
       + .review.md liệt kê ô cần review tay.
 
-Sau khi review tay file CSV, chạy etl_admissions.py để nạp vào DB.
+Năm KHÔNG nằm trong CSV (suy từ tên file lúc ETL). Sau khi review tay file CSV,
+chạy etl_admissions.py để nạp vào DB.
 
 Dùng:
-  uv run extract_admissions.py              # xử lý mọi thư mục trong images/
-  uv run extract_admissions.py DLS-ULSA2-2025   # chỉ 1 thư mục
+  uv run extract_admissions.py                  # xử lý mọi thư mục trong images/
+  uv run extract_admissions.py QST-HCMUS-2025   # chỉ 1 thư mục
 """
 
 import csv
-import io
+import json
 import os
 import sys
 from os.path import join, dirname
@@ -34,10 +36,18 @@ IMAGES_DIR = join(BASE_DIR, "admissionrequirements", "images")
 OUTPUT_DIR = join(BASE_DIR, "admissionrequirements")
 PROMPT_PATH = join(BASE_DIR, "prompts", "admission_extract.txt")
 
-HEADER = [
-    "Mã trường", "Mã ngành xét tuyển", "Tên ngành", "Năm", "Chỉ tiêu",
-    "Phương thức", "Tổ hợp", "Thang điểm", "Điểm",
-]
+# Header CSV (Năm + Chỉ tiêu đã bỏ; Năm suy từ tên file, Chỉ tiêu ETL riêng sau).
+HEADER = ["Mã trường", "Mã ngành xét tuyển", "Tên ngành", "Phương thức", "Tổ hợp", "Thang điểm", "Điểm"]
+
+# Khoá JSON model trả về → cột CSV tương ứng.
+JSON_TO_COL = {
+    "ma_nganh": "Mã ngành xét tuyển",
+    "ten_nganh": "Tên ngành",
+    "phuong_thuc": "Phương thức",
+    "to_hop": "Tổ hợp",
+    "thang_diem": "Thang điểm",
+    "diem": "Điểm",
+}
 
 MIME_BY_EXT = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
 
@@ -45,19 +55,16 @@ MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.1-pro-preview")
 NUM_PASSES = 2
 
 
-def load_prompt(uni_code: str, year: str) -> str:
+def load_prompt(uni_code: str) -> str:
     with open(PROMPT_PATH, encoding="utf-8") as f:
         template = f.read()
     valid = ", ".join(sorted(SUBJECT_COMBINATION.keys()))
-    return template.format(uni_code=uni_code, year=year, valid_combinations=valid)
+    return template.format(uni_code=uni_code, valid_combinations=valid)
 
 
-def parse_folder_name(folder: str):
-    """'DLS-ULSA2-2025' → (uni_code='DLS', year='2025')."""
-    parts = folder.split("-")
-    uni_code = parts[0].strip()
-    year = parts[-1].strip()
-    return uni_code, year
+def parse_uni_code(folder: str) -> str:
+    """'QST-HCMUS-2025' → 'QST' (phần đầu trước dấu '-')."""
+    return folder.split("-", 1)[0].strip()
 
 
 def load_images(folder_path: str):
@@ -78,6 +85,7 @@ def call_gemini(client, prompt: str, image_parts):
         contents=[prompt, *image_parts],
         config=types.GenerateContentConfig(
             temperature=0.0,
+            response_mime_type="application/json",
             # Độ phân giải ảnh cao → đọc bảng dày chữ / số thập phân chính xác hơn.
             media_resolution=types.MediaResolution.MEDIA_RESOLUTION_HIGH,
         ),
@@ -85,21 +93,33 @@ def call_gemini(client, prompt: str, image_parts):
     return resp.text or ""
 
 
-def parse_csv_text(text: str):
-    """Parse output Gemini → list[dict]. Bỏ rào ```csv nếu có."""
+def _to_str(value) -> str:
+    """Số nguyên-thực (30, 1200.0) → '30'/'1200'; còn lại str() thẳng."""
+    if isinstance(value, bool):
+        return str(value)
+    if isinstance(value, float) and value.is_integer():
+        return str(int(value))
+    if value is None:
+        return ""
+    return str(value).strip()
+
+
+def parse_json_text(text: str, uni_code: str):
+    """Parse JSON array model trả về → list[dict] theo HEADER."""
     text = text.strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[1] if "\n" in text else ""
         if text.rstrip().endswith("```"):
             text = text.rsplit("```", 1)[0]
+    data = json.loads(text)
     rows = []
-    reader = csv.DictReader(io.StringIO(text))
-    for row in reader:
-        # chuẩn hoá khoảng trắng các cột header đã biết
-        clean = {h: (row.get(h) or "").strip() for h in HEADER}
-        if not clean["Mã ngành xét tuyển"] and not clean["Phương thức"]:
+    for obj in data:
+        row = {"Mã trường": uni_code}
+        for jkey, col in JSON_TO_COL.items():
+            row[col] = _to_str(obj.get(jkey))
+        if not row["Mã ngành xét tuyển"] and not row["Phương thức"]:
             continue
-        rows.append(clean)
+        rows.append(row)
     return rows
 
 
@@ -121,6 +141,9 @@ def validate_row(row: dict):
         warns.append("THPTQG thiếu tổ hợp")
 
     thang_raw = row["Thang điểm"] or str(DEFAULT_MAX_SCORE.get(pt, ""))
+    if not row["Điểm"]:
+        warns.append("thiếu Điểm")
+        return warns
     try:
         diem = float(row["Điểm"])
     except ValueError:
@@ -132,7 +155,7 @@ def validate_row(row: dict):
         warns.append(f"Thang điểm không hợp lệ: '{row['Thang điểm']}'")
         return warns
     if not (0 <= diem <= thang):
-        warns.append(f"Điểm {diem} ngoài khoảng [0, {thang:g}]")
+        warns.append(f"Điểm {diem:g} ngoài khoảng [0, {thang:g}]")
     return warns
 
 
@@ -162,6 +185,11 @@ def merge_passes(passes):
     return rows, flags
 
 
+def row_key_str(key):
+    ma, pt, th = key
+    return f"{ma} | {pt} | {th or '(không tổ hợp)'}"
+
+
 def write_outputs(out_csv: str, rows, flags):
     with open(out_csv, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=HEADER)
@@ -184,27 +212,30 @@ def write_outputs(out_csv: str, rows, flags):
     return review_path, len(flagged)
 
 
-def row_key_str(key):
-    ma, pt, th = key
-    return f"{ma} | {pt} | {th or '(không tổ hợp)'}"
-
-
 def process_folder(client, folder: str):
     folder_path = join(IMAGES_DIR, folder)
-    uni_code, year = parse_folder_name(folder)
+    uni_code = parse_uni_code(folder)
     image_parts = load_images(folder_path)
     if not image_parts:
         print(f"  SKIP '{folder}' — không có ảnh")
         return
 
-    prompt = load_prompt(uni_code, year)
-    print(f"  '{folder}': {len(image_parts)} ảnh → gọi Gemini {NUM_PASSES} lần ({MODEL})...")
+    prompt = load_prompt(uni_code)
+    print(f"  '{folder}' (mã {uni_code}): {len(image_parts)} ảnh → gọi Gemini {NUM_PASSES} lần ({MODEL})...")
     passes = []
     for i in range(NUM_PASSES):
         text = call_gemini(client, prompt, image_parts)
-        rows = parse_csv_text(text)
+        try:
+            rows = parse_json_text(text, uni_code)
+        except (json.JSONDecodeError, TypeError) as e:
+            print(f"    pass {i + 1}: LỖI parse JSON ({e}); bỏ qua pass này")
+            continue
         print(f"    pass {i + 1}: {len(rows)} dòng")
         passes.append(rows)
+
+    if not passes:
+        print(f"  SKIP '{folder}' — không pass nào parse được")
+        return
 
     rows, flags = merge_passes(passes)
     out_csv = join(OUTPUT_DIR, f"{folder}.csv")

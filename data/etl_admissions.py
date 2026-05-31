@@ -18,8 +18,6 @@ from enums import parse_exam_type, parse_subject_combination
 AR_DIR = os.path.join(os.path.dirname(__file__), "admissionrequirements")
 
 COL_CODE = "Mã ngành xét tuyển"
-COL_YEAR = "Năm"
-COL_QUOTA = "Chỉ tiêu"
 COL_METHOD = "Phương thức"
 COL_COMBO = "Tổ hợp"
 COL_SCORE = "Điểm"
@@ -30,7 +28,6 @@ INSERT_SQL = """
     VALUES (%(major_id)s, %(exam_type)s, %(score)s, %(combo)s, %(year)s)
 """
 UPDATE_SQL = 'UPDATE "AdmissionRequirements" SET "Score" = %(score)s WHERE "Id" = %(id)s'
-QUOTA_SQL = 'UPDATE "Majors" SET "EnrollmentQuota" = %(quota)s WHERE "Id" = %(major_id)s'
 
 
 def parse_uni_code(filename: str) -> str:
@@ -38,7 +35,14 @@ def parse_uni_code(filename: str) -> str:
     return os.path.basename(filename).split("-", 1)[0].strip()
 
 
-def load_file(path: str):
+def parse_year(filename: str):
+    """'DLS-ULSA2-2025.csv' → 2025 (phần cuối tên file). None nếu không hợp lệ."""
+    stem = os.path.splitext(os.path.basename(filename))[0]
+    last = stem.rsplit("-", 1)[-1].strip()
+    return int(last) if last.isdigit() else None
+
+
+def load_file(path: str, year: int):
     """Đọc 1 CSV → list dòng đã chuẩn hoá/convert. Trả (rows, errors)."""
     rows, errors = [], []
     with open(path, encoding="utf-8") as f:
@@ -63,22 +67,12 @@ def load_file(path: str):
                 errors.append(f"dòng {lineno} ({code}): điểm không hợp lệ '{raw.get(COL_SCORE)}' — bỏ")
                 continue
 
-            try:
-                year = int((raw.get(COL_YEAR) or "").strip())
-            except ValueError:
-                errors.append(f"dòng {lineno} ({code}): năm không hợp lệ '{raw.get(COL_YEAR)}' — bỏ")
-                continue
-
-            quota_raw = (raw.get(COL_QUOTA) or "").strip()
-            quota = int(quota_raw) if quota_raw.isdigit() else None
-
             rows.append({
                 "code": code,
                 "exam_type": exam_type,
                 "combo": combo,
                 "score": score,
                 "year": year,
-                "quota": quota,
             })
     return rows, errors
 
@@ -132,14 +126,6 @@ def process_uni(cur, uni_code, uni_id, rows):
             cur.execute('DELETE FROM "AdmissionRequirements" WHERE "Id" = %s', (id_,))
             deleted += 1
 
-    # Cập nhật chỉ tiêu (nếu có) — lấy giá trị đầu tiên non-null mỗi major
-    quota_by_major = {}
-    for r in valid:
-        if r["quota"] is not None:
-            quota_by_major.setdefault(r["major_id"], r["quota"])
-    for major_id, quota in quota_by_major.items():
-        cur.execute(QUOTA_SQL, {"major_id": major_id, "quota": quota})
-
     return ins, upd, deleted, skipped
 
 
@@ -162,7 +148,12 @@ def run():
                 print(f"  SKIP file '{os.path.basename(path)}' — không có University Code '{uni_code}'")
                 continue
 
-            rows, errors = load_file(path)
+            year = parse_year(path)
+            if year is None:
+                print(f"  SKIP file '{os.path.basename(path)}' — không suy được Năm từ tên file (cần dạng {{Code}}-{{ShortName}}-{{Năm}}.csv)")
+                continue
+
+            rows, errors = load_file(path, year)
             for e in errors:
                 print(f"  [{uni_code}] {e}")
             ins, upd, deleted, skipped = process_uni(cur, uni_code, uni_id, rows)
