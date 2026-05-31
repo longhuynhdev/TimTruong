@@ -105,6 +105,9 @@ public enum SubjectCombination
     /// <summary>Văn, Toán, Sử (Literature, Math, Biology)</summary>
     C03 = 303,
 
+    /// <summary>Văn, Toán, Địa</summary>
+    C04 = 304,
+
     //TODO:
 
     // ==========================================
@@ -141,14 +144,29 @@ public enum SubjectCombination
     /// <summary>Toán, Địa, Anh </summary>
     D10 = 410,
 
+    /// <summary>Văn, Sử, Anh</summary>
+    D14 = 414,
+
+    /// <summary>Văn, Địa, Anh</summary>
+    D15 = 415,
+
     //TODO:
 
     // ==========================================
-    // GROUP X  
+    // GROUP X
     // ==========================================
+
+    /// <summary>Toán, Văn, GDKT&amp;PL </summary>
+    X01 = 501,
 
     /// <summary>Toán, Văn, Tin </summary>
     X02 = 502,
+
+    /// <summary>Toán, Văn, Công nghệ công nghiệp </summary>
+    X03 = 503,
+
+    /// <summary>Toán, Văn, Công nghệ nông nghiệp </summary>
+    X04 = 504,
 
     /// <summary>Toán, Lí, Tin </summary>
     X06 = 506,
