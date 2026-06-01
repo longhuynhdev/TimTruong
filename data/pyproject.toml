@@ -8,4 +8,5 @@ dependencies = [
     "dotenv>=0.9.9",
     "psycopg2-binary>=2.9.12",
     "google-genai>=2.7.0",
+    "openai>=1.0.0",
 ]

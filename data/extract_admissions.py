@@ -1,8 +1,10 @@
-"""Trích xuất điểm chuẩn từ ẢNH → CSV long-format bằng Gemini (2-pass consensus).
+"""Trích xuất điểm chuẩn từ ẢNH → CSV long-format bằng Vision-LLM (2-pass consensus).
+
+Provider chọn qua env LLM_PROVIDER (gemini | openai-compatible) — xem vision.py.
 
 Quy trình:
   data/admissionrequirements/images/{Code}-{ShortName}-{Year}/*.png|jpg
-    → gọi Gemini 2 lần (temperature 0, response_mime_type=JSON) với TẤT CẢ ảnh trong thư mục
+    → gọi model 2 lần (temperature 0) với TẤT CẢ ảnh trong thư mục
     → model trả JSON array (an toàn với dấu phẩy trong tên ngành); MÌNH tự ghi CSV
     → diff theo key (Mã ngành, Phương thức, Tổ hợp)
     → validate (range điểm theo thang, tổ hợp ∈ enum)
@@ -13,10 +15,12 @@ Năm KHÔNG nằm trong CSV (suy từ tên file lúc ETL). Sau khi review tay fi
 chạy etl_admissions.py để nạp vào DB.
 
 Dùng:
-  uv run extract_admissions.py                  # xử lý mọi thư mục trong images/
-  uv run extract_admissions.py QST-HCMUS-2025   # chỉ 1 thư mục
+  uv run extract_admissions.py                                    # xử lý mọi thư mục trong images/
+  uv run extract_admissions.py QST-HCMUS-2025                     # chỉ 1 thư mục
+  uv run extract_admissions.py QST-HCMUS-2025 --note "cột cuối là ĐGNL, bỏ dòng Tổng"
 """
 
+import argparse
 import csv
 import json
 import os
@@ -24,9 +28,8 @@ import sys
 from os.path import join, dirname
 
 from dotenv import load_dotenv
-from google import genai
-from google.genai import types
 
+import vision
 from enums import EXAM_TYPE, SUBJECT_COMBINATION, DEFAULT_MAX_SCORE
 
 load_dotenv(join(dirname(__file__), ".env"))
@@ -51,15 +54,17 @@ JSON_TO_COL = {
 
 MIME_BY_EXT = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
 
-MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.1-pro-preview")
 NUM_PASSES = 2
 
 
-def load_prompt(uni_code: str) -> str:
+def load_prompt(uni_code: str, extra: str = "") -> str:
     with open(PROMPT_PATH, encoding="utf-8") as f:
         template = f.read()
     valid = ", ".join(sorted(SUBJECT_COMBINATION.keys()))
-    return template.format(uni_code=uni_code, valid_combinations=valid)
+    extra_block = ""
+    if extra.strip():
+        extra_block = "\nHƯỚNG DẪN RIÊNG CHO TRƯỜNG NÀY (ưu tiên tuân theo):\n" + extra.strip() + "\n"
+    return template.format(uni_code=uni_code, valid_combinations=valid, extra_instructions=extra_block)
 
 
 def parse_uni_code(folder: str) -> str:
@@ -68,29 +73,16 @@ def parse_uni_code(folder: str) -> str:
 
 
 def load_images(folder_path: str):
-    parts = []
+    """Trả list ảnh dạng provider-neutral: [{"data": bytes, "mime": str}, ...]."""
+    images = []
     for name in sorted(os.listdir(folder_path)):
         ext = os.path.splitext(name)[1].lower()
         mime = MIME_BY_EXT.get(ext)
         if not mime:
             continue
         with open(join(folder_path, name), "rb") as f:
-            parts.append(types.Part.from_bytes(data=f.read(), mime_type=mime))
-    return parts
-
-
-def call_gemini(client, prompt: str, image_parts):
-    resp = client.models.generate_content(
-        model=MODEL,
-        contents=[prompt, *image_parts],
-        config=types.GenerateContentConfig(
-            temperature=0.0,
-            response_mime_type="application/json",
-            # Độ phân giải ảnh cao → đọc bảng dày chữ / số thập phân chính xác hơn.
-            media_resolution=types.MediaResolution.MEDIA_RESOLUTION_HIGH,
-        ),
-    )
-    return resp.text or ""
+            images.append({"data": f.read(), "mime": mime})
+    return images
 
 
 def _to_str(value) -> str:
@@ -212,19 +204,20 @@ def write_outputs(out_csv: str, rows, flags):
     return review_path, len(flagged)
 
 
-def process_folder(client, folder: str):
+def process_folder(folder: str, note: str = ""):
     folder_path = join(IMAGES_DIR, folder)
     uni_code = parse_uni_code(folder)
-    image_parts = load_images(folder_path)
-    if not image_parts:
+    images = load_images(folder_path)
+    if not images:
         print(f"  SKIP '{folder}' — không có ảnh")
         return
 
-    prompt = load_prompt(uni_code)
-    print(f"  '{folder}' (mã {uni_code}): {len(image_parts)} ảnh → gọi Gemini {NUM_PASSES} lần ({MODEL})...")
+    prompt = load_prompt(uni_code, note)
+    note_msg = " + hướng dẫn riêng" if note else ""
+    print(f"  '{folder}' (mã {uni_code}): {len(images)} ảnh{note_msg} → gọi model {NUM_PASSES} lần ({vision.active_model()})...")
     passes = []
     for i in range(NUM_PASSES):
-        text = call_gemini(client, prompt, image_parts)
+        text = vision.call_model(prompt, images)
         try:
             rows = parse_json_text(text, uni_code)
         except (json.JSONDecodeError, TypeError) as e:
@@ -248,23 +241,35 @@ def process_folder(client, folder: str):
 
 
 def run():
-    api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        sys.exit("Thiếu GEMINI_API_KEY trong .env")
-    client = genai.Client(api_key=api_key)
+    parser = argparse.ArgumentParser(
+        description="Trích xuất điểm chuẩn từ ảnh → CSV bằng Vision-LLM (2-pass). Provider qua LLM_PROVIDER.",
+    )
+    parser.add_argument(
+        "folders", nargs="*",
+        help="tên thư mục trong images/ cần xử lý (vd QST-HCMUS-2025); bỏ trống = xử lý tất cả",
+    )
+    parser.add_argument(
+        "-n", "--note", default="",
+        help="hướng dẫn riêng nối vào prompt cho lần chạy này (vd 'cột cuối là ĐGNL, bỏ dòng Tổng')",
+    )
+    args = parser.parse_args()
+
+    vision.validate_env()
 
     if not os.path.isdir(IMAGES_DIR):
         sys.exit(f"Không thấy thư mục ảnh: {IMAGES_DIR}")
 
-    targets = sys.argv[1:] or sorted(
+    targets = args.folders or sorted(
         d for d in os.listdir(IMAGES_DIR) if os.path.isdir(join(IMAGES_DIR, d))
     )
     if not targets:
         sys.exit(f"Không có thư mục con nào trong {IMAGES_DIR}")
 
+    if args.note and len(targets) > 1:
+        print("  (lưu ý: --note áp dụng cho TẤT CẢ thư mục trong lần chạy này)")
     print(f"Xử lý {len(targets)} thư mục:")
     for folder in targets:
-        process_folder(client, folder)
+        process_folder(folder, args.note)
 
 
 if __name__ == "__main__":
