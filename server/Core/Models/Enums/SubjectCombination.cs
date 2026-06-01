@@ -167,7 +167,7 @@ public enum SubjectCombination
     /// <summary>Toán, Ngữ văn, GDKTPL </summary>
     X01 = 501,
 
-    /// <summary>Toán, Ngữ văn, Tin </summary>
+    /// <summary>Toán, Ngữ văn, Tin học</summary>
     X02 = 502,
 
     /// <summary>Toán, Ngữ văn, Công nghệ công nghiệp </summary>
@@ -176,7 +176,7 @@ public enum SubjectCombination
     /// <summary>Toán, Ngữ văn, Công nghệ nông nghiệp </summary>
     X04 = 504,
 
-    /// <summary>Toán, Vật lí, Tin </summary>
+    /// <summary>Toán, Vật lí, Tin học</summary>
     X06 = 506,
 
     /// <summary>Toán, Vật lí, Công nghệ công nghiệp</summary>
@@ -188,10 +188,13 @@ public enum SubjectCombination
     /// <summary>Toán, Hóa học, Công nghệ công nghiệp</summary>
     X11 = 511,
 
+    /// <summary>Toán, Sinh học, Tin học</summary>
+    X14 = 514,
+
     /// <summary>Toán, Anh, GDKTPL </summary>
     X25 = 525,
 
-    /// <summary>Toán, Anh, Tin </summary>
+    /// <summary>Toán, Anh, Tin học</summary>
     X26 = 526,
 
     /// <summary>Toán, Tiếng Anh, Công nghệ công nghiệp</summary>
