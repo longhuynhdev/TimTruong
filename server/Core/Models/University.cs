@@ -42,7 +42,14 @@ public class University
 
     public bool? IsFinanciallyAutonomous { get; set; }
 
+    /// <summary>
+    /// Whether the university provides a dormitory (KTX): true = yes, false = no,
+    /// null = not yet known. Used for the "có ký túc xá" search filter.
+    /// </summary>
+    public bool? HasDormitory { get; set; }
+
     // Navigation properties
     public ICollection<Campus> Campuses { get; set; } = new List<Campus>();
     public ICollection<Major> Majors { get; set; } = new List<Major>();
+    public ICollection<Dormitory> Dormitories { get; set; } = new List<Dormitory>();
 }

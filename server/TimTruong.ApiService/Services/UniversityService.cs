@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Core.Models;
 using TimTruong.ApiService.DataAccess;
 using TimTruong.ApiService.DTOs;
-using TimTruong.ApiService.Utils;
 
 namespace TimTruong.ApiService.Services;
 
@@ -20,10 +19,10 @@ public class UniversityService : IUniversityService
         _logger = logger;
     }
 
-    public async Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null)
+    public async Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null, bool? hasDormitory = null)
     {
-        _logger.LogInformation("Getting all universities with filters - Search: {Search}, Type: {Type}, City: {City}", 
-            search, type, city);
+        _logger.LogInformation("Getting all universities with filters - Search: {Search}, Type: {Type}, City: {City}, HasDormitory: {HasDormitory}",
+            search, type, city, hasDormitory);
 
         var query = _context.Universities.Include(u => u.Campuses).AsQueryable();
 
@@ -45,10 +44,16 @@ public class UniversityService : IUniversityService
             }
         }
 
-        // Apply city filter 
+        // Apply city filter
         if (!string.IsNullOrWhiteSpace(city))
         {
             query = query.Where(u => u.Campuses.Any(c => c.City != null && c.City.ToLower().Contains(city.ToLower())));
+        }
+
+        // Apply dormitory filter (only universities that have a KTX)
+        if (hasDormitory == true)
+        {
+            query = query.Where(u => u.HasDormitory == true);
         }
 
         var universities = await query
@@ -64,6 +69,7 @@ public class UniversityService : IUniversityService
                 Type = u.Type.ToString(),
                 ImageUrl = u.ImageUrl,
                 IsFinanciallyAutonomous = u.IsFinanciallyAutonomous,
+                HasDormitory = u.HasDormitory,
                 Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList()
             })
             .ToListAsync();
@@ -95,6 +101,7 @@ public class UniversityService : IUniversityService
 
         var university = await _context.Universities
             .Include(u => u.Campuses)
+            .Include(u => u.Dormitories)
             .Where(u => u.Id == id)
             .Select(u => new UniversityDto
             {
@@ -107,7 +114,12 @@ public class UniversityService : IUniversityService
                 Type = u.Type.ToString(),
                 ImageUrl = u.ImageUrl,
                 IsFinanciallyAutonomous = u.IsFinanciallyAutonomous,
-                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList()
+                HasDormitory = u.HasDormitory,
+                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList(),
+                Dormitories = u.Dormitories
+                    .OrderBy(d => d.Name)
+                    .Select(d => new DormitoryDto(d.Name, d.Address, d.Note, d.RegistrationUrl))
+                    .ToList()
             })
             .FirstOrDefaultAsync();
 
@@ -125,6 +137,7 @@ public class UniversityService : IUniversityService
 
         var university = await _context.Universities
             .Include(u => u.Campuses)
+            .Include(u => u.Dormitories)
             .Where(u => u.Slug == slug)
             .Select(u => new UniversityDto
             {
@@ -137,7 +150,12 @@ public class UniversityService : IUniversityService
                 Type = u.Type.ToString(),
                 ImageUrl = u.ImageUrl,
                 IsFinanciallyAutonomous = u.IsFinanciallyAutonomous,
-                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList()
+                HasDormitory = u.HasDormitory,
+                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList(),
+                Dormitories = u.Dormitories
+                    .OrderBy(d => d.Name)
+                    .Select(d => new DormitoryDto(d.Name, d.Address, d.Note, d.RegistrationUrl))
+                    .ToList()
             })
             .FirstOrDefaultAsync();
 
@@ -147,105 +165,6 @@ public class UniversityService : IUniversityService
         }
 
         return university;
-    }
-
-    public async Task<UniversityDto> CreateUniversityAsync(CreateUniversityRequest request)
-    {
-        _logger.LogInformation("Creating university with code: {Code}", request.Code);
-
-        // Parse type
-        if (!Enum.TryParse<UniType>(request.Type, out var uniType))
-        {
-            throw new ArgumentException($"Invalid university type: {request.Type}");
-        }
-
-        var name = request.Name.Trim();
-        var shortName = request.ShortName?.Trim();
-        var code = request.Code.ToUpper().Trim();
-
-        // Create entity
-        var university = new University
-        {
-            Name = name,
-            ShortName = shortName,
-            EnglishName = request.EnglishName?.Trim(),
-            Code = code,
-            Slug = await GenerateUniqueSlugAsync(name, shortName, code),
-            Type = uniType,
-            ImageUrl = request.ImageUrl
-        };
-
-        _context.Universities.Add(university);
-        await _context.SaveChangesAsync();
-
-        _logger.LogInformation("Successfully created university with ID: {Id}", university.Id);
-
-        return new UniversityDto
-        {
-            Id = university.Id,
-            Name = university.Name,
-            Slug = university.Slug,
-            ShortName = university.ShortName,
-            EnglishName = university.EnglishName,
-            Code = university.Code,
-            Type = university.Type.ToString(),
-            ImageUrl = university.ImageUrl
-        };
-    }
-
-    /// <summary>
-    /// Builds a slug from name (+ short name) and guarantees uniqueness by
-    /// appending the (already unique) university code on collision.
-    /// </summary>
-    private async Task<string> GenerateUniqueSlugAsync(string name, string? shortName, string code, int? excludeId = null)
-    {
-        var slug = SlugGenerator.Generate(name, shortName);
-        var exists = await _context.Universities
-            .AnyAsync(u => u.Slug == slug && (excludeId == null || u.Id != excludeId));
-        return exists ? $"{slug}-{code.ToLowerInvariant()}" : slug;
-    }
-
-    public async Task<UniversityDto?> UpdateUniversityAsync(int id, UpdateUniversityRequest request)
-    {
-        _logger.LogInformation("Updating university with ID: {Id}", id);
-
-        var university = await _context.Universities.FindAsync(id);
-        if (university == null)
-        {
-            _logger.LogWarning("University with ID {Id} not found for update", id);
-            return null;
-        }
-
-        // Parse type
-        if (!Enum.TryParse<UniType>(request.Type, out var uniType))
-        {
-            throw new ArgumentException($"Invalid university type: {request.Type}");
-        }
-
-        // Update properties
-        university.Name = request.Name.Trim();
-        university.ShortName = request.ShortName?.Trim();
-        university.EnglishName = request.EnglishName?.Trim();
-        university.Code = request.Code.ToUpper().Trim();
-        university.Slug = await GenerateUniqueSlugAsync(university.Name, university.ShortName, university.Code, id);
-        university.Type = uniType;
-        university.ImageUrl = request.ImageUrl;
-
-        await _context.SaveChangesAsync();
-
-        _logger.LogInformation("Successfully updated university with ID: {Id}", id);
-
-        return new UniversityDto
-        {
-            Id = university.Id,
-            Name = university.Name,
-            Slug = university.Slug,
-            ShortName = university.ShortName,
-            EnglishName = university.EnglishName,
-            Code = university.Code,
-            Type = university.Type.ToString(),
-            ImageUrl = university.ImageUrl
-        };
     }
 
     public async Task<UniversityMajorsDto?> GetUniversityMajorsAsync(int id)
@@ -291,23 +210,4 @@ public class UniversityService : IUniversityService
         return university;
     }
 
-    // WARNING: This will CASCADE DELETE all campuses and majors
-    // TODO: Add safety checks before production (see note-of-Huy.md line 1042)
-    public async Task<bool> DeleteUniversityAsync(int id)
-    {
-        _logger.LogInformation("Deleting university with ID: {Id}", id);
-
-        var university = await _context.Universities.FindAsync(id);
-        if (university == null)
-        {
-            _logger.LogWarning("University with ID {Id} not found for deletion", id);
-            return false;
-        }
-
-        _context.Universities.Remove(university);
-        await _context.SaveChangesAsync(); // CASCADE DELETES ALL CHILDREN
-
-        _logger.LogInformation("Successfully deleted university with ID: {Id}", id);
-        return true;
-    }
 }

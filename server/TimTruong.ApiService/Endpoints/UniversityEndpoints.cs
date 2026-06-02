@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TimTruong.ApiService.DTOs;
 using TimTruong.ApiService.Services;
-using TimTruong.ApiService.Validators;
-using TimTruong.ApiService.DataAccess;
-using MiniValidation;
 
 namespace TimTruong.ApiService.Endpoints;
 
@@ -62,12 +59,13 @@ public static class UniversityEndpoints
         [FromQuery] string? search,
         [FromQuery] string? type,
         [FromQuery] string? city,
+        [FromQuery] bool? hasDormitory,
         IUniversityService universityService,
         ILogger<IUniversityService> logger)
     {
         try
         {
-            var universities = await universityService.GetAllUniversitiesAsync(search, type, city);
+            var universities = await universityService.GetAllUniversitiesAsync(search, type, city, hasDormitory);
             return Results.Ok(universities);
         }
         catch (Exception ex)

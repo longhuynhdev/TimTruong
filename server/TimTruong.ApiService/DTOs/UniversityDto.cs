@@ -14,7 +14,15 @@ public record UniversityDto
     public string Type { get; init; } = string.Empty; // "Public" or "Private"
     public string? ImageUrl { get; init; }
     public bool? IsFinanciallyAutonomous { get; init; }
+    public bool? HasDormitory { get; init; }
     public List<CampusLocationDto> Campuses { get; init; } = new();
+    public List<DormitoryDto> Dormitories { get; init; } = new();
 }
 
 public record CampusLocationDto(string City, string? District);
+
+public record DormitoryDto(
+    string Name,
+    string? Address,
+    string? Note,
+    string? RegistrationUrl);

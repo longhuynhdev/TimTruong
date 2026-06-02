@@ -22,8 +22,8 @@ UNI_TYPE_MAP = {
 }
 
 INSERT_SQL = """
-    INSERT INTO "Universities" ("Name", "ShortName", "EnglishName", "Code", "Type", "ImageUrl", "IsFinanciallyAutonomous", "Slug")
-    VALUES (%(name)s, %(short_name)s, %(english_name)s, %(code)s, %(type)s, %(image_url)s, %(is_financially_autonomous)s, %(slug)s)
+    INSERT INTO "Universities" ("Name", "ShortName", "EnglishName", "Code", "Type", "ImageUrl", "IsFinanciallyAutonomous", "HasDormitory", "Slug")
+    VALUES (%(name)s, %(short_name)s, %(english_name)s, %(code)s, %(type)s, %(image_url)s, %(is_financially_autonomous)s, %(has_dormitory)s, %(slug)s)
 """
 
 UPDATE_SQL = """
@@ -34,6 +34,7 @@ UPDATE_SQL = """
         "Type"                   = %(type)s,
         "ImageUrl"               = %(image_url)s,
         "IsFinanciallyAutonomous" = %(is_financially_autonomous)s,
+        "HasDormitory"           = %(has_dormitory)s,
         "Slug"                   = %(slug)s
     WHERE "Code" = %(code)s
 """
@@ -69,6 +70,7 @@ def load_universities():
                 "type": UNI_TYPE_MAP.get(row["Type"].strip(), 0),
                 "image_url": row["ImageUrl"].strip() or None,
                 "is_financially_autonomous": _parse_bool(row.get("IsFinanciallyAutonomous", "")),
+                "has_dormitory": _parse_bool(row.get("HasDormitory", "")),
                 "slug": slug,
             })
 

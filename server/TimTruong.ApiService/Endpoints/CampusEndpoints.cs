@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TimTruong.ApiService.DTOs;
 using TimTruong.ApiService.Services;
-using TimTruong.ApiService.DataAccess;
-using TimTruong.ApiService.Validators;
-using MiniValidation;
 
 namespace TimTruong.ApiService.Endpoints;
 

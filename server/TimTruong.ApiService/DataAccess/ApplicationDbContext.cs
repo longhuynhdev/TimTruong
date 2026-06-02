@@ -17,6 +17,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Campus> Campuses { get; set; }
     public DbSet<Major> Majors { get; set; }
     public DbSet<AdmissionRequirement> AdmissionRequirements { get; set; }
+    public DbSet<Dormitory> Dormitories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,6 +27,18 @@ public class ApplicationDbContext : DbContext
         // can be backfilled by the ETL pipeline without violating the index).
         modelBuilder.Entity<University>()
             .HasIndex(u => u.Slug)
+            .IsUnique();
+
+        // Many-to-many: University ↔ Dormitory (shared KTX like Làng ĐH used by multiple universities).
+        // EF Core 6+ auto-creates the join table; we name it explicitly for clarity.
+        modelBuilder.Entity<University>()
+            .HasMany(u => u.Dormitories)
+            .WithMany(d => d.Universities)
+            .UsingEntity("UniversityDormitories");
+
+        // Unique dormitory name (used as ETL upsert key).
+        modelBuilder.Entity<Dormitory>()
+            .HasIndex(d => d.Name)
             .IsUnique();
 
         // Seed data
