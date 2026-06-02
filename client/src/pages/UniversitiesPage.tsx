@@ -41,6 +41,15 @@ const UniversitiesPage = () => {
 		setSelectedDorm(ALL);
 	};
 
+	const hasActiveFilter =
+		query.trim() !== "" || selectedType !== ALL || selectedAutonomy !== ALL;
+
+	const resetFilters = () => {
+		setQuery("");
+		setSelectedType(ALL);
+		setSelectedAutonomy(ALL);
+	};
+
 	useEffect(() => {
 		fetchAllUniversities()
 			.then(setUniversities)
