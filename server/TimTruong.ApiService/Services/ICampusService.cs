@@ -11,12 +11,4 @@ public interface ICampusService
     // Get a single campus by ID
     Task<CampusDto?> GetCampusByIdAsync(int id);
 
-    // Create a new campus (returns null if university not found)
-    Task<CampusDto?> CreateCampusAsync(CreateCampusRequest request);
-
-    // Update an existing campus
-    Task<CampusDto?> UpdateCampusAsync(int id, UpdateCampusRequest request);
-
-    // Delete a campus
-    Task<bool> DeleteCampusAsync(int id);
 }

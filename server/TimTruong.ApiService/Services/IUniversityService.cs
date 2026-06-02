@@ -11,7 +11,7 @@ public interface IUniversityService
     /// Gets all universities with optional filtering
     /// </summary>
 
-    Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null);
+    Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null, bool? hasDormitory = null);
 
     /// <summary>
     /// Gets a simplified list of universities for dropdowns
@@ -29,22 +29,7 @@ public interface IUniversityService
     Task<UniversityDto?> GetUniversityBySlugAsync(string slug);
 
     /// <summary>
-    /// Creates a new university
-    /// </summary>
-    Task<UniversityDto> CreateUniversityAsync(CreateUniversityRequest request);
-
-    /// <summary>
-    /// Updates an existing university
-    /// </summary>
-    Task<UniversityDto?> UpdateUniversityAsync(int id, UpdateUniversityRequest request);
-
-    /// <summary>
     /// Gets all majors and their admission requirements for a university
     /// </summary>
     Task<UniversityMajorsDto?> GetUniversityMajorsAsync(int id);
-
-    /// <summary>
-    /// Deletes a university (soft delete - not implemented yet, or hard delete)
-    /// </summary>
-    Task<bool> DeleteUniversityAsync(int id);
 }
