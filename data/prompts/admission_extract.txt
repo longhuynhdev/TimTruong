@@ -35,5 +35,5 @@ QUY TẮC
 
 DANH SÁCH TỔ HỢP HỢP LỆ
 {valid_combinations}
-
+{extra_instructions}
 Chỉ in ra JSON array, KHÔNG kèm bất kỳ chữ nào khác, KHÔNG bọc trong ```.

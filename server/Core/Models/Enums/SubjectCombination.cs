@@ -9,25 +9,25 @@ public enum SubjectCombination
     // GROUP A - NATURAL SCIENCES
     // ==========================================
 
-    /// <summary>Toán, Lí, Hóa</summary>
+    /// <summary>Toán, Vật lí, Hóa</summary>
     A00 = 100,
 
-    /// <summary>Toán, Lí, Anh </summary>
+    /// <summary>Toán, Vật lí, Anh </summary>
     A01 = 101,
 
-    /// <summary>Toán, Lí, Sinh </summary>
+    /// <summary>Toán, Vật lí, Sinh </summary>
     A02 = 102,
 
-    /// <summary>Toán, Lí, Sử</summary>
+    /// <summary>Toán, Vật lí, Sử</summary>
     A03 = 103,
 
-    /// <summary>Toán, Lí, Địa </summary>
+    /// <summary>Toán, Vật lí, Địa </summary>
     A04 = 104,
 
     /// <summary>Toán, Hóa, Sử</summary>
     A05 = 105,
 
-    /// <summary>Toán, Hóa, Lí</summary>
+    /// <summary>Toán, Hóa, Vật lí</summary>
     A06 = 106,
 
     /// <summary>Toán, Sử, Địa</summary>
@@ -39,7 +39,7 @@ public enum SubjectCombination
     /// <summary>Toán, Địa, GDCD</summary>
     A09 = 109,
 
-    /// <summary>Toán, Lí, GDCD</summary>
+    /// <summary>Toán, Vật lí, GDCD</summary>
     A10 = 110,
 
     /// <summary>Toán, Hóa, GDCD</summary>
@@ -54,10 +54,10 @@ public enum SubjectCombination
     /// <summary>Toán, KHTN, GDCD </summary>
     A15 = 115,
 
-    /// <summary>Toán, KHTN, Văn </summary>
+    /// <summary>Toán, KHTN, Ngữ văn </summary>
     A16 = 116,
 
-    /// <summary>Toán, KHXH, Lí </summary>
+    /// <summary>Toán, KHXH, Vật lí </summary>
     A17 = 117,
 
     /// <summary>Toán, KHXH, Hóa </summary>
@@ -76,7 +76,7 @@ public enum SubjectCombination
     /// <summary>Toán, Sinh, Địa</summary>
     B02 = 202,
 
-    /// <summary>Toán, Sinh, Văn</summary>
+    /// <summary>Toán, Sinh, Ngữ văn</summary>
     B03 = 203,
 
     /// <summary>Toán, Sinh, GDCD</summary>
@@ -93,43 +93,47 @@ public enum SubjectCombination
     // GROUP C - SOCIAL SCIENCES 
     // ==========================================
 
-    /// <summary>Văn, Sử, Địa </summary>
+    /// <summary>Ngữ văn, Sử, Địa </summary>
     C00 = 300,
 
-    /// <summary>Văn, Toán, Lí </summary>
+    /// <summary>Ngữ văn, Toán, Vật lí </summary>
     C01 = 301,
 
-    /// <summary>Văn, Toán, Hóa </summary>
+    /// <summary>Ngữ văn, Toán, Hóa </summary>
     C02 = 302,
 
-    /// <summary>Văn, Toán, Sử (Literature, Math, Biology)</summary>
+    /// <summary>Ngữ văn, Toán, Sử</summary>
     C03 = 303,
 
-    /// <summary>Văn, Toán, Địa</summary>
+    /// <summary>Ngữ văn, Toán, Địa</summary>
     C04 = 304,
 
-    //TODO:
+    /// <summary>Ngữ văn, Sử, Vật lí</summary>
+    C07 = 307,
+
+    /// <summary>Ngữ văn, Toán, GDKTPL</summary>
+    C14 = 314,
 
     // ==========================================
     // GROUP D - MATH & FOREIGN LANGUAGES 
     // ==========================================
 
-    /// <summary>Toán, Văn, Anh</summary>
+    /// <summary>Toán, Ngữ văn, Anh</summary>
     D01 = 401,
 
-    /// <summary>Toán, Văn, Nga</summary>
+    /// <summary>Toán, Ngữ văn, Nga</summary>
     D02 = 402,
 
-    /// <summary>Toán, Văn, Pháp</summary>
+    /// <summary>Toán, Ngữ văn, Pháp</summary>
     D03 = 403,
 
-    /// <summary>Toán, Văn, Trung</summary>
+    /// <summary>Toán, Ngữ văn, Trung</summary>
     D04 = 404,
 
-    /// <summary>Toán, Văn, Đức</summary>
+    /// <summary>Toán, Ngữ văn, Đức</summary>
     D05 = 405,
 
-    /// <summary>Toán, Văn, Nhật</summary>
+    /// <summary>Toán, Ngữ văn, Nhật</summary>
     D06 = 406,
 
     /// <summary>Toán, Hóa, Anh</summary>
@@ -144,45 +148,77 @@ public enum SubjectCombination
     /// <summary>Toán, Địa, Anh </summary>
     D10 = 410,
 
-    /// <summary>Văn, Sử, Anh</summary>
+    /// <summary>Ngữ văn, Sử, Anh</summary>
     D14 = 414,
 
-    /// <summary>Văn, Địa, Anh</summary>
+    /// <summary>Ngữ văn, Địa, Anh</summary>
     D15 = 415,
 
-    //TODO:
+    /// <summary>Ngữ văn, GDCD, Tiếng Anh</summary>
+    D66 = 466,
+
+    /// <summary>Toán, Tiếng Anh, GDKTPL</summary>
+    D84 = 484,
 
     // ==========================================
     // GROUP X
     // ==========================================
 
-    /// <summary>Toán, Văn, GDKT&amp;PL </summary>
+    /// <summary>Toán, Ngữ văn, GDKTPL </summary>
     X01 = 501,
 
-    /// <summary>Toán, Văn, Tin </summary>
+    /// <summary>Toán, Ngữ văn, Tin học</summary>
     X02 = 502,
 
-    /// <summary>Toán, Văn, Công nghệ công nghiệp </summary>
+    /// <summary>Toán, Ngữ văn, Công nghệ công nghiệp </summary>
     X03 = 503,
 
-    /// <summary>Toán, Văn, Công nghệ nông nghiệp </summary>
+    /// <summary>Toán, Ngữ văn, Công nghệ nông nghiệp </summary>
     X04 = 504,
 
-    /// <summary>Toán, Lí, Tin </summary>
+    /// <summary>Toán, Vật lí, Tin học</summary>
     X06 = 506,
+
+    /// <summary>Toán, Vật lí, Công nghệ công nghiệp</summary>
+    X07 = 507,
+
+    /// <summary>Toán, Hóa học, Tin học</summary>
+    X10 = 510,
+
+    /// <summary>Toán, Hóa học, Công nghệ công nghiệp</summary>
+    X11 = 511,
+
+    /// <summary>Toán, Sinh học, Tin học</summary>
+    X14 = 514,
 
     /// <summary>Toán, Anh, GDKTPL </summary>
     X25 = 525,
 
-    /// <summary>Toán, Anh, Tin </summary>
+    /// <summary>Toán, Anh, Tin học</summary>
     X26 = 526,
 
-    /// <summary>Văn, Sử, GDKTPL </summary>
+    /// <summary>Toán, Tiếng Anh, Công nghệ công nghiệp</summary>
+    X27 = 527,
+
+    /// <summary>Toán, Tin học, Công nghệ công nghiệp</summary>
+    X56 = 556,
+
+    /// <summary>Ngữ văn, Sử, GDKTPL </summary>
     X70 = 570,
 
-    /// <summary>Văn, Địa, GDKTPL </summary>
+    /// <summary>Ngữ văn, Địa, GDKTPL </summary>
     X74 = 574,
 
-    /// <summary>Văn, GDKTPL, Anh </summary>
-    X78 = 578
+    /// <summary>Ngữ văn, Tiếng Anh, Tin học</summary>
+    X79 = 579,
+
+    /// <summary>Ngữ văn, GDKTPL, Anh </summary>
+    X78 = 578,
+
+    // ==========================================
+    // GROUP Y
+    // ==========================================
+
+    /// <summary>Ngữ văn, GDKTPL, Công nghệ công nghiệp</summary>
+    Y08 = 608,
 }
