@@ -67,7 +67,11 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 var app = builder.Build();
 
-// Configure middleware pipeline
+// Configure middleware pipeline.
+// Forwarded Headers Middleware is enabled via the ASPNETCORE_FORWARDEDHEADERS_ENABLED
+// environment variable (set in docker-compose). The app sits behind a TLS-terminating
+// reverse proxy (Cloudflare Tunnel + Caddy), so it must honor X-Forwarded-Proto to know
+// the original https scheme; otherwise OpenAPI/Scalar would advertise http URLs.
 app.UseExceptionHandler();
 app.UseCors();
 
