@@ -1,3 +1,4 @@
+import { Building2, ExternalLink, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "@tanstack/react-router";
 import JsonLd from "@/components/JsonLd";
@@ -7,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
 	AdmissionRequirement,
+	Dormitory,
 	MajorWithRequirements,
 	UniversityListItem,
 	UniversityMajors,
@@ -130,6 +132,66 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 		</CardContent>
 	</Card>
 );
+
+const DormitoryItem = ({ dorm }: { dorm: Dormitory }) => (
+	<div className="rounded-lg border border-border bg-background/60 p-4">
+		<p className="font-medium text-foreground leading-snug">{dorm.name}</p>
+		{dorm.address && (
+			<p className="mt-1 flex items-start gap-1.5 text-sm text-muted-foreground">
+				<MapPin className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" />
+				<span>{dorm.address}</span>
+			</p>
+		)}
+		{dorm.note && (
+			<p className="mt-2 text-sm text-muted-foreground">{dorm.note}</p>
+		)}
+		{dorm.registrationUrl && (
+			<a
+				href={dorm.registrationUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+			>
+				Trang đăng ký / thông tin KTX
+				<ExternalLink className="h-3.5 w-3.5" />
+			</a>
+		)}
+	</div>
+);
+
+const DormitorySection = ({ university: u }: { university: UniversityListItem }) => {
+	const dorms = u.dormitories ?? [];
+
+	// Hide entirely when we have no signal at all (unknown flag, no rows).
+	if (u.hasDormitory == null && dorms.length === 0) return null;
+
+	return (
+		<Card className="border-border bg-card shadow-sm">
+			<CardContent className="p-6">
+				<div className="flex items-center gap-2">
+					<Building2 className="h-5 w-5 text-muted-foreground" />
+					<h2 className="text-base font-semibold text-foreground">Ký túc xá</h2>
+				</div>
+
+				{u.hasDormitory === false ? (
+					<p className="mt-3 text-sm text-muted-foreground">
+						Trường không có ký túc xá.
+					</p>
+				) : dorms.length > 0 ? (
+					<div className="mt-4 space-y-3">
+						{dorms.map((d) => (
+							<DormitoryItem key={d.name} dorm={d} />
+						))}
+					</div>
+				) : (
+					<p className="mt-3 text-sm text-muted-foreground">
+						Trường có ký túc xá — thông tin chi tiết đang được cập nhật.
+					</p>
+				)}
+			</CardContent>
+		</Card>
+	);
+};
 
 const RequirementsTable = ({
 	requirements,
@@ -357,6 +419,11 @@ const UniversityDetailPage = () => {
 					) : university ? (
 						<UniversityInfoCard university={university} />
 					) : null}
+
+					{/* Section 1.5 — Dormitory (KTX) */}
+					{!loadingInfo && !errorInfo && university && (
+						<DormitorySection university={university} />
+					)}
 
 					{/* Section 2 — Tabs */}
 					<div>

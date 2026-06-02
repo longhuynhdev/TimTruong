@@ -26,14 +26,19 @@ const UniversitiesPage = () => {
 	const [query, setQuery] = useState("");
 	const [selectedType, setSelectedType] = useState<string>(ALL);
 	const [selectedAutonomy, setSelectedAutonomy] = useState<string>(ALL);
+	const [selectedDorm, setSelectedDorm] = useState<string>(ALL);
 
 	const hasActiveFilter =
-		query.trim() !== "" || selectedType !== ALL || selectedAutonomy !== ALL;
+		query.trim() !== "" ||
+		selectedType !== ALL ||
+		selectedAutonomy !== ALL ||
+		selectedDorm !== ALL;
 
 	const resetFilters = () => {
 		setQuery("");
 		setSelectedType(ALL);
 		setSelectedAutonomy(ALL);
+		setSelectedDorm(ALL);
 	};
 
 	useEffect(() => {
@@ -53,6 +58,8 @@ const UniversitiesPage = () => {
 				return false;
 			if (selectedAutonomy === "non-autonomous" && u.isFinanciallyAutonomous !== false)
 				return false;
+			if (selectedDorm === "has-dorm" && u.hasDormitory !== true) return false;
+			if (selectedDorm === "no-dorm" && u.hasDormitory !== false) return false;
 			if (q) {
 				const haystack = normalize(
 					[u.name, u.shortName, u.englishName, u.code]
@@ -63,7 +70,7 @@ const UniversitiesPage = () => {
 			}
 			return true;
 		});
-	}, [universities, query, selectedType, selectedAutonomy]);
+	}, [universities, query, selectedType, selectedAutonomy, selectedDorm]);
 
 	return (
 		<>
@@ -108,7 +115,7 @@ const UniversitiesPage = () => {
 								</button>
 							)}
 						</div>
-						<div className="grid gap-4 sm:grid-cols-2">
+						<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 							<label className="flex flex-col gap-1.5">
 								<span className="text-xs font-medium text-muted-foreground">
 									Theo loại trường (công, tư)
@@ -136,6 +143,21 @@ const UniversitiesPage = () => {
 									<option value={ALL}>Tất cả cơ chế</option>
 									<option value="autonomous">Đã tự chủ tài chính</option>
 									<option value="non-autonomous">Chưa tự chủ tài chính</option>
+								</select>
+							</label>
+
+							<label className="flex flex-col gap-1.5">
+								<span className="text-xs font-medium text-muted-foreground">
+									Theo ký túc xá
+								</span>
+								<select
+									value={selectedDorm}
+									onChange={(e) => setSelectedDorm(e.target.value)}
+									className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+								>
+									<option value={ALL}>Tất cả</option>
+									<option value="has-dorm">Có ký túc xá</option>
+									<option value="no-dorm">Không có ký túc xá</option>
 								</select>
 							</label>
 						</div>
@@ -289,6 +311,11 @@ const UniversityCard = ({
 										className="text-xs border-border text-muted-foreground"
 									>
 										Chưa tự chủ tài chính
+									</Badge>
+								)}
+								{u.hasDormitory === true && (
+									<Badge variant="outline" className="text-xs border-border">
+										Có ký túc xá
 									</Badge>
 								)}
 							</div>

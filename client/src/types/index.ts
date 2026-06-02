@@ -27,6 +27,13 @@ export interface CampusLocation {
 	district: string | null;
 }
 
+export interface Dormitory {
+	name: string;
+	address: string | null;
+	note: string | null;
+	registrationUrl: string | null;
+}
+
 export interface UniversityListItem {
 	id: number;
 	name: string;
@@ -37,7 +44,9 @@ export interface UniversityListItem {
 	type: "Public" | "Private";
 	imageUrl: string | null;
 	isFinanciallyAutonomous: boolean | null;
+	hasDormitory: boolean | null;
 	campuses: CampusLocation[];
+	dormitories: Dormitory[];
 }
 
 // University detail — admission requirements and majors

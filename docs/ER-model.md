@@ -2,30 +2,39 @@
 erDiagram
     Universities ||--o{ Campuses : "has"
     Universities ||--o{ Majors : "offers"
+    Universities }o--o{ Dormitories : "shares"
     Majors ||--o{ AdmissionRequirements : "has"
 
     Universities {
         int Id PK
         string Name
-        string OldName
         string EnglishName
         string ShortName
+        string Slug
         string Code "e.g. QST, QSB"
         UniType Type "Public/Private"
         string ImageUrl
+        bool IsFinanciallyAutonomous "Nullable"
+        bool HasDormitory "Nullable — có KTX hay không"
+    }
+
+    Dormitories {
+        int Id PK
+        string Name "e.g. KTX Khu A, KTX Quận 1 — unique"
+        string Address "Nullable"
+        string Note "Nullable — tiện ích, nội quy, giá..."
+        string RegistrationUrl "Nullable"
     }
 
     Campuses {
         int Id PK
         int UniversityId FK
         string Name
-        string OldAddress
-        string OldCity "e.g. TP HCM, Hà Nội"
-        string OldDistrict "e.g. Quận 5, Quận 1"
         string Address
         string City "e.g. TP HCM, Hà Nội"
-        string District "e.g. Huyện Chợ Quán"
-
+        string District "e.g. Quận 5, Quận 1"
+        string OldAddress
+        string OldCity "e.g. TP HCM, Hà Nội"
     }
 
     Majors {
