@@ -160,6 +160,9 @@ public enum SubjectCombination
     /// <summary>Toán, Tiếng Anh, GDKTPL</summary>
     D84 = 484,
 
+    /// <summary>Toán, Tiếng Anh và Khoa học tự nhiên</summary>
+    D90 = 490,
+
     // ==========================================
     // GROUP X
     // ==========================================
