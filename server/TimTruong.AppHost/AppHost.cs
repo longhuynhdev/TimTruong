@@ -8,9 +8,8 @@ IResourceBuilder<PostgresServerResource>? postgres = null;
 
 if (builder.Environment.IsDevelopment())
 {
-    // Development: Full PostgreSQL with pgAdmin and persistent volume
+    // Development: Full PostgreSQL with persistent volume
     postgres = builder.AddPostgres("postgres")
-        .WithPgAdmin()
         .WithDataVolume()
         .WithHostPort(5432);
 

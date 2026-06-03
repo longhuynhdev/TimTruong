@@ -41,15 +41,6 @@ const UniversitiesPage = () => {
 		setSelectedDorm(ALL);
 	};
 
-	const hasActiveFilter =
-		query.trim() !== "" || selectedType !== ALL || selectedAutonomy !== ALL;
-
-	const resetFilters = () => {
-		setQuery("");
-		setSelectedType(ALL);
-		setSelectedAutonomy(ALL);
-	};
-
 	useEffect(() => {
 		fetchAllUniversities()
 			.then(setUniversities)
@@ -157,7 +148,7 @@ const UniversitiesPage = () => {
 
 							<label className="flex flex-col gap-1.5">
 								<span className="text-xs font-medium text-muted-foreground">
-									Theo ký túc xá
+									Theo tình trạng ký túc xá
 								</span>
 								<select
 									value={selectedDorm}
@@ -325,6 +316,14 @@ const UniversityCard = ({
 								{u.hasDormitory === true && (
 									<Badge variant="outline" className="text-xs border-border">
 										Có ký túc xá
+									</Badge>
+								)}
+								{u.hasDormitory === false && (
+									<Badge
+										variant="outline"
+										className="text-xs border-border text-muted-foreground"
+									>
+										Không có ký túc xá
 									</Badge>
 								)}
 							</div>

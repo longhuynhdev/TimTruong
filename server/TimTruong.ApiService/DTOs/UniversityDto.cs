@@ -17,6 +17,7 @@ public record UniversityDto
     public bool? HasDormitory { get; init; }
     public List<CampusLocationDto> Campuses { get; init; } = new();
     public List<DormitoryDto> Dormitories { get; init; } = new();
+    public List<RankingDto> Rankings { get; init; } = new();
 }
 
 public record CampusLocationDto(string City, string? District);
@@ -26,3 +27,5 @@ public record DormitoryDto(
     string? Address,
     string? Note,
     string? RegistrationUrl);
+
+public record RankingDto(string System, int Year, int RankFrom, int? RankTo, string? SourceUrl);

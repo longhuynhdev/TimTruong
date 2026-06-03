@@ -18,6 +18,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Major> Majors { get; set; }
     public DbSet<AdmissionRequirement> AdmissionRequirements { get; set; }
     public DbSet<Dormitory> Dormitories { get; set; }
+    public DbSet<UniversityRanking> UniversityRankings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -40,6 +41,17 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Dormitory>()
             .HasIndex(d => d.Name)
             .IsUnique();
+
+        // A university has one rank per (system, year) — also the ETL upsert key.
+        modelBuilder.Entity<UniversityRanking>()
+            .HasIndex(r => new { r.UniversityId, r.RankingSystem, r.Year })
+            .IsUnique();
+
+        modelBuilder.Entity<UniversityRanking>()
+            .HasOne(r => r.University)
+            .WithMany(u => u.Rankings)
+            .HasForeignKey(r => r.UniversityId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Seed data
     }
