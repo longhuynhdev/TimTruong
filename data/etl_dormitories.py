@@ -2,7 +2,7 @@ import csv
 import os
 from db import get_connection
 
-CSV_FILE = os.path.join(os.path.dirname(__file__), "dormitories.csv")
+CSV_FILE = os.path.join(os.path.dirname(__file__), "Dormitories.csv")
 
 # Upsert a single dormitory row by Name (unique); returns its Id.
 UPSERT_DORM_SQL = """

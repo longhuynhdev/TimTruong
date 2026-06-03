@@ -102,6 +102,7 @@ public class UniversityService : IUniversityService
         var university = await _context.Universities
             .Include(u => u.Campuses)
             .Include(u => u.Dormitories)
+            .Include(u => u.Rankings)
             .Where(u => u.Id == id)
             .Select(u => new UniversityDto
             {
@@ -119,6 +120,11 @@ public class UniversityService : IUniversityService
                 Dormitories = u.Dormitories
                     .OrderBy(d => d.Name)
                     .Select(d => new DormitoryDto(d.Name, d.Address, d.Note, d.RegistrationUrl))
+                    .ToList(),
+                Rankings = u.Rankings
+                    .OrderByDescending(r => r.Year)
+                    .ThenBy(r => r.RankingSystem)
+                    .Select(r => new RankingDto(r.RankingSystem.ToString(), r.Year, r.RankFrom, r.RankTo, r.SourceUrl))
                     .ToList()
             })
             .FirstOrDefaultAsync();
@@ -138,6 +144,7 @@ public class UniversityService : IUniversityService
         var university = await _context.Universities
             .Include(u => u.Campuses)
             .Include(u => u.Dormitories)
+            .Include(u => u.Rankings)
             .Where(u => u.Slug == slug)
             .Select(u => new UniversityDto
             {
@@ -155,6 +162,11 @@ public class UniversityService : IUniversityService
                 Dormitories = u.Dormitories
                     .OrderBy(d => d.Name)
                     .Select(d => new DormitoryDto(d.Name, d.Address, d.Note, d.RegistrationUrl))
+                    .ToList(),
+                Rankings = u.Rankings
+                    .OrderByDescending(r => r.Year)
+                    .ThenBy(r => r.RankingSystem)
+                    .Select(r => new RankingDto(r.RankingSystem.ToString(), r.Year, r.RankFrom, r.RankTo, r.SourceUrl))
                     .ToList()
             })
             .FirstOrDefaultAsync();

@@ -3,6 +3,7 @@ erDiagram
     Universities ||--o{ Campuses : "has"
     Universities ||--o{ Majors : "offers"
     Universities }o--o{ Dormitories : "shares"
+    Universities ||--o{ UniversityRankings : "ranked in"
     Majors ||--o{ AdmissionRequirements : "has"
 
     Universities {
@@ -20,7 +21,7 @@ erDiagram
 
     Dormitories {
         int Id PK
-        string Name "e.g. KTX Khu A, KTX Quận 1 — unique"
+        string Name "e.g. KTX Khu B"
         string Address "Nullable"
         string Note "Nullable — tiện ích, nội quy, giá..."
         string RegistrationUrl "Nullable"
@@ -55,5 +56,15 @@ erDiagram
         decimal Score "Threshold"
         SubjectCombination SubjectCombination "Nullable"
         int Year "e.g. 2024"
+    }
+
+    UniversityRankings {
+        int Id PK
+        int UniversityId FK
+        RankingSystem RankingSystem "VNUR, QS, THE..."
+        int Year "e.g. 2024"
+        int RankFrom "thứ hạng / cận dưới của khoảng — cho phép trùng"
+        int RankTo "Nullable — cận trên nếu là khoảng (vd 601–800)"
+        string SourceUrl "Nullable — link nguồn, có thể dùng chung"
     }
 ```    

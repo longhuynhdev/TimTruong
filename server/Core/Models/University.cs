@@ -52,4 +52,5 @@ public class University
     public ICollection<Campus> Campuses { get; set; } = new List<Campus>();
     public ICollection<Major> Majors { get; set; } = new List<Major>();
     public ICollection<Dormitory> Dormitories { get; set; } = new List<Dormitory>();
+    public ICollection<UniversityRanking> Rankings { get; set; } = new List<UniversityRanking>();
 }
