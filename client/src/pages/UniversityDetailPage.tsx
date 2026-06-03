@@ -1,8 +1,9 @@
-import { Building2, ExternalLink, MapPin } from "lucide-react";
+import { Award, Building2, ExternalLink, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "@tanstack/react-router";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
+import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
@@ -132,6 +133,58 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 		</CardContent>
 	</Card>
 );
+
+const RankingSection = ({ university: u }: { university: UniversityListItem }) => {
+	const items = latestPerSystem(u.rankings ?? []);
+	if (items.length === 0) return null;
+
+	return (
+		<Card className="border-border bg-card shadow-sm">
+			<CardContent className="p-6">
+				<div className="flex items-center gap-2">
+					<Award className="h-5 w-5 text-muted-foreground" />
+					<h2 className="text-base font-semibold text-foreground">Bảng xếp hạng</h2>
+				</div>
+
+				<div className="mt-4 flex flex-wrap gap-2">
+					{items.map((r) => {
+						const chipClass =
+							"inline-flex items-center gap-1.5 rounded-md border border-amber-300/70 bg-amber-50 px-2.5 py-1 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300";
+						const content = (
+							<>
+								<Award className="h-3.5 w-3.5" />
+								<span className="font-semibold">{r.system}</span>
+								<span>{rankSentence(r)}</span>
+								<span className="text-amber-700/70 dark:text-amber-300/70">
+									· {r.year}
+								</span>
+								{r.sourceUrl && <ExternalLink className="h-3 w-3 opacity-70" />}
+							</>
+						);
+						return r.sourceUrl ? (
+							<a
+								key={r.system}
+								href={r.sourceUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className={cn(
+									chipClass,
+									"transition-colors hover:bg-amber-100 dark:hover:bg-amber-500/20",
+								)}
+							>
+								{content}
+							</a>
+						) : (
+							<span key={r.system} className={chipClass}>
+								{content}
+							</span>
+						);
+					})}
+				</div>
+			</CardContent>
+		</Card>
+	);
+};
 
 const DormitoryItem = ({ dorm }: { dorm: Dormitory }) => (
 	<div className="rounded-lg border border-border bg-background/60 p-4">
@@ -421,6 +474,10 @@ const UniversityDetailPage = () => {
 					) : null}
 
 					{/* Section 1.5 — Dormitory (KTX) */}
+					{!loadingInfo && !errorInfo && university && (
+						<RankingSection university={university} />
+					)}
+
 					{!loadingInfo && !errorInfo && university && (
 						<DormitorySection university={university} />
 					)}

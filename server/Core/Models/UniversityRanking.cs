@@ -35,8 +35,10 @@ public class UniversityRanking
     public int RankFrom { get; set; }
 
     /// <summary>
-    /// Upper bound of a band (e.g., 800 for "601–800"). Null for a single rank.
-    /// Some systems (QS, THE) publish bands instead of an exact position.
+    /// Upper bound, encoding the rank shape so a single rank is distinguishable from an
+    /// open band: equal to <see cref="RankFrom"/> for a single rank (e.g., 5 → 5),
+    /// the band's upper bound for a closed band (e.g., 601–800 → 800), and null for an
+    /// open-ended band (e.g., "1001+"). Some systems (QS, THE) publish bands.
     /// </summary>
     public int? RankTo { get; set; }
 

@@ -19,12 +19,15 @@ public class UniversityService : IUniversityService
         _logger = logger;
     }
 
-    public async Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null, bool? hasDormitory = null)
+    public async Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null, bool? hasDormitory = null, string? sort = null)
     {
-        _logger.LogInformation("Getting all universities with filters - Search: {Search}, Type: {Type}, City: {City}, HasDormitory: {HasDormitory}",
-            search, type, city, hasDormitory);
+        _logger.LogInformation("Getting all universities with filters - Search: {Search}, Type: {Type}, City: {City}, HasDormitory: {HasDormitory}, Sort: {Sort}",
+            search, type, city, hasDormitory, sort);
 
-        var query = _context.Universities.Include(u => u.Campuses).AsQueryable();
+        var query = _context.Universities
+            .Include(u => u.Campuses)
+            .Include(u => u.Rankings)
+            .AsQueryable();
 
         // Apply search filter (name or code)
         if (!string.IsNullOrWhiteSpace(search))
@@ -57,7 +60,6 @@ public class UniversityService : IUniversityService
         }
 
         var universities = await query
-            .OrderBy(u => u.Name)
             .Select(u => new UniversityDto
             {
                 Id = u.Id,
@@ -70,13 +72,39 @@ public class UniversityService : IUniversityService
                 ImageUrl = u.ImageUrl,
                 IsFinanciallyAutonomous = u.IsFinanciallyAutonomous,
                 HasDormitory = u.HasDormitory,
-                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList()
+                Campuses = u.Campuses.Select(c => new CampusLocationDto(c.City, c.District)).ToList(),
+                Rankings = u.Rankings
+                    .OrderByDescending(r => r.Year)
+                    .ThenBy(r => r.RankingSystem)
+                    .Select(r => new RankingDto(r.RankingSystem.ToString(), r.Year, r.RankFrom, r.RankTo, r.SourceUrl))
+                    .ToList()
             })
             .ToListAsync();
+
+        // Default sort: by VNUR ranking (broadest domestic coverage) — ranked schools
+        // first (best rank first), unranked after, alphabetical as tiebreak.
+        // `sort=name` keeps a plain alphabetical order.
+        universities = sort?.Trim().ToLower() == "name"
+            ? universities.OrderBy(u => u.Name).ToList()
+            : universities
+                .Select(u => new { U = u, Rank = VnurRank(u) })
+                .OrderBy(x => x.Rank.HasValue ? 0 : 1)
+                .ThenBy(x => x.Rank ?? int.MaxValue)
+                .ThenBy(x => x.U.Name)
+                .Select(x => x.U)
+                .ToList();
 
         _logger.LogInformation("Found {Count} universities", universities.Count);
         return universities;
     }
+
+    /// <summary>Latest-year VNUR RankFrom used for default sorting; null if no VNUR ranking.</summary>
+    private static int? VnurRank(UniversityDto u) =>
+        u.Rankings
+            .Where(r => r.System == nameof(RankingSystem.VNUR))
+            .OrderByDescending(r => r.Year)
+            .Select(r => (int?)r.RankFrom)
+            .FirstOrDefault();
 
     public async Task<List<UniversitySimpleDto>> GetSimpleUniversitiesAsync()
     {

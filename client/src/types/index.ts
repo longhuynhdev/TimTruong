@@ -34,6 +34,17 @@ export interface Dormitory {
 	registrationUrl: string | null;
 }
 
+// A university's rank in one ranking system for a given year.
+// rankTo encodes the shape: == rankFrom → single rank; > rankFrom → closed band;
+// null → open band (e.g. "1001+").
+export interface Ranking {
+	system: string; // "VNUR" | "QS" | "THE" | "CWUR"
+	year: number;
+	rankFrom: number;
+	rankTo: number | null;
+	sourceUrl: string | null;
+}
+
 export interface UniversityListItem {
 	id: number;
 	name: string;
@@ -47,6 +58,7 @@ export interface UniversityListItem {
 	hasDormitory: boolean | null;
 	campuses: CampusLocation[];
 	dormitories: Dormitory[];
+	rankings: Ranking[];
 }
 
 // University detail — admission requirements and majors

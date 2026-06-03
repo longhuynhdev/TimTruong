@@ -75,15 +75,19 @@ def parse_ranking_system(value: str):
 
 
 def parse_rank(value: str):
-    """Rank đơn hoặc khoảng → (rank_from, rank_to|None). None nếu không hợp lệ.
+    """Rank → (rank_from, rank_to|None). None nếu không hợp lệ.
 
-    Chấp nhận: '5' → (5, None); '601-800' / '601–800' → (601, 800);
-    '1001+' → (1001, None); '601-800th' → (601, 800).
+    Quy ước (để phân biệt hạng đơn với band mở khi hiển thị):
+      - Hạng đơn '5'        → (5, 5)        (rank_from == rank_to)
+      - Band đóng '601-800' → (601, 800)    (rank_from < rank_to)
+      - Band mở '1001+'     → (1001, None)  (rank_to = None)
+    Chấp nhận gạch nối '–'/'—', hậu tố 'th', vd '601–800th' → (601, 800).
     """
     v = (value or "").strip().lower()
     if not v:
         return None
-    # Chuẩn hoá: các loại gạch nối → '-', bỏ ký tự thứ tự / dấu '+'/khoảng trắng
+    open_ended = "+" in v
+    # Chuẩn hoá: các loại gạch nối → '-', bỏ hậu tố thứ tự / dấu '+'/khoảng trắng
     for ch in ("–", "—", "~"):
         v = v.replace(ch, "-")
     v = v.replace("th", "").replace("+", "").replace(" ", "")
@@ -93,4 +97,7 @@ def parse_rank(value: str):
         return None
     if not nums:
         return None
-    return (nums[0], nums[1] if len(nums) > 1 else None)
+    if len(nums) > 1:
+        return (nums[0], nums[1])
+    # Một số: band mở '1001+' → to=None; còn lại là hạng đơn → to==from
+    return (nums[0], None if open_ended else nums[0])
