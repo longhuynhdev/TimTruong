@@ -3,10 +3,12 @@
 PHẢI giữ đồng bộ với:
   - server/Core/Models/Enums/ExamType.cs
   - server/Core/Models/Enums/SubjectCombination.cs
+  - server/Core/Models/Enums/RankingSystem.cs
 
 ExamType lưu theo thứ tự khai báo (THPTQG=0, ĐGNL=1).
 SubjectCombination lưu theo giá trị int gán tường minh trong C#
 (quy ước: <base nhóm> + <số tổ hợp>, vd A00=100, D14=414, X01=501).
+RankingSystem lưu theo thứ tự khai báo (VNUR=0, QS=1, THE=2).
 """
 
 EXAM_TYPE = {
@@ -57,3 +59,38 @@ def parse_subject_combination(value: str):
     if not v:
         return None
     return SUBJECT_COMBINATION.get(v, "UNKNOWN")
+
+
+RANKING_SYSTEM = {
+    "VNUR": 0,
+    "QS": 1,
+    "THE": 2,
+    "CWUR": 3,
+}
+
+
+def parse_ranking_system(value: str):
+    """'VNUR'/'QS'/'THE' → int. None nếu không hợp lệ."""
+    return RANKING_SYSTEM.get((value or "").strip().upper())
+
+
+def parse_rank(value: str):
+    """Rank đơn hoặc khoảng → (rank_from, rank_to|None). None nếu không hợp lệ.
+
+    Chấp nhận: '5' → (5, None); '601-800' / '601–800' → (601, 800);
+    '1001+' → (1001, None); '601-800th' → (601, 800).
+    """
+    v = (value or "").strip().lower()
+    if not v:
+        return None
+    # Chuẩn hoá: các loại gạch nối → '-', bỏ ký tự thứ tự / dấu '+'/khoảng trắng
+    for ch in ("–", "—", "~"):
+        v = v.replace(ch, "-")
+    v = v.replace("th", "").replace("+", "").replace(" ", "")
+    try:
+        nums = [int(p) for p in v.split("-") if p]
+    except ValueError:
+        return None
+    if not nums:
+        return None
+    return (nums[0], nums[1] if len(nums) > 1 else None)

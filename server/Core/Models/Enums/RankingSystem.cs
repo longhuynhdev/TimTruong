@@ -9,5 +9,6 @@ public enum RankingSystem
 {
     VNUR,        // Viet Nam's University Rankings
     QS,
-    THE,         
+    THE,
+    CWUR,         
 }
