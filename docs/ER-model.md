@@ -5,6 +5,7 @@ erDiagram
     Universities }o--o{ Dormitories : "shares"
     Universities ||--o{ UniversityRankings : "ranked in"
     Majors ||--o{ AdmissionRequirements : "has"
+    Majors ||--o{ MajorYears : "offered in"
 
     Universities {
         int Id PK
@@ -42,11 +43,18 @@ erDiagram
         int Id PK
         int UniversityId FK
         string Name
-        string Code "e.g. 7480201"
+        string Code "mã canonical / ổn định — khóa ETL, e.g. 7480201"
         string FieldOfStudy "e.g. CNTT, Y Dược"
-        decimal TuitionFeeAmount "VND"
-        enum TuitionFeeUnit "e.g. PerCredit, PerSemester, PerYear"
-        int EnrollmentQuota
+    }
+
+    MajorYears {
+        int Id PK
+        int MajorId FK
+        int Year "e.g. 2026"
+        decimal TuitionFeeMin "Nullable — số cụ thể / cận dưới (VND)"
+        decimal TuitionFeeMax "null nếu là số cụ thể; >Min nếu là khoảng"
+        enum TuitionFeeUnit "Nullable — PerCredit/PerSemester/PerYear"
+        int EnrollmentQuota "Nullable — chỉ tiêu năm đó"
     }
 
     AdmissionRequirements {

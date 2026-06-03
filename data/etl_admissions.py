@@ -1,11 +1,4 @@
-"""ETL điểm chuẩn: admissionrequirements/*.csv → bảng AdmissionRequirements.
-
-Chạy SAU khi đã review tay CSV (xem extract_admissions.py) và đã nạp majors
-(etl_majors.py). Upsert theo key (MajorId, ExamType, SubjectCombination, Year),
-xoá orphan trong phạm vi các (major, year) có trong file — giống cơ chế etl_majors.
-
-Dùng: uv run etl_admissions.py
-"""
+"""ETL điểm chuẩn: admissionrequirements/*.csv → bảng AdmissionRequirements."""
 
 import csv
 import glob
@@ -17,10 +10,10 @@ from enums import parse_exam_type, parse_subject_combination
 
 AR_DIR = os.path.join(os.path.dirname(__file__), "admissionrequirements")
 
-COL_CODE = "Mã ngành xét tuyển"
-COL_METHOD = "Phương thức"
-COL_COMBO = "Tổ hợp"
-COL_SCORE = "Điểm"
+COL_CODE = "MajorCode"
+COL_METHOD = "Method"
+COL_COMBO = "SubjectCombination"
+COL_SCORE = "Score"
 
 INSERT_SQL = """
     INSERT INTO "AdmissionRequirements"

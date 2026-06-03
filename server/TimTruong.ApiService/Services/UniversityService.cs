@@ -223,9 +223,16 @@ public class UniversityService : IUniversityService
                         m.Id,
                         m.Name,
                         m.Code,
-                        m.TuitionFeeAmount,
-                        m.TuitionFeeUnit.HasValue ? m.TuitionFeeUnit.Value.ToString() : null,
-                        m.EnrollmentQuota,
+                        m.Years
+                            .OrderByDescending(my => my.Year)
+                            .Select(my => new MajorYearDto(
+                                my.Year,
+                                my.TuitionFeeMin,
+                                my.TuitionFeeMax,
+                                my.TuitionFeeUnit.HasValue ? my.TuitionFeeUnit.Value.ToString() : null,
+                                my.EnrollmentQuota
+                            ))
+                            .ToList(),
                         m.AdmissionRequirements
                             .OrderByDescending(r => r.Year)
                             .ThenBy(r => r.ExamType)

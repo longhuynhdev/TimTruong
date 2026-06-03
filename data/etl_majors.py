@@ -6,8 +6,8 @@ from db import get_connection
 MAJORS_DIR = os.path.join(os.path.dirname(__file__), "majors")
 
 # CSV column headers in each majors file
-COL_CODE = "Mã ngành xét tuyển"
-COL_NAME = "Tên ngành/nhóm ngành, chương trình"
+COL_CODE = "MajorCode"
+COL_NAME = "MajorName"
 
 INSERT_SQL = """
     INSERT INTO "Majors" ("Name", "Code", "UniversityId")

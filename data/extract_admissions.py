@@ -39,17 +39,26 @@ IMAGES_DIR = join(BASE_DIR, "admissionrequirements", "images")
 OUTPUT_DIR = join(BASE_DIR, "admissionrequirements")
 PROMPT_PATH = join(BASE_DIR, "prompts", "admission_extract.txt")
 
+# Tên cột CSV (tiếng Anh, đồng bộ với etl_majors / etl_major_years / etl_admissions).
+COL_UNI = "UniversityCode"
+COL_CODE = "MajorCode"
+COL_NAME = "MajorName"
+COL_METHOD = "Method"
+COL_COMBO = "SubjectCombination"
+COL_MAXSCORE = "MaxScore"
+COL_SCORE = "Score"
+
 # Header CSV (Năm + Chỉ tiêu đã bỏ; Năm suy từ tên file, Chỉ tiêu ETL riêng sau).
-HEADER = ["Mã trường", "Mã ngành xét tuyển", "Tên ngành", "Phương thức", "Tổ hợp", "Thang điểm", "Điểm"]
+HEADER = [COL_UNI, COL_CODE, COL_NAME, COL_METHOD, COL_COMBO, COL_MAXSCORE, COL_SCORE]
 
 # Khoá JSON model trả về → cột CSV tương ứng.
 JSON_TO_COL = {
-    "ma_nganh": "Mã ngành xét tuyển",
-    "ten_nganh": "Tên ngành",
-    "phuong_thuc": "Phương thức",
-    "to_hop": "Tổ hợp",
-    "thang_diem": "Thang điểm",
-    "diem": "Điểm",
+    "ma_nganh": COL_CODE,
+    "ten_nganh": COL_NAME,
+    "phuong_thuc": COL_METHOD,
+    "to_hop": COL_COMBO,
+    "thang_diem": COL_MAXSCORE,
+    "diem": COL_SCORE,
 }
 
 MIME_BY_EXT = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
@@ -106,45 +115,45 @@ def parse_json_text(text: str, uni_code: str):
     data = json.loads(text)
     rows = []
     for obj in data:
-        row = {"Mã trường": uni_code}
+        row = {COL_UNI: uni_code}
         for jkey, col in JSON_TO_COL.items():
             row[col] = _to_str(obj.get(jkey))
-        if not row["Mã ngành xét tuyển"] and not row["Phương thức"]:
+        if not row[COL_CODE] and not row[COL_METHOD]:
             continue
         rows.append(row)
     return rows
 
 
 def row_key(row: dict):
-    return (row["Mã ngành xét tuyển"], row["Phương thức"], row["Tổ hợp"])
+    return (row[COL_CODE], row[COL_METHOD], row[COL_COMBO])
 
 
 def validate_row(row: dict):
     """Trả về list cảnh báo cho 1 dòng (rỗng = hợp lệ)."""
     warns = []
-    pt = row["Phương thức"]
+    pt = row[COL_METHOD]
     if pt not in EXAM_TYPE:
         warns.append(f"Phương thức lạ '{pt}' (chỉ chấp nhận THPTQG/ĐGNL)")
 
-    to_hop = row["Tổ hợp"]
+    to_hop = row[COL_COMBO]
     if to_hop and to_hop.upper() not in SUBJECT_COMBINATION:
         warns.append(f"Tổ hợp lạ '{to_hop}' (chưa có trong enum)")
     if pt == "THPTQG" and not to_hop:
         warns.append("THPTQG thiếu tổ hợp")
 
-    thang_raw = row["Thang điểm"] or str(DEFAULT_MAX_SCORE.get(pt, ""))
-    if not row["Điểm"]:
+    thang_raw = row[COL_MAXSCORE] or str(DEFAULT_MAX_SCORE.get(pt, ""))
+    if not row[COL_SCORE]:
         warns.append("thiếu Điểm")
         return warns
     try:
-        diem = float(row["Điểm"])
+        diem = float(row[COL_SCORE])
     except ValueError:
-        warns.append(f"Điểm không phải số: '{row['Điểm']}'")
+        warns.append(f"Điểm không phải số: '{row[COL_SCORE]}'")
         return warns
     try:
         thang = float(thang_raw)
     except ValueError:
-        warns.append(f"Thang điểm không hợp lệ: '{row['Thang điểm']}'")
+        warns.append(f"Thang điểm không hợp lệ: '{row[COL_MAXSCORE]}'")
         return warns
     if not (0 <= diem <= thang):
         warns.append(f"Điểm {diem:g} ngoài khoảng [0, {thang:g}]")
@@ -166,7 +175,7 @@ def merge_passes(passes):
 
         if len(present) < n:
             flags.setdefault(key, []).append(f"chỉ xuất hiện ở {len(present)}/{n} lần trích")
-        diem_values = {d[key]["Điểm"] for d in present}
+        diem_values = {d[key][COL_SCORE] for d in present}
         if len(diem_values) > 1:
             flags.setdefault(key, []).append(f"Điểm lệch giữa các lần: {sorted(diem_values)}")
 

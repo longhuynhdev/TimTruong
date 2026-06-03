@@ -4,11 +4,13 @@ PHẢI giữ đồng bộ với:
   - server/Core/Models/Enums/ExamType.cs
   - server/Core/Models/Enums/SubjectCombination.cs
   - server/Core/Models/Enums/RankingSystem.cs
+  - server/Core/Models/Enums/TuitionFeeUnit.cs
 
 ExamType lưu theo thứ tự khai báo (THPTQG=0, ĐGNL=1).
 SubjectCombination lưu theo giá trị int gán tường minh trong C#
 (quy ước: <base nhóm> + <số tổ hợp>, vd A00=100, D14=414, X01=501).
 RankingSystem lưu theo thứ tự khai báo (VNUR=0, QS=1, THE=2).
+TuitionFeeUnit lưu theo thứ tự khai báo (PerCredit=0, PerSemester=1, PerYear=2).
 """
 
 EXAM_TYPE = {
@@ -72,6 +74,24 @@ RANKING_SYSTEM = {
 def parse_ranking_system(value: str):
     """'VNUR'/'QS'/'THE' → int. None nếu không hợp lệ."""
     return RANKING_SYSTEM.get((value or "").strip().upper())
+
+
+TUITION_FEE_UNIT = {
+    "PerCredit": 0,
+    "PerSemester": 1,
+    "PerYear": 2,
+}
+
+
+def parse_tuition_fee_unit(value: str):
+    """Tên enum ('PerCredit'/'PerSemester'/'PerYear') → int. Rỗng → None. Lạ → 'UNKNOWN' sentinel.
+
+    CSV dùng thẳng tên enum (giống cách các CSV khác dùng tên SubjectCombination/RankingSystem).
+    """
+    v = (value or "").strip()
+    if not v:
+        return None
+    return TUITION_FEE_UNIT.get(v, "UNKNOWN")
 
 
 def parse_rank(value: str):

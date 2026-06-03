@@ -30,6 +30,8 @@ public class RecommendationService : IRecommendationService
         var query = _context.AdmissionRequirements
             .Include(ar => ar.Major)
                 .ThenInclude(m => m.University)
+            .Include(ar => ar.Major)
+                .ThenInclude(m => m.Years)
             .Where(ar => ar.ExamType == request.ExamType)
             .Where(ar => ar.Score <= request.Score); // Student's score meets or exceeds requirement
 
@@ -53,18 +55,7 @@ public class RecommendationService : IRecommendationService
                 UniversityCode: g.Key.Code,
                 UniversityType: g.Key.Type.ToString(),
                 UniversityImageUrl: g.Key.ImageUrl,
-                Majors: g.Select(ar => new MajorRecommendation(
-                    MajorId: ar.Major.Id,
-                    MajorName: ar.Major.Name,
-                    MajorCode: ar.Major.Code,
-                    FieldOfStudy: ar.Major.FieldOfStudy,
-                    TuitionFeeAmount: ar.Major.TuitionFeeAmount,
-                    TuitionFeeUnit: ar.Major.TuitionFeeUnit.HasValue ? ar.Major.TuitionFeeUnit.Value.ToString() : null,
-                    EnrollmentQuota: ar.Major.EnrollmentQuota,
-                    AdmissionScore: ar.Score,
-                    SubjectCombination: ar.SubjectCombination?.ToString() ?? "N/A",
-                    Year: ar.Year
-                ))
+                Majors: g.Select(ar => BuildMajorRecommendation(ar))
                 .OrderByDescending(m => m.AdmissionScore) // Order majors by score within each university
                 .ToList()
             ))
@@ -77,5 +68,25 @@ public class RecommendationService : IRecommendationService
             matchingRequirements.Count);
 
         return new RecommendationResponse(groupedByUniversity);
+    }
+
+    // Tuition/quota live on the per-year MajorYear row; pick the one matching this
+    // requirement's year (null fields if that year has no offering data yet).
+    private static MajorRecommendation BuildMajorRecommendation(AdmissionRequirement ar)
+    {
+        var yearInfo = ar.Major.Years.FirstOrDefault(my => my.Year == ar.Year);
+        return new MajorRecommendation(
+            MajorId: ar.Major.Id,
+            MajorName: ar.Major.Name,
+            MajorCode: ar.Major.Code,
+            FieldOfStudy: ar.Major.FieldOfStudy ?? string.Empty,
+            TuitionFeeMin: yearInfo?.TuitionFeeMin,
+            TuitionFeeMax: yearInfo?.TuitionFeeMax,
+            TuitionFeeUnit: yearInfo?.TuitionFeeUnit?.ToString(),
+            EnrollmentQuota: yearInfo?.EnrollmentQuota,
+            AdmissionScore: ar.Score,
+            SubjectCombination: ar.SubjectCombination?.ToString() ?? "N/A",
+            Year: ar.Year
+        );
     }
 }
