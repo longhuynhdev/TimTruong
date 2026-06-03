@@ -70,13 +70,21 @@ export interface AdmissionRequirement {
 	year: number;
 }
 
+// Per-year offering data (tuition, quota).
+// tuitionFeeMax is null for a concrete amount, set for a range.
+export interface MajorYear {
+	year: number;
+	tuitionFeeMin: number | null;
+	tuitionFeeMax: number | null;
+	tuitionFeeUnit: TuitionFeeUnit | null;
+	enrollmentQuota: number | null;
+}
+
 export interface MajorWithRequirements {
 	id: number;
 	name: string;
 	code: string | null;
-	tuitionFeeAmount: number | null;
-	tuitionFeeUnit: TuitionFeeUnit | null;
-	enrollmentQuota: number | null;
+	years: MajorYear[];
 	admissionRequirements: AdmissionRequirement[];
 }
 

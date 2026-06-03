@@ -20,7 +20,7 @@ export const SUBJECT_COMBINATIONS = [
 	{ code: "X03", subjects: ["Toán", "Ngữ văn", "Công nghệ công nghiệp"] },
 	{ code: "X04", subjects: ["Toán", "Ngữ văn", "Công nghệ nông nghiệp"] },
 	{ code: "X06", subjects: ["Toán", "Vật lý", "Tin Học"] },
-	{ code: "X26", subjects: ["Toán", "Tiếng Anh", "Tin Học"] }
+	{ code: "X26", subjects: ["Toán", "Tiếng Anh", "Tin Học"] },
 ] as const satisfies SubjectCombinationDetail[];
 
 // Derived from the constant — automatically stays in sync when entries are added/removed.

@@ -31,9 +31,7 @@ const SearchPage = () => {
 	const [examType, setExamType] = useState<ExamType>(
 		search.examType ?? "THPTQG",
 	);
-	const [selectedSubject, setSelectedSubject] = useState(
-		search.subject ?? "",
-	);
+	const [selectedSubject, setSelectedSubject] = useState(search.subject ?? "");
 
 	// UI-only state (not in URL)
 	const [validationError, setValidationError] = useState("");

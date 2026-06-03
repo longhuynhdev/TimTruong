@@ -1,4 +1,10 @@
-import type { ExamType, TuitionFeeUnit, UniversityListItem, UniversityMajors, UniversityResult } from "@/types";
+import type {
+	ExamType,
+	TuitionFeeUnit,
+	UniversityListItem,
+	UniversityMajors,
+	UniversityResult,
+} from "@/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5309";
 
@@ -14,7 +20,8 @@ interface MajorRecommendation {
 	majorName: string;
 	majorCode: string | null;
 	fieldOfStudy: string;
-	tuitionFeeAmount: number | null;
+	tuitionFeeMin: number | null;
+	tuitionFeeMax: number | null;
 	tuitionFeeUnit: TuitionFeeUnit | null;
 	enrollmentQuota: number | null;
 	admissionScore: number;
@@ -51,7 +58,9 @@ export async function fetchAllUniversities(): Promise<UniversityListItem[]> {
 /**
  * Fetch a single university by ID
  */
-export async function fetchUniversityById(id: number): Promise<UniversityListItem> {
+export async function fetchUniversityById(
+	id: number,
+): Promise<UniversityListItem> {
 	const response = await fetch(`${API_BASE_URL}/api/v1/universities/${id}`);
 
 	if (!response.ok) {
@@ -64,7 +73,9 @@ export async function fetchUniversityById(id: number): Promise<UniversityListIte
 /**
  * Fetch a single university by its URL slug (used by the SEO-friendly detail route)
  */
-export async function fetchUniversityBySlug(slug: string): Promise<UniversityListItem> {
+export async function fetchUniversityBySlug(
+	slug: string,
+): Promise<UniversityListItem> {
 	const response = await fetch(
 		`${API_BASE_URL}/api/v1/universities/by-slug/${encodeURIComponent(slug)}`,
 	);
@@ -79,7 +90,9 @@ export async function fetchUniversityBySlug(slug: string): Promise<UniversityLis
 /**
  * Fetch all majors with admission requirements for a university
  */
-export async function fetchUniversityMajors(id: number): Promise<UniversityMajors> {
+export async function fetchUniversityMajors(
+	id: number,
+): Promise<UniversityMajors> {
 	const response = await fetch(
 		`${API_BASE_URL}/api/v1/universities/${id}/majors`,
 	);

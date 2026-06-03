@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { ChevronRight, MapPin, Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "@tanstack/react-router";
 import PageMetadata from "@/components/PageMetadata";
 import { RankingBadges } from "@/components/RankingBadges";
 import { Badge } from "@/components/ui/badge";
@@ -13,11 +13,7 @@ const ALL = "__all__";
 
 /** Bỏ dấu tiếng Việt + lowercase để tìm kiếm khoan dung (vd: "khtn" khớp "KHTN"). */
 const normalize = (s: string) =>
-	s
-		.toLowerCase()
-		.normalize("NFD")
-		.replace(/[̀-ͯ]/g, "")
-		.replace(/đ/g, "d");
+	s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d");
 
 const UniversitiesPage = () => {
 	const [universities, setUniversities] = useState<UniversityListItem[]>([]);
@@ -55,9 +51,15 @@ const UniversitiesPage = () => {
 		const q = normalize(query.trim());
 		return universities.filter((u) => {
 			if (selectedType !== ALL && u.type !== selectedType) return false;
-			if (selectedAutonomy === "autonomous" && u.isFinanciallyAutonomous !== true)
+			if (
+				selectedAutonomy === "autonomous" &&
+				u.isFinanciallyAutonomous !== true
+			)
 				return false;
-			if (selectedAutonomy === "non-autonomous" && u.isFinanciallyAutonomous !== false)
+			if (
+				selectedAutonomy === "non-autonomous" &&
+				u.isFinanciallyAutonomous !== false
+			)
 				return false;
 			if (selectedDorm === "has-dorm" && u.hasDormitory !== true) return false;
 			if (selectedDorm === "no-dorm" && u.hasDormitory !== false) return false;

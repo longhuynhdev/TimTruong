@@ -1,11 +1,12 @@
+import { Link, useParams } from "@tanstack/react-router";
 import { Award, Building2, ExternalLink, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "@tanstack/react-router";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
 	AdmissionRequirement,
@@ -14,12 +15,13 @@ import type {
 	UniversityListItem,
 	UniversityMajors,
 } from "@/types";
-import { cn } from "@/lib/utils";
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
 function formatScore(score: number): string {
-	return score % 1 === 0 ? score.toFixed(0) : score.toFixed(2).replace(/\.?0+$/, "");
+	return score % 1 === 0
+		? score.toFixed(0)
+		: score.toFixed(2).replace(/\.?0+$/, "");
 }
 
 const TUITION_UNIT_LABEL: Record<string, string> = {
@@ -28,13 +30,23 @@ const TUITION_UNIT_LABEL: Record<string, string> = {
 	PerYear: "năm",
 };
 
-function formatTuition(fee: number, unit: string | null): string {
-	const suffix = unit ? TUITION_UNIT_LABEL[unit] ?? "năm" : "năm";
-	if (fee >= 1_000_000) {
-		const millions = fee / 1_000_000;
-		return `${millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1)} triệu đồng/${suffix}`;
-	}
-	return `${fee.toLocaleString("vi-VN")} đồng/${suffix}`;
+/** Format a tuition fee as a concrete amount (max null) or a range (min – max). */
+function formatTuition(
+	min: number,
+	max: number | null,
+	unit: string | null,
+): string {
+	const suffix = unit ? (TUITION_UNIT_LABEL[unit] ?? "năm") : "năm";
+	const inMillions = min >= 1_000_000 && (max == null || max >= 1_000_000);
+	const fmt = (v: number) => {
+		if (!inMillions) return v.toLocaleString("vi-VN");
+		const millions = v / 1_000_000;
+		return millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1);
+	};
+	const unitWord = inMillions ? "triệu đồng" : "đồng";
+	const amount =
+		max != null && max !== min ? `${fmt(min)} – ${fmt(max)}` : fmt(min);
+	return `${amount} ${unitWord}/${suffix}`;
 }
 
 /** Group requirements by examType, then build a year × combo grid */
@@ -52,7 +64,11 @@ function uniqueSorted<T>(arr: T[]): T[] {
 
 // ─── sub-components ───────────────────────────────────────────────────────────
 
-const UniversityInfoCard = ({ university: u }: { university: UniversityListItem }) => (
+const UniversityInfoCard = ({
+	university: u,
+}: {
+	university: UniversityListItem;
+}) => (
 	<Card className="border-border bg-card shadow-sm">
 		<CardContent className="p-6">
 			<div className="flex flex-col sm:flex-row gap-5">
@@ -110,7 +126,10 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 							</Badge>
 						)}
 						{u.isFinanciallyAutonomous === false && (
-							<Badge variant="outline" className="text-xs border-border text-muted-foreground">
+							<Badge
+								variant="outline"
+								className="text-xs border-border text-muted-foreground"
+							>
 								Chưa tự chủ tài chính
 							</Badge>
 						)}
@@ -121,9 +140,7 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 							<span className="text-muted-foreground mt-px text-xs">📍</span>
 							<p className="text-sm text-muted-foreground">
 								{u.campuses
-									.map((c) =>
-										[c.district, c.city].filter(Boolean).join(", "),
-									)
+									.map((c) => [c.district, c.city].filter(Boolean).join(", "))
 									.join(" · ")}
 							</p>
 						</div>
@@ -134,7 +151,11 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 	</Card>
 );
 
-const RankingSection = ({ university: u }: { university: UniversityListItem }) => {
+const RankingSection = ({
+	university: u,
+}: {
+	university: UniversityListItem;
+}) => {
 	const items = latestPerSystem(u.rankings ?? []);
 	if (items.length === 0) return null;
 
@@ -143,7 +164,9 @@ const RankingSection = ({ university: u }: { university: UniversityListItem }) =
 			<CardContent className="p-6">
 				<div className="flex items-center gap-2">
 					<Award className="h-5 w-5 text-muted-foreground" />
-					<h2 className="text-base font-semibold text-foreground">Bảng xếp hạng</h2>
+					<h2 className="text-base font-semibold text-foreground">
+						Bảng xếp hạng
+					</h2>
 				</div>
 
 				<div className="mt-4 flex flex-wrap gap-2">
@@ -212,7 +235,11 @@ const DormitoryItem = ({ dorm }: { dorm: Dormitory }) => (
 	</div>
 );
 
-const DormitorySection = ({ university: u }: { university: UniversityListItem }) => {
+const DormitorySection = ({
+	university: u,
+}: {
+	university: UniversityListItem;
+}) => {
 	const dorms = u.dormitories ?? [];
 
 	// Hide entirely when we have no signal at all (unknown flag, no rows).
@@ -346,38 +373,54 @@ const RequirementsTable = ({
 	);
 };
 
-const MajorCard = ({ major: m }: { major: MajorWithRequirements }) => (
-	<Card className="border-border bg-card shadow-sm">
-		<CardContent className="p-4">
-			<div className="flex items-start justify-between gap-3 flex-wrap">
-				<div className="min-w-0">
-					<p className="font-semibold text-foreground leading-snug">{m.name}</p>
-					{m.code && (
-						<p className="text-xs text-muted-foreground font-mono mt-0.5">
-							{m.code}
+const MajorCard = ({ major: m }: { major: MajorWithRequirements }) => {
+	// years is sorted by year descending (server-side); show the latest offering.
+	const latest = m.years[0];
+	return (
+		<Card className="border-border bg-card shadow-sm">
+			<CardContent className="p-4">
+				<div className="flex items-start justify-between gap-3 flex-wrap">
+					<div className="min-w-0">
+						<p className="font-semibold text-foreground leading-snug">
+							{m.name}
 						</p>
+						{m.code && (
+							<p className="text-xs text-muted-foreground font-mono mt-0.5">
+								{m.code}
+							</p>
+						)}
+					</div>
+					{latest && (
+						<div className="flex flex-wrap gap-2 text-xs text-muted-foreground shrink-0">
+							{latest.tuitionFeeMin != null && (
+								<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
+									💰{" "}
+									{formatTuition(
+										latest.tuitionFeeMin,
+										latest.tuitionFeeMax,
+										latest.tuitionFeeUnit,
+									)}
+									<span className="text-muted-foreground/70">
+										· {latest.year}
+									</span>
+								</span>
+							)}
+							{latest.enrollmentQuota != null && (
+								<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
+									🎓 {latest.enrollmentQuota} chỉ tiêu
+								</span>
+							)}
+						</div>
 					)}
 				</div>
-				<div className="flex flex-wrap gap-2 text-xs text-muted-foreground shrink-0">
-					{m.tuitionFeeAmount != null && (
-						<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
-							💰 {formatTuition(m.tuitionFeeAmount, m.tuitionFeeUnit)}
-						</span>
-					)}
-					{m.enrollmentQuota != null && (
-						<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
-							🎓 {m.enrollmentQuota} chỉ tiêu
-						</span>
-					)}
-				</div>
-			</div>
 
-			{m.admissionRequirements.length > 0 && (
-				<RequirementsTable requirements={m.admissionRequirements} />
-			)}
-		</CardContent>
-	</Card>
-);
+				{m.admissionRequirements.length > 0 && (
+					<RequirementsTable requirements={m.admissionRequirements} />
+				)}
+			</CardContent>
+		</Card>
+	);
+};
 
 const MajorsSkeleton = () => (
 	<div className="space-y-3">
@@ -447,7 +490,9 @@ const UniversityDetailPage = () => {
 						"@context": "https://schema.org",
 						"@type": "CollegeOrUniversity",
 						name: university.name,
-						...(university.englishName && { alternateName: university.englishName }),
+						...(university.englishName && {
+							alternateName: university.englishName,
+						}),
 						url: `https://timtruong.app/danh-sach-truong/${slug}`,
 						...(university.imageUrl && { logo: university.imageUrl }),
 					}}
