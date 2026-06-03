@@ -34,7 +34,7 @@ const Header = () => {
 						to="/danh-sach-truong"
 						className="text-muted-foreground hover:text-primary hover:bg-accent px-3 py-2 rounded-md transition-colors duration-200"
 					>
-						Danh sách trường
+						Danh sách trường Đại học
 					</Link>
 					<Link
 						to="/to-hop-mon"
