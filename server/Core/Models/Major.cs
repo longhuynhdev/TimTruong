@@ -12,10 +12,17 @@ public class Major
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Major code used by the university (e.g., '7480201')
+    /// Major code currently used by the university (e.g., '7480201').
     /// </summary>
     [MaxLength(50)]
     public string? Code { get; set; }
+
+    /// <summary>
+    /// Codes this major used in previous years, before the university renumbered it.
+    /// Lets the ETL link historical files (which keep the old code) to the same major.
+    /// Stored as a Postgres text[].
+    /// </summary>
+    public List<string> OldCodes { get; set; } = new();
 
     /// <summary>
     /// Field of study category (e.g., 'CNTT', 'Điện - Điện tử', 'Y Dược')

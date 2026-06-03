@@ -33,6 +33,7 @@ public class RecommendationService : IRecommendationService
             .Include(ar => ar.Major)
                 .ThenInclude(m => m.Years)
             .Where(ar => ar.ExamType == request.ExamType)
+            .Where(ar => ar.Score != null) // Skip combos with no published cutoff yet (new majors)
             .Where(ar => ar.Score <= request.Score); // Student's score meets or exceeds requirement
 
         // For THPTQG, filter by subject combination
@@ -84,7 +85,7 @@ public class RecommendationService : IRecommendationService
             TuitionFeeMax: yearInfo?.TuitionFeeMax,
             TuitionFeeUnit: yearInfo?.TuitionFeeUnit?.ToString(),
             EnrollmentQuota: yearInfo?.EnrollmentQuota,
-            AdmissionScore: ar.Score,
+            AdmissionScore: ar.Score!.Value, // non-null: query filters Score != null
             SubjectCombination: ar.SubjectCombination?.ToString() ?? "N/A",
             Year: ar.Year
         );

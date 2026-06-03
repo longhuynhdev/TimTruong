@@ -17,14 +17,14 @@ erDiagram
         UniType Type "Public/Private"
         string ImageUrl
         bool IsFinanciallyAutonomous "Nullable"
-        bool HasDormitory "Nullable — có KTX hay không"
+        bool HasDormitory "Nullable"
     }
 
     Dormitories {
         int Id PK
         string Name "e.g. KTX Khu B"
         string Address "Nullable"
-        string Note "Nullable — tiện ích, nội quy, giá..."
+        string Note "Nullable"
         string RegistrationUrl "Nullable"
     }
 
@@ -43,7 +43,8 @@ erDiagram
         int Id PK
         int UniversityId FK
         string Name
-        string Code "mã canonical / ổn định — khóa ETL, e.g. 7480201"
+        string Code "mã hiện hành, e.g. 7480201"
+        string[] OldCodes "mã các năm trước (khi trường đổi mã)"
         string FieldOfStudy "e.g. CNTT, Y Dược"
     }
 
@@ -61,7 +62,7 @@ erDiagram
         int Id PK
         int MajorId FK
         ExamType ExamType "THPTQG or ĐGNL"
-        decimal Score "Threshold"
+        decimal Score "Nullable — null nếu tổ hợp đã công bố nhưng chưa có điểm chuẩn"
         SubjectCombination SubjectCombination "Nullable"
         int Year "e.g. 2024"
     }
@@ -69,7 +70,7 @@ erDiagram
     UniversityRankings {
         int Id PK
         int UniversityId FK
-        RankingSystem RankingSystem "VNUR, QS, THE..."
+        RankingSystem RankingSystem "e.g. VNUR, QS, THE..."
         int Year "e.g. 2024"
         int RankFrom "thứ hạng / cận dưới của khoảng — cho phép trùng"
         int RankTo "==From nếu hạng đơn; cận trên nếu band đóng; null nếu band mở (1001+)"

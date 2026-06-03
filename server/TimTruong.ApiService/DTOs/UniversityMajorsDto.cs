@@ -29,7 +29,7 @@ public record MajorYearDto(
 public record AdmissionRequirementDto(
     int Id,
     string ExamType,
-    decimal Score,
+    decimal? Score,
     string? SubjectCombination,
     int Year
 );

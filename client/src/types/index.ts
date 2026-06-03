@@ -65,7 +65,8 @@ export interface UniversityListItem {
 export interface AdmissionRequirement {
 	id: number;
 	examType: string;
-	score: number;
+	// null = tổ hợp có xét nhưng chưa công bố điểm chuẩn (ngành mới / chưa tới mùa)
+	score: number | null;
 	subjectCombination: string | null;
 	year: number;
 }

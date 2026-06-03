@@ -1,4 +1,4 @@
-Mã trường,Mã ngành xét tuyển,Tên ngành,Phương thức,Tổ hợp,Thang điểm,Điểm
+UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score
 QST,7140103,Công nghệ giáo dục,THPTQG,A00,30,24.25
 QST,7140103,Công nghệ giáo dục,THPTQG,A01,30,22.88
 QST,7140103,Công nghệ giáo dục,THPTQG,B00,30,23.13

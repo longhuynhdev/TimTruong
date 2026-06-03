@@ -292,8 +292,8 @@ const RequirementsTable = ({
 					reqs.map((r) => r.subjectCombination ?? ""),
 				).filter(Boolean);
 
-				// Build lookup: combo → year → score
-				const lookup: Record<string, Record<number, number>> = {};
+				// Build lookup: combo → year → score (null = chưa công bố điểm)
+				const lookup: Record<string, Record<number, number | null>> = {};
 				for (const r of reqs) {
 					const key = r.subjectCombination ?? "";
 					(lookup[key] ??= {})[r.year] = r.score;
@@ -357,7 +357,9 @@ const RequirementsTable = ({
 														key={y}
 														className="px-3 py-2 text-right tabular-nums text-foreground"
 													>
-														{entry ? formatScore(entry.score) : "—"}
+														{entry && entry.score != null
+															? formatScore(entry.score)
+															: "—"}
 													</td>
 												);
 											})}

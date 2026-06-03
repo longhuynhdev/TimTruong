@@ -54,11 +54,15 @@ def load_file(path: str, year: int):
                 errors.append(f"dòng {lineno} ({code}): tổ hợp lạ '{raw.get(COL_COMBO)}' — bỏ (mở rộng enum trước)")
                 continue
 
-            try:
-                score = Decimal((raw.get(COL_SCORE) or "").strip())
-            except (InvalidOperation, ValueError):
-                errors.append(f"dòng {lineno} ({code}): điểm không hợp lệ '{raw.get(COL_SCORE)}' — bỏ")
-                continue
+            score_raw = (raw.get(COL_SCORE) or "").strip()
+            if not score_raw:
+                score = None  # tổ hợp có xét nhưng chưa công bố điểm (ngành mới / chưa tới mùa)
+            else:
+                try:
+                    score = Decimal(score_raw)
+                except (InvalidOperation, ValueError):
+                    errors.append(f"dòng {lineno} ({code}): điểm không hợp lệ '{score_raw}' — bỏ")
+                    continue
 
             rows.append({
                 "code": code,
@@ -72,8 +76,14 @@ def load_file(path: str, year: int):
 
 def process_uni(cur, uni_code, uni_id, rows):
     """Upsert AdmissionRequirements cho 1 trường. Trả (ins, upd, deleted, skipped)."""
-    cur.execute('SELECT "Id", "Code" FROM "Majors" WHERE "UniversityId" = %s', (uni_id,))
-    major_id_by_code = {code: id_ for id_, code in cur.fetchall()}
+    # Khớp mã đúng nguyên văn + qua OldCodes (mã năm cũ → ngành đã đổi mã).
+    cur.execute('SELECT "Id", "Code", "OldCodes" FROM "Majors" WHERE "UniversityId" = %s', (uni_id,))
+    major_id_by_code = {}
+    for id_, code, oldcodes in cur.fetchall():
+        if code:
+            major_id_by_code[code] = id_
+        for oc in oldcodes or []:
+            major_id_by_code[oc] = id_
 
     # Lọc dòng có major khớp
     valid, skipped = [], 0
