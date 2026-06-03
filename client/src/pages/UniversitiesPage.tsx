@@ -2,6 +2,7 @@ import { ChevronRight, MapPin, Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import PageMetadata from "@/components/PageMetadata";
+import { RankingBadges } from "@/components/RankingBadges";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -294,6 +295,9 @@ const UniversityCard = ({
 									</span>
 								)}
 							</div>
+
+							{/* Ranking badges (nổi bật — đặt trên các badge khác) */}
+							<RankingBadges rankings={u.rankings} className="mt-2" />
 
 							{/* Badges */}
 							<div className="flex flex-wrap gap-1.5 mt-2">

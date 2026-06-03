@@ -60,12 +60,13 @@ public static class UniversityEndpoints
         [FromQuery] string? type,
         [FromQuery] string? city,
         [FromQuery] bool? hasDormitory,
+        [FromQuery] string? sort,
         IUniversityService universityService,
         ILogger<IUniversityService> logger)
     {
         try
         {
-            var universities = await universityService.GetAllUniversitiesAsync(search, type, city, hasDormitory);
+            var universities = await universityService.GetAllUniversitiesAsync(search, type, city, hasDormitory, sort);
             return Results.Ok(universities);
         }
         catch (Exception ex)

@@ -64,7 +64,7 @@ erDiagram
         RankingSystem RankingSystem "VNUR, QS, THE..."
         int Year "e.g. 2024"
         int RankFrom "thứ hạng / cận dưới của khoảng — cho phép trùng"
-        int RankTo "Nullable — cận trên nếu là khoảng (vd 601–800)"
+        int RankTo "==From nếu hạng đơn; cận trên nếu band đóng; null nếu band mở (1001+)"
         string SourceUrl "Nullable — link nguồn, có thể dùng chung"
     }
 ```    

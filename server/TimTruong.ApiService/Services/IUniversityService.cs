@@ -11,7 +11,7 @@ public interface IUniversityService
     /// Gets all universities with optional filtering
     /// </summary>
 
-    Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null, bool? hasDormitory = null);
+    Task<List<UniversityDto>> GetAllUniversitiesAsync(string? search = null, string? type = null, string? city = null, bool? hasDormitory = null, string? sort = null);
 
     /// <summary>
     /// Gets a simplified list of universities for dropdowns
