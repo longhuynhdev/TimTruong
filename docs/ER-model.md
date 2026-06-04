@@ -11,6 +11,7 @@ erDiagram
         int Id PK
         string Name
         string EnglishName
+        string OldName "Nullable — tên cũ (khi trường đổi tên)"
         string ShortName
         string Slug
         string Code "e.g. QST, QSB"
@@ -44,7 +45,7 @@ erDiagram
         int UniversityId FK
         string Name
         string Code "mã hiện hành, e.g. 7480201"
-        string[] OldCodes "mã các năm trước (khi trường đổi mã)"
+        string OldCode "Nullable — mã năm trước (khi trường đổi mã)"
         string FieldOfStudy "e.g. CNTT, Y Dược"
     }
 

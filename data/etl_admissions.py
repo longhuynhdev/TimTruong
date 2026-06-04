@@ -76,14 +76,14 @@ def load_file(path: str, year: int):
 
 def process_uni(cur, uni_code, uni_id, rows):
     """Upsert AdmissionRequirements cho 1 trường. Trả (ins, upd, deleted, skipped)."""
-    # Khớp mã đúng nguyên văn + qua OldCodes (mã năm cũ → ngành đã đổi mã).
-    cur.execute('SELECT "Id", "Code", "OldCodes" FROM "Majors" WHERE "UniversityId" = %s', (uni_id,))
+    # Khớp mã đúng nguyên văn + qua OldCode (mã năm cũ → ngành đã đổi mã).
+    cur.execute('SELECT "Id", "Code", "OldCode" FROM "Majors" WHERE "UniversityId" = %s', (uni_id,))
     major_id_by_code = {}
-    for id_, code, oldcodes in cur.fetchall():
+    for id_, code, oldcode in cur.fetchall():
         if code:
             major_id_by_code[code] = id_
-        for oc in oldcodes or []:
-            major_id_by_code[oc] = id_
+        if oldcode:
+            major_id_by_code[oldcode] = id_
 
     # Lọc dòng có major khớp
     valid, skipped = [], 0

@@ -18,11 +18,10 @@ public class Major
     public string? Code { get; set; }
 
     /// <summary>
-    /// Codes this major used in previous years, before the university renumbered it.
-    /// Lets the ETL link historical files (which keep the old code) to the same major.
-    /// Stored as a Postgres text[].
+    /// Code this major used previously, before the university renumbered it.
     /// </summary>
-    public List<string> OldCodes { get; set; } = new();
+    [MaxLength(50)]
+    public string? OldCode { get; set; }
 
     /// <summary>
     /// Field of study category (e.g., 'CNTT', 'Điện - Điện tử', 'Y Dược')

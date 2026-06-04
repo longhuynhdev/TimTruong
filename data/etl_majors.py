@@ -11,7 +11,7 @@ from enums import parse_tuition_fee_unit
 MAJORS_DIR = os.path.join(os.path.dirname(__file__), "majors")
 
 COL_CODE = "MajorCode"
-COL_OLD = "OldCodes"
+COL_OLD = "OldCode"
 COL_NAME = "MajorName"
 COL_QUOTA = "EnrollmentQuota"
 COL_FEE_MIN = "TuitionFeeMin"
@@ -19,12 +19,12 @@ COL_FEE_MAX = "TuitionFeeMax"
 COL_UNIT = "TuitionFeeUnit"
 
 MAJOR_INSERT_SQL = """
-    INSERT INTO "Majors" ("Name", "Code", "OldCodes", "UniversityId")
-    VALUES (%(name)s, %(code)s, %(oldcodes)s, %(uni_id)s)
+    INSERT INTO "Majors" ("Name", "Code", "OldCode", "UniversityId")
+    VALUES (%(name)s, %(code)s, %(oldcode)s, %(uni_id)s)
     RETURNING "Id"
 """
 MAJOR_UPDATE_SQL = """
-    UPDATE "Majors" SET "Name" = %(name)s, "Code" = %(code)s, "OldCodes" = %(oldcodes)s
+    UPDATE "Majors" SET "Name" = %(name)s, "Code" = %(code)s, "OldCode" = %(oldcode)s
      WHERE "Id" = %(id)s
 """
 
@@ -96,13 +96,8 @@ def parse_quota(value: str):
     return int(digits) if digits else None
 
 
-def split_codes(value: str):
-    """'75202A1; 7480101' → ['75202A1', '7480101']. Rỗng → []."""
-    return [c.strip() for c in (value or "").replace(",", ";").split(";") if c.strip()]
-
-
 def load_file(path: str, year: int):
-    """Đọc 1 CSV → (rows, errors). Mỗi row: code, oldcodes[], name, quota, fee_min/max, unit."""
+    """Đọc 1 CSV → (rows, errors). Mỗi row: code, oldcode, name, quota, fee_min/max, unit."""
     rows, errors = [], []
     with open(path, encoding="utf-8") as f:
         for lineno, raw in enumerate(csv.DictReader(f), start=2):
@@ -126,7 +121,7 @@ def load_file(path: str, year: int):
 
             rows.append({
                 "code": code,
-                "oldcodes": split_codes(raw.get(COL_OLD, "")),
+                "oldcode": (raw.get(COL_OLD) or "").strip() or None,
                 "name": (raw.get(COL_NAME) or "").strip(),
                 "quota": parse_quota(raw.get(COL_QUOTA, "")),
                 "fee_min": fee_min,
@@ -137,8 +132,8 @@ def load_file(path: str, year: int):
 
 
 def upsert_major(cur, uni_id, code_to_id, row):
-    """Tìm major theo mã (khớp đúng nguyên văn) hoặc OldCodes; cập nhật/tạo. Trả major_id."""
-    keys = {row["code"], *row["oldcodes"]}
+    """Tìm major theo mã (khớp đúng nguyên văn) hoặc OldCode; cập nhật/tạo. Trả major_id."""
+    keys = {k for k in (row["code"], row["oldcode"]) if k}
     candidate_ids = {code_to_id[k] for k in keys if k in code_to_id}
 
     if len(candidate_ids) > 1:
@@ -148,20 +143,21 @@ def upsert_major(cur, uni_id, code_to_id, row):
     if major_id is None:
         cur.execute(MAJOR_INSERT_SQL, {
             "name": row["name"], "code": row["code"],
-            "oldcodes": row["oldcodes"], "uni_id": uni_id,
+            "oldcode": row["oldcode"], "uni_id": uni_id,
         })
         major_id = cur.fetchone()[0]
     else:
-        # Mã hiện hành cũ (nếu khác mã mới) được đẩy vào OldCodes; hợp nhất, bỏ trùng/mã hiện hành.
-        cur.execute('SELECT "Code", "OldCodes" FROM "Majors" WHERE "Id" = %s', (major_id,))
+        # OldCode = mã của file (nếu có), nếu không thì mã hiện hành cũ khi đổi mã.
+        cur.execute('SELECT "Code", "OldCode" FROM "Majors" WHERE "Id" = %s', (major_id,))
         cur_code, cur_old = cur.fetchone()
-        merged = {*(cur_old or []), *row["oldcodes"]}
+        old_code = row["oldcode"] or cur_old
         if cur_code and cur_code != row["code"]:
-            merged.add(cur_code)
-        merged.discard(row["code"])
+            old_code = cur_code
+        if old_code == row["code"]:
+            old_code = None
         cur.execute(MAJOR_UPDATE_SQL, {
             "id": major_id, "name": row["name"], "code": row["code"],
-            "oldcodes": sorted(merged),
+            "oldcode": old_code,
         })
 
     # Cập nhật map để các dòng sau cùng file nhận diện được
@@ -172,13 +168,13 @@ def upsert_major(cur, uni_id, code_to_id, row):
 
 def process_uni(cur, uni_code, uni_id, year, rows):
     """Upsert Majors + MajorYears cho 1 trường/năm. Trả (major_upd, my_ins, my_upd, my_del)."""
-    cur.execute('SELECT "Id", "Code", "OldCodes" FROM "Majors" WHERE "UniversityId" = %s', (uni_id,))
+    cur.execute('SELECT "Id", "Code", "OldCode" FROM "Majors" WHERE "UniversityId" = %s', (uni_id,))
     code_to_id = {}
-    for id_, code, oldcodes in cur.fetchall():
+    for id_, code, oldcode in cur.fetchall():
         if code:
             code_to_id[code] = id_
-        for oc in oldcodes or []:
-            code_to_id[oc] = id_
+        if oldcode:
+            code_to_id[oldcode] = id_
 
     # 1) Majors (danh tính)
     major_ids = []

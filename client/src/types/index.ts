@@ -51,6 +51,7 @@ export interface UniversityListItem {
 	slug: string | null;
 	shortName: string | null;
 	englishName: string | null;
+	oldName: string | null;
 	code: string;
 	type: "Public" | "Private";
 	imageUrl: string | null;

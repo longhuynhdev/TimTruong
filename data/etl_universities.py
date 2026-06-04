@@ -22,8 +22,8 @@ UNI_TYPE_MAP = {
 }
 
 INSERT_SQL = """
-    INSERT INTO "Universities" ("Name", "ShortName", "EnglishName", "Code", "Type", "ImageUrl", "IsFinanciallyAutonomous", "HasDormitory", "Slug")
-    VALUES (%(name)s, %(short_name)s, %(english_name)s, %(code)s, %(type)s, %(image_url)s, %(is_financially_autonomous)s, %(has_dormitory)s, %(slug)s)
+    INSERT INTO "Universities" ("Name", "ShortName", "EnglishName", "OldName", "Code", "Type", "ImageUrl", "IsFinanciallyAutonomous", "HasDormitory", "Slug")
+    VALUES (%(name)s, %(short_name)s, %(english_name)s, %(old_name)s, %(code)s, %(type)s, %(image_url)s, %(is_financially_autonomous)s, %(has_dormitory)s, %(slug)s)
 """
 
 UPDATE_SQL = """
@@ -31,6 +31,7 @@ UPDATE_SQL = """
         "Name"                   = %(name)s,
         "ShortName"              = %(short_name)s,
         "EnglishName"            = %(english_name)s,
+        "OldName"                = %(old_name)s,
         "Type"                   = %(type)s,
         "ImageUrl"               = %(image_url)s,
         "IsFinanciallyAutonomous" = %(is_financially_autonomous)s,
@@ -66,6 +67,7 @@ def load_universities():
                 "name": name,
                 "short_name": short_name,
                 "english_name": row["EnglishName"].strip() or None,
+                "old_name": row.get("OldName", "").strip() or None,
                 "code": code,
                 "type": UNI_TYPE_MAP.get(row["Type"].strip(), 0),
                 "image_url": row["ImageUrl"].strip() or None,
