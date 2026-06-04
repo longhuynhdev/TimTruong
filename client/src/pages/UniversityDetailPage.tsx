@@ -1,18 +1,35 @@
 import { Link, useParams } from "@tanstack/react-router";
 import {
+	type Column,
+	type ColumnDef,
+	type FilterFn,
+	flexRender,
+	getCoreRowModel,
+	getExpandedRowModel,
+	getFilteredRowModel,
+	getSortedRowModel,
+	type Row,
+	type SortingState,
+	useReactTable,
+} from "@tanstack/react-table";
+import {
+	ArrowDown,
+	ArrowUp,
+	ArrowUpDown,
 	Award,
 	Building2,
 	ChevronDown,
 	ExternalLink,
 	MapPin,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
 import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
 	Table,
 	TableBody,
@@ -21,7 +38,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
+import { cn, normalizeVi } from "@/lib/utils";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
 	AdmissionRequirement,
@@ -383,38 +400,68 @@ const RequirementsTable = ({
 	);
 };
 
-const MajorRow = ({ major: m }: { major: MajorWithRequirements }) => {
-	const [open, setOpen] = useState(false);
-	// years is sorted by year descending (server-side); show the latest offering.
+// ─── majors table (TanStack) ──────────────────────────────────────────────────
+
+/** Latest-year tuition string for a major, or null when not published. */
+const majorTuition = (m: MajorWithRequirements): string | null => {
 	const latest = m.years[0];
-	const isNew = isNewMajor(m);
-	const canExpand = m.admissionRequirements.length > 0;
+	return latest?.tuitionFeeMin != null
+		? formatTuition(latest.tuitionFeeMin, latest.tuitionFeeMax, latest.tuitionFeeUnit)
+		: null;
+};
 
-	const tuition =
-		latest?.tuitionFeeMin != null
-			? formatTuition(
-					latest.tuitionFeeMin,
-					latest.tuitionFeeMax,
-					latest.tuitionFeeUnit,
-				)
-			: null;
-	const quota = latest?.enrollmentQuota ?? null;
-
-	const toggle = () => setOpen((v) => !v);
-
+/** Clickable column header that toggles sorting and shows the current direction. */
+const SortableHeader = ({
+	column,
+	label,
+	className,
+}: {
+	column: Column<MajorWithRequirements>;
+	label: string;
+	className?: string;
+}) => {
+	const sorted = column.getIsSorted();
+	const Icon = sorted === "asc" ? ArrowUp : sorted === "desc" ? ArrowDown : ArrowUpDown;
 	return (
-		<>
-			<TableRow
-				className={canExpand ? "cursor-pointer" : undefined}
-				onClick={canExpand ? toggle : undefined}
-			>
-				{/* Ngành */}
-				<TableCell className="align-top py-3 whitespace-normal">
+		<button
+			type="button"
+			onClick={column.getToggleSortingHandler()}
+			className={cn(
+				"inline-flex items-center gap-1 font-medium hover:text-foreground transition-colors",
+				className,
+			)}
+		>
+			{label}
+			<Icon
+				className={cn(
+					"h-3.5 w-3.5",
+					sorted ? "text-foreground" : "text-muted-foreground/60",
+				)}
+			/>
+		</button>
+	);
+};
+
+// Search by major name + code, diacritic-insensitive (mirrors SubjectCombinationsPage).
+const majorFilter: FilterFn<MajorWithRequirements> = (row, _columnId, filterValue: string) => {
+	const q = normalizeVi(filterValue);
+	if (!q) return true;
+	const m = row.original;
+	return normalizeVi(m.name).includes(q) || normalizeVi(m.code ?? "").includes(q);
+};
+
+const majorColumns: ColumnDef<MajorWithRequirements>[] = [
+	{
+		id: "name",
+		accessorFn: (m) => m.name,
+		header: ({ column }) => <SortableHeader column={column} label="Ngành" />,
+		cell: ({ row }) => {
+			const m = row.original;
+			return (
+				<div className="whitespace-normal">
 					<div className="flex items-start gap-2 flex-wrap">
-						<span className="font-medium text-foreground leading-snug">
-							{m.name}
-						</span>
-						{isNew && (
+						<span className="font-medium text-foreground leading-snug">{m.name}</span>
+						{isNewMajor(m) && (
 							<Badge
 								variant="outline"
 								className="border-primary/40 text-primary text-[10px]"
@@ -424,63 +471,104 @@ const MajorRow = ({ major: m }: { major: MajorWithRequirements }) => {
 						)}
 					</div>
 					{m.code && (
-						<p className="text-xs text-muted-foreground font-mono mt-0.5">
-							{m.code}
-						</p>
+						<p className="text-xs text-muted-foreground font-mono mt-0.5">{m.code}</p>
 					)}
-					{/* Tuition/quota surfaced here on mobile (the columns are hidden < sm). */}
-					{(tuition || quota != null) && (
-						<p className="text-xs text-muted-foreground mt-1 sm:hidden">
-							{tuition && <span>💰 {tuition}</span>}
-							{tuition && quota != null && " · "}
-							{quota != null && <span>🎓 {quota} chỉ tiêu</span>}
-						</p>
-					)}
-				</TableCell>
-
-				{/* Học phí */}
-				<TableCell className="hidden sm:table-cell align-top py-3 text-sm text-muted-foreground">
-					{tuition ?? "—"}
-				</TableCell>
-
-				{/* Chỉ tiêu */}
-				<TableCell className="hidden sm:table-cell align-top py-3 text-sm text-muted-foreground tabular-nums">
+				</div>
+			);
+		},
+	},
+	{
+		id: "tuition",
+		// undefined (not null) so sortUndefined keeps "chưa công bố" rows last either direction.
+		accessorFn: (m) => m.years[0]?.tuitionFeeMin ?? undefined,
+		sortUndefined: "last",
+		header: ({ column }) => <SortableHeader column={column} label="Học phí" />,
+		cell: ({ row }) => (
+			<span className="text-sm text-muted-foreground">{majorTuition(row.original) ?? "—"}</span>
+		),
+	},
+	{
+		id: "quota",
+		accessorFn: (m) => m.years[0]?.enrollmentQuota ?? undefined,
+		sortUndefined: "last",
+		header: ({ column }) => <SortableHeader column={column} label="Chỉ tiêu" />,
+		cell: ({ row }) => {
+			const quota = row.original.years[0]?.enrollmentQuota ?? null;
+			return (
+				<span className="text-sm text-muted-foreground tabular-nums">
 					{quota != null ? quota : "—"}
-				</TableCell>
+				</span>
+			);
+		},
+	},
+	{
+		id: "score",
+		enableSorting: false,
+		header: () => <span className="font-medium">Điểm chuẩn</span>,
+		meta: { align: "right" },
+		cell: ({ row }) =>
+			row.getCanExpand() ? (
+				<button
+					type="button"
+					onClick={(e) => {
+						e.stopPropagation();
+						row.toggleExpanded();
+					}}
+					aria-expanded={row.getIsExpanded()}
+					className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+				>
+					{row.getIsExpanded() ? "Ẩn" : "Xem"}
+					<ChevronDown
+						className={cn(
+							"h-4 w-4 transition-transform",
+							row.getIsExpanded() && "rotate-180",
+						)}
+					/>
+				</button>
+			) : (
+				<span className="text-sm text-muted-foreground">—</span>
+			),
+	},
+];
 
-				{/* Điểm chuẩn / action */}
-				<TableCell className="align-top py-3 text-right">
-					{canExpand ? (
-						<button
-							type="button"
-							onClick={(e) => {
-								e.stopPropagation();
-								toggle();
-							}}
-							aria-expanded={open}
-							className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+const MajorTableRow = ({
+	row,
+	columnCount,
+}: {
+	row: Row<MajorWithRequirements>;
+	columnCount: number;
+}) => {
+	const m = row.original;
+	const canExpand = row.getCanExpand();
+	return (
+		<>
+			<TableRow
+				className={canExpand ? "cursor-pointer" : undefined}
+				onClick={canExpand ? row.getToggleExpandedHandler() : undefined}
+			>
+				{row.getVisibleCells().map((cell) => {
+					const align = (cell.column.columnDef.meta as { align?: string } | undefined)?.align;
+					return (
+						<TableCell
+							key={cell.id}
+							className={cn("align-top py-3", align === "right" && "text-right")}
 						>
-							{open ? "Ẩn" : "Xem"}
-							<ChevronDown
-								className={cn(
-									"h-4 w-4 transition-transform",
-									open && "rotate-180",
-								)}
-							/>
-						</button>
-					) : (
-						<span className="text-sm text-muted-foreground">—</span>
-					)}
-				</TableCell>
+							{flexRender(cell.column.columnDef.cell, cell.getContext())}
+						</TableCell>
+					);
+				})}
 			</TableRow>
 
-			{open && canExpand && (
+			{row.getIsExpanded() && canExpand && (
 				<TableRow className="hover:bg-transparent">
-					<TableCell colSpan={4} className="bg-muted/20 py-3 whitespace-normal">
-						{isNew && (
+					<TableCell
+						colSpan={columnCount}
+						className="bg-muted/20 py-3 whitespace-normal"
+					>
+						{isNewMajor(m) && (
 							<p className="text-xs text-muted-foreground mb-2">
-								Ngành mới mở — chưa công bố điểm chuẩn. Dưới đây là các tổ hợp
-								xét tuyển.
+								Ngành mới mở — chưa công bố điểm chuẩn. Dưới đây là các tổ hợp xét
+								tuyển.
 							</p>
 						)}
 						<RequirementsTable requirements={m.admissionRequirements} />
@@ -488,6 +576,98 @@ const MajorRow = ({ major: m }: { major: MajorWithRequirements }) => {
 				</TableRow>
 			)}
 		</>
+	);
+};
+
+const MajorsTable = ({ majors }: { majors: MajorWithRequirements[] }) => {
+	const [sorting, setSorting] = useState<SortingState>([]);
+	const [globalFilter, setGlobalFilter] = useState("");
+
+	const columns = useMemo(() => majorColumns, []);
+
+	const table = useReactTable({
+		data: majors,
+		columns,
+		state: { sorting, globalFilter },
+		onSortingChange: setSorting,
+		onGlobalFilterChange: setGlobalFilter,
+		globalFilterFn: majorFilter,
+		getRowCanExpand: (row) => row.original.admissionRequirements.length > 0,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		getExpandedRowModel: getExpandedRowModel(),
+	});
+
+	const rows = table.getRowModel().rows;
+	const columnCount = columns.length;
+
+	return (
+		<div className="space-y-4">
+			<Input
+				placeholder="Tìm kiếm ngành học..."
+				value={globalFilter}
+				onChange={(e) => setGlobalFilter(e.target.value)}
+				className="max-w-sm"
+			/>
+
+			<p className="text-sm text-muted-foreground">
+				{table.getFilteredRowModel().rows.length} ngành học
+			</p>
+
+			{/* Horizontal swipe on mobile keeps all columns (min-width forces overflow). */}
+			<div className="rounded-lg border border-border overflow-x-auto">
+				<Table className="min-w-[640px]">
+					<TableHeader>
+						{table.getHeaderGroups().map((headerGroup) => (
+							<TableRow
+								key={headerGroup.id}
+								className="bg-muted/40 hover:bg-muted/40"
+							>
+								{headerGroup.headers.map((header) => {
+									const align = (
+										header.column.columnDef.meta as { align?: string } | undefined
+									)?.align;
+									return (
+										<TableHead
+											key={header.id}
+											className={cn(align === "right" && "text-right")}
+										>
+											{header.isPlaceholder
+												? null
+												: flexRender(
+														header.column.columnDef.header,
+														header.getContext(),
+													)}
+										</TableHead>
+									);
+								})}
+							</TableRow>
+						))}
+					</TableHeader>
+					<TableBody>
+						{rows.length ? (
+							rows.map((row) => (
+								<MajorTableRow
+									key={row.id}
+									row={row}
+									columnCount={columnCount}
+								/>
+							))
+						) : (
+							<TableRow>
+								<TableCell
+									colSpan={columnCount}
+									className="h-24 text-center text-muted-foreground"
+								>
+									Không tìm thấy ngành học phù hợp.
+								</TableCell>
+							</TableRow>
+						)}
+					</TableBody>
+				</Table>
+			</div>
+		</div>
 	);
 };
 
@@ -628,34 +808,7 @@ const UniversityDetailPage = () => {
 									) : errorMajors ? (
 										<p className="text-sm text-destructive">{errorMajors}</p>
 									) : majorsData && majorsData.majors.length > 0 ? (
-										<>
-											<p className="text-sm text-muted-foreground mb-4">
-												{majorsData.majors.length} ngành học
-											</p>
-											<div className="rounded-lg border border-border overflow-hidden">
-												<Table>
-													<TableHeader>
-														<TableRow className="bg-muted/40 hover:bg-muted/40">
-															<TableHead>Ngành</TableHead>
-															<TableHead className="hidden sm:table-cell">
-																Học phí
-															</TableHead>
-															<TableHead className="hidden sm:table-cell">
-																Chỉ tiêu
-															</TableHead>
-															<TableHead className="text-right">
-																Điểm chuẩn
-															</TableHead>
-														</TableRow>
-													</TableHeader>
-													<TableBody>
-														{majorsData.majors.map((major) => (
-															<MajorRow key={major.id} major={major} />
-														))}
-													</TableBody>
-												</Table>
-											</div>
-										</>
+										<MajorsTable majors={majorsData.majors} />
 									) : (
 										<p className="text-sm text-muted-foreground py-8 text-center">
 											Chưa có thông tin ngành học.
