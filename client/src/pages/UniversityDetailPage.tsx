@@ -1,5 +1,11 @@
 import { Link, useParams } from "@tanstack/react-router";
-import { Award, Building2, ExternalLink, MapPin } from "lucide-react";
+import {
+	Award,
+	Building2,
+	ChevronDown,
+	ExternalLink,
+	MapPin,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
@@ -7,6 +13,14 @@ import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
 import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
@@ -62,6 +76,14 @@ function groupRequirements(reqs: AdmissionRequirement[]) {
 function uniqueSorted<T>(arr: T[]): T[] {
 	return [...new Set(arr)].sort() as T[];
 }
+
+const hasPublishedScore = (m: MajorWithRequirements) =>
+	m.admissionRequirements.some((r) => r.score != null);
+
+// "Ngành mới": the school published the combos (đề án) but no cutoff in any year yet.
+// A major with no admission-requirement rows at all is "chưa có dữ liệu", not new.
+const isNewMajor = (m: MajorWithRequirements) =>
+	m.admissionRequirements.length > 0 && !hasPublishedScore(m);
 
 // ─── sub-components ───────────────────────────────────────────────────────────
 
@@ -361,52 +383,111 @@ const RequirementsTable = ({
 	);
 };
 
-const MajorCard = ({ major: m }: { major: MajorWithRequirements }) => {
+const MajorRow = ({ major: m }: { major: MajorWithRequirements }) => {
+	const [open, setOpen] = useState(false);
 	// years is sorted by year descending (server-side); show the latest offering.
 	const latest = m.years[0];
+	const isNew = isNewMajor(m);
+	const canExpand = m.admissionRequirements.length > 0;
+
+	const tuition =
+		latest?.tuitionFeeMin != null
+			? formatTuition(
+					latest.tuitionFeeMin,
+					latest.tuitionFeeMax,
+					latest.tuitionFeeUnit,
+				)
+			: null;
+	const quota = latest?.enrollmentQuota ?? null;
+
+	const toggle = () => setOpen((v) => !v);
+
 	return (
-		<Card className="border-border bg-card shadow-sm">
-			<CardContent className="p-4">
-				<div className="flex items-start justify-between gap-3 flex-wrap">
-					<div className="min-w-0">
-						<p className="font-semibold text-foreground leading-snug">
+		<>
+			<TableRow
+				className={canExpand ? "cursor-pointer" : undefined}
+				onClick={canExpand ? toggle : undefined}
+			>
+				{/* Ngành */}
+				<TableCell className="align-top py-3 whitespace-normal">
+					<div className="flex items-start gap-2 flex-wrap">
+						<span className="font-medium text-foreground leading-snug">
 							{m.name}
-						</p>
-						{m.code && (
-							<p className="text-xs text-muted-foreground font-mono mt-0.5">
-								{m.code}
-							</p>
+						</span>
+						{isNew && (
+							<Badge
+								variant="outline"
+								className="border-primary/40 text-primary text-[10px]"
+							>
+								Ngành mới
+							</Badge>
 						)}
 					</div>
-					{latest && (
-						<div className="flex flex-wrap gap-2 text-xs text-muted-foreground shrink-0">
-							{latest.tuitionFeeMin != null && (
-								<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
-									💰{" "}
-									{formatTuition(
-										latest.tuitionFeeMin,
-										latest.tuitionFeeMax,
-										latest.tuitionFeeUnit,
-									)}
-									<span className="text-muted-foreground/70">
-										· {latest.year}
-									</span>
-								</span>
-							)}
-							{latest.enrollmentQuota != null && (
-								<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
-									🎓 {latest.enrollmentQuota} chỉ tiêu
-								</span>
-							)}
-						</div>
+					{m.code && (
+						<p className="text-xs text-muted-foreground font-mono mt-0.5">
+							{m.code}
+						</p>
 					)}
-				</div>
+					{/* Tuition/quota surfaced here on mobile (the columns are hidden < sm). */}
+					{(tuition || quota != null) && (
+						<p className="text-xs text-muted-foreground mt-1 sm:hidden">
+							{tuition && <span>💰 {tuition}</span>}
+							{tuition && quota != null && " · "}
+							{quota != null && <span>🎓 {quota} chỉ tiêu</span>}
+						</p>
+					)}
+				</TableCell>
 
-				{m.admissionRequirements.length > 0 && (
-					<RequirementsTable requirements={m.admissionRequirements} />
-				)}
-			</CardContent>
-		</Card>
+				{/* Học phí */}
+				<TableCell className="hidden sm:table-cell align-top py-3 text-sm text-muted-foreground">
+					{tuition ?? "—"}
+				</TableCell>
+
+				{/* Chỉ tiêu */}
+				<TableCell className="hidden sm:table-cell align-top py-3 text-sm text-muted-foreground tabular-nums">
+					{quota != null ? quota : "—"}
+				</TableCell>
+
+				{/* Điểm chuẩn / action */}
+				<TableCell className="align-top py-3 text-right">
+					{canExpand ? (
+						<button
+							type="button"
+							onClick={(e) => {
+								e.stopPropagation();
+								toggle();
+							}}
+							aria-expanded={open}
+							className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+						>
+							{open ? "Ẩn" : "Xem"}
+							<ChevronDown
+								className={cn(
+									"h-4 w-4 transition-transform",
+									open && "rotate-180",
+								)}
+							/>
+						</button>
+					) : (
+						<span className="text-sm text-muted-foreground">—</span>
+					)}
+				</TableCell>
+			</TableRow>
+
+			{open && canExpand && (
+				<TableRow className="hover:bg-transparent">
+					<TableCell colSpan={4} className="bg-muted/20 py-3 whitespace-normal">
+						{isNew && (
+							<p className="text-xs text-muted-foreground mb-2">
+								Ngành mới mở — chưa công bố điểm chuẩn. Dưới đây là các tổ hợp
+								xét tuyển.
+							</p>
+						)}
+						<RequirementsTable requirements={m.admissionRequirements} />
+					</TableCell>
+				</TableRow>
+			)}
+		</>
 	);
 };
 
@@ -551,10 +632,28 @@ const UniversityDetailPage = () => {
 											<p className="text-sm text-muted-foreground mb-4">
 												{majorsData.majors.length} ngành học
 											</p>
-											<div className="space-y-3">
-												{majorsData.majors.map((major) => (
-													<MajorCard key={major.id} major={major} />
-												))}
+											<div className="rounded-lg border border-border overflow-hidden">
+												<Table>
+													<TableHeader>
+														<TableRow className="bg-muted/40 hover:bg-muted/40">
+															<TableHead>Ngành</TableHead>
+															<TableHead className="hidden sm:table-cell">
+																Học phí
+															</TableHead>
+															<TableHead className="hidden sm:table-cell">
+																Chỉ tiêu
+															</TableHead>
+															<TableHead className="text-right">
+																Điểm chuẩn
+															</TableHead>
+														</TableRow>
+													</TableHeader>
+													<TableBody>
+														{majorsData.majors.map((major) => (
+															<MajorRow key={major.id} major={major} />
+														))}
+													</TableBody>
+												</Table>
 											</div>
 										</>
 									) : (
