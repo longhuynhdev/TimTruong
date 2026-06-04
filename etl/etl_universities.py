@@ -3,7 +3,7 @@ import os
 from db import get_connection
 from slugify import slugify
 
-CSV_FILE = os.path.join(os.path.dirname(__file__), "Universities.csv")
+CSV_FILE = os.path.join(os.path.dirname(__file__), "data", "_shared", "universities.csv")
 
 def _parse_bool(value: str):
     """'1'/'true' → True, '0'/'false' → False, empty/unknown → None."""

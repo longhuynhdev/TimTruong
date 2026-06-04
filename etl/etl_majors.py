@@ -1,4 +1,4 @@
-"""ETL ngành theo năm: majors/{Code}-{Short}-{Year}.csv → bảng Majors + MajorYears."""
+"""ETL ngành theo năm: data/schools/{Code}-{Short}/majors/{Year}.csv → bảng Majors + MajorYears."""
 
 import csv
 import glob
@@ -8,7 +8,7 @@ from decimal import Decimal, InvalidOperation
 from db import get_connection
 from enums import parse_tuition_fee_unit
 
-MAJORS_DIR = os.path.join(os.path.dirname(__file__), "majors")
+SCHOOLS_DIR = os.path.join(os.path.dirname(__file__), "data", "schools")
 
 COL_CODE = "MajorCode"
 COL_OLD = "OldCode"
@@ -41,16 +41,16 @@ MY_UPDATE_SQL = """
 """
 
 
-def parse_uni_code(filename: str) -> str:
-    """'QSC-UIT-2026.csv' → 'QSC'."""
-    return os.path.basename(filename).split("-", 1)[0].strip()
+def parse_uni_code(path: str) -> str:
+    """'.../schools/QSC-UIT/majors/2026.csv' → 'QSC' (đầu tên thư mục trường)."""
+    school = os.path.basename(os.path.dirname(os.path.dirname(path)))
+    return school.split("-", 1)[0].strip()
 
 
-def parse_year(filename: str):
-    """'QSC-UIT-2026.csv' → 2026 (phần cuối tên file). None nếu không hợp lệ."""
-    stem = os.path.splitext(os.path.basename(filename))[0]
-    last = stem.rsplit("-", 1)[-1].strip()
-    return int(last) if last.isdigit() else None
+def parse_year(path: str):
+    """'.../majors/2026.csv' → 2026 (tên file). None nếu không hợp lệ."""
+    stem = os.path.splitext(os.path.basename(path))[0]
+    return int(stem) if stem.isdigit() else None
 
 
 def parse_money(value: str):
@@ -212,9 +212,9 @@ def process_uni(cur, uni_code, uni_id, year, rows):
 
 
 def run():
-    files = sorted(glob.glob(os.path.join(MAJORS_DIR, "*.csv")))
+    files = sorted(glob.glob(os.path.join(SCHOOLS_DIR, "*", "majors", "*.csv")))
     if not files:
-        print(f"Không thấy CSV nào trong {MAJORS_DIR}")
+        print(f"Không thấy CSV ngành nào trong {SCHOOLS_DIR}/*/majors/")
         return
     print(f"Tìm thấy {len(files)} file ngành")
 
@@ -227,12 +227,12 @@ def run():
             uni_code = parse_uni_code(path)
             uni_id = uni_id_by_code.get(uni_code)
             if uni_id is None:
-                print(f"  SKIP file '{os.path.basename(path)}' — không có University Code '{uni_code}'")
+                print(f"  SKIP '{os.path.relpath(path, SCHOOLS_DIR)}' — không có University Code '{uni_code}'")
                 continue
 
             year = parse_year(path)
             if year is None:
-                print(f"  SKIP file '{os.path.basename(path)}' — không suy được Năm từ tên file (cần {{Code}}-{{ShortName}}-{{Năm}}.csv)")
+                print(f"  SKIP '{os.path.relpath(path, SCHOOLS_DIR)}' — tên file không phải Năm (cần data/schools/{{Code}}-{{ShortName}}/majors/{{Năm}}.csv)")
                 continue
 
             rows, errors = load_file(path, year)

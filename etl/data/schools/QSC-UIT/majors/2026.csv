@@ -1,4 +1,4 @@
-MajorCode,OldCodes,MajorName,EnrollmentQuota,TuitionFeeMin,TuitionFeeMax,TuitionFeeUnit
+MajorCode,OldCode,MajorName,EnrollmentQuota,TuitionFeeMin,TuitionFeeMax,TuitionFeeUnit
 7480101,,Khoa học Máy tính,280,41.800.000,,PerYear
 7480101TA,,Khoa học Máy tính (Chương trình đào tạo bằng tiếng Anh),50,80.000.000,,PerYear
 7480102,,Mạng máy tính và truyền thông dữ liệu,200,41.800.000,,PerYear

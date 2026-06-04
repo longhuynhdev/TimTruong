@@ -2,14 +2,14 @@
 server/TimTruong.ApiService/bin
 server/.vscode/settings.json
 
-data/venv
-data/.venv
-data/.env*
-data/__pycache__/
+etl/venv
+etl/.venv
+etl/.env*
+etl/__pycache__/
 *.pyc
 
-data/admissionrequirements/images/
-data/admissionrequirements/*.review.md
+etl/data/schools/*/admissions/*/images/
+etl/data/schools/**/*.review.md
 
 .claude/settings.local.json
 CLAUDE.md

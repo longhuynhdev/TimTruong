@@ -3,25 +3,27 @@
 Provider chọn qua env LLM_PROVIDER (gemini | openai-compatible) — xem vision.py.
 
 Quy trình:
-  data/admissionrequirements/images/{Code}-{ShortName}-{Year}/*.png|jpg
+  data/schools/{Code}-{ShortName}/admissions/{Year}/images/*.png|jpg
     → gọi model 2 lần (temperature 0) với TẤT CẢ ảnh trong thư mục
     → model trả JSON array (an toàn với dấu phẩy trong tên ngành); MÌNH tự ghi CSV
     → diff theo key (Mã ngành, Phương thức, Tổ hợp)
     → validate (range điểm theo thang, tổ hợp ∈ enum)
-    → ghi data/admissionrequirements/{Code}-{ShortName}-{Year}.csv
-      + .review.md liệt kê ô cần review tay.
+    → ghi data/schools/{Code}-{ShortName}/admissions/{Year}/scores.csv
+      + scores.review.md liệt kê ô cần review tay.
 
-Năm KHÔNG nằm trong CSV (suy từ tên file lúc ETL). Sau khi review tay file CSV,
+Năm KHÔNG nằm trong CSV (suy từ thư mục năm lúc ETL). Sau khi review tay file CSV,
 chạy etl_admissions.py để nạp vào DB.
 
 Dùng:
-  uv run extract_admissions.py                                    # xử lý mọi thư mục trong images/
-  uv run extract_admissions.py QST-HCMUS-2025                     # chỉ 1 thư mục
-  uv run extract_admissions.py QST-HCMUS-2025 --note "cột cuối là ĐGNL, bỏ dòng Tổng"
+  uv run extract_admissions.py                                    # xử lý mọi (trường, năm) có images/
+  uv run extract_admissions.py QST-HCMUS/2025                     # chỉ 1 trường-năm
+  uv run extract_admissions.py QST-HCMUS                          # mọi năm của 1 trường
+  uv run extract_admissions.py QST-HCMUS/2025 --note "cột cuối là ĐGNL, bỏ dòng Tổng"
 """
 
 import argparse
 import csv
+import glob
 import json
 import os
 import sys
@@ -35,8 +37,7 @@ from enums import EXAM_TYPE, SUBJECT_COMBINATION, DEFAULT_MAX_SCORE
 load_dotenv(join(dirname(__file__), ".env"))
 
 BASE_DIR = dirname(__file__)
-IMAGES_DIR = join(BASE_DIR, "admissionrequirements", "images")
-OUTPUT_DIR = join(BASE_DIR, "admissionrequirements")
+SCHOOLS_DIR = join(BASE_DIR, "data", "schools")
 PROMPT_PATH = join(BASE_DIR, "prompts", "admission_extract.txt")
 
 # Tên cột CSV (tiếng Anh, đồng bộ với etl_majors / etl_major_years / etl_admissions).
@@ -76,9 +77,47 @@ def load_prompt(uni_code: str, extra: str = "") -> str:
     return template.format(uni_code=uni_code, valid_combinations=valid, extra_instructions=extra_block)
 
 
-def parse_uni_code(folder: str) -> str:
-    """'QST-HCMUS-2025' → 'QST' (phần đầu trước dấu '-')."""
-    return folder.split("-", 1)[0].strip()
+def parse_uni_code(school_folder: str) -> str:
+    """'QST-HCMUS' → 'QST' (phần đầu trước dấu '-')."""
+    return school_folder.split("-", 1)[0].strip()
+
+
+def discover_targets():
+    """Mọi thư mục admissions/{Year} có images/ → list đường dẫn thư mục năm (đã sort)."""
+    pattern = join(SCHOOLS_DIR, "*", "admissions", "*", "images")
+    return sorted(os.path.dirname(p) for p in glob.glob(pattern))
+
+
+def resolve_targets(args_list):
+    """CLI args → list thư mục năm. 'QST-HCMUS/2025' = 1 trường-năm; 'QST-HCMUS' = mọi năm.
+
+    Bỏ trống = tất cả (discover_targets)."""
+    if not args_list:
+        return discover_targets()
+    targets = []
+    for raw in args_list:
+        spec = raw.strip().strip("/")
+        if "/" in spec:
+            school, year = spec.split("/", 1)
+            year_dir = join(SCHOOLS_DIR, school, "admissions", year)
+            if os.path.isdir(join(year_dir, "images")):
+                targets.append(year_dir)
+            else:
+                print(f"  SKIP '{spec}' — không thấy {school}/admissions/{year}/images/")
+        else:
+            pattern = join(SCHOOLS_DIR, spec, "admissions", "*", "images")
+            found = sorted(os.path.dirname(p) for p in glob.glob(pattern))
+            if found:
+                targets.extend(found)
+            else:
+                print(f"  SKIP '{spec}' — không thấy năm nào có images/")
+    return targets
+
+
+def target_label(year_dir: str) -> str:
+    """'.../schools/QST-HCMUS/admissions/2025' → 'QST-HCMUS/2025'."""
+    school = os.path.basename(os.path.dirname(os.path.dirname(year_dir)))
+    return f"{school}/{os.path.basename(year_dir)}"
 
 
 def load_images(folder_path: str):
@@ -213,17 +252,18 @@ def write_outputs(out_csv: str, rows, flags):
     return review_path, len(flagged)
 
 
-def process_folder(folder: str, note: str = ""):
-    folder_path = join(IMAGES_DIR, folder)
-    uni_code = parse_uni_code(folder)
-    images = load_images(folder_path)
+def process_target(year_dir: str, note: str = ""):
+    label = target_label(year_dir)
+    school = os.path.basename(os.path.dirname(os.path.dirname(year_dir)))
+    uni_code = parse_uni_code(school)
+    images = load_images(join(year_dir, "images"))
     if not images:
-        print(f"  SKIP '{folder}' — không có ảnh")
+        print(f"  SKIP '{label}' — không có ảnh")
         return
 
     prompt = load_prompt(uni_code, note)
     note_msg = " + hướng dẫn riêng" if note else ""
-    print(f"  '{folder}' (mã {uni_code}): {len(images)} ảnh{note_msg} → gọi model {NUM_PASSES} lần ({vision.active_model()})...")
+    print(f"  '{label}' (mã {uni_code}): {len(images)} ảnh{note_msg} → gọi model {NUM_PASSES} lần ({vision.active_model()})...")
     passes = []
     for i in range(NUM_PASSES):
         text = vision.call_model(prompt, images)
@@ -236,11 +276,11 @@ def process_folder(folder: str, note: str = ""):
         passes.append(rows)
 
     if not passes:
-        print(f"  SKIP '{folder}' — không pass nào parse được")
+        print(f"  SKIP '{label}' — không pass nào parse được")
         return
 
     rows, flags = merge_passes(passes)
-    out_csv = join(OUTPUT_DIR, f"{folder}.csv")
+    out_csv = join(year_dir, "scores.csv")
     review_path, n_flag = write_outputs(out_csv, rows, flags)
     print(f"    → {os.path.relpath(out_csv, BASE_DIR)} ({len(rows)} dòng)")
     if n_flag:
@@ -254,8 +294,8 @@ def run():
         description="Trích xuất điểm chuẩn từ ảnh → CSV bằng Vision-LLM (2-pass). Provider qua LLM_PROVIDER.",
     )
     parser.add_argument(
-        "folders", nargs="*",
-        help="tên thư mục trong images/ cần xử lý (vd QST-HCMUS-2025); bỏ trống = xử lý tất cả",
+        "targets", nargs="*",
+        help="trường-năm cần xử lý: 'QST-HCMUS/2025' (1 năm) hoặc 'QST-HCMUS' (mọi năm); bỏ trống = tất cả",
     )
     parser.add_argument(
         "-n", "--note", default="",
@@ -265,20 +305,18 @@ def run():
 
     vision.validate_env()
 
-    if not os.path.isdir(IMAGES_DIR):
-        sys.exit(f"Không thấy thư mục ảnh: {IMAGES_DIR}")
+    if not os.path.isdir(SCHOOLS_DIR):
+        sys.exit(f"Không thấy thư mục trường: {SCHOOLS_DIR}")
 
-    targets = args.folders or sorted(
-        d for d in os.listdir(IMAGES_DIR) if os.path.isdir(join(IMAGES_DIR, d))
-    )
+    targets = resolve_targets(args.targets)
     if not targets:
-        sys.exit(f"Không có thư mục con nào trong {IMAGES_DIR}")
+        sys.exit(f"Không có (trường, năm) nào có images/ trong {SCHOOLS_DIR}")
 
     if args.note and len(targets) > 1:
-        print("  (lưu ý: --note áp dụng cho TẤT CẢ thư mục trong lần chạy này)")
-    print(f"Xử lý {len(targets)} thư mục:")
-    for folder in targets:
-        process_folder(folder, args.note)
+        print("  (lưu ý: --note áp dụng cho TẤT CẢ trường-năm trong lần chạy này)")
+    print(f"Xử lý {len(targets)} trường-năm:")
+    for year_dir in targets:
+        process_target(year_dir, args.note)
 
 
 if __name__ == "__main__":

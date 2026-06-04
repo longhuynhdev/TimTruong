@@ -1,4 +1,4 @@
-"""ETL xếp hạng đại học: University_Rankings.csv → bảng UniversityRankings."""
+"""ETL xếp hạng đại học: data/_shared/university_rankings.csv → bảng UniversityRankings."""
 
 import csv
 import os
@@ -6,7 +6,7 @@ import os
 from db import get_connection
 from enums import parse_rank, parse_ranking_system
 
-CSV_FILE = os.path.join(os.path.dirname(__file__), "University_Rankings.csv")
+CSV_FILE = os.path.join(os.path.dirname(__file__), "data", "_shared", "university_rankings.csv")
 
 # Upsert 1 dòng xếp hạng theo (UniversityId, RankingSystem, Year).
 UPSERT_SQL = """

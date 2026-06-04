@@ -1,4 +1,4 @@
-"""ETL điểm chuẩn: admissionrequirements/*.csv → bảng AdmissionRequirements."""
+"""ETL điểm chuẩn: data/schools/{Code}-{Short}/admissions/{Year}/scores.csv → bảng AdmissionRequirements."""
 
 import csv
 import glob
@@ -8,7 +8,7 @@ from decimal import Decimal, InvalidOperation
 from db import get_connection
 from enums import parse_exam_type, parse_subject_combination
 
-AR_DIR = os.path.join(os.path.dirname(__file__), "admissionrequirements")
+SCHOOLS_DIR = os.path.join(os.path.dirname(__file__), "data", "schools")
 
 COL_CODE = "MajorCode"
 COL_METHOD = "Method"
@@ -23,16 +23,16 @@ INSERT_SQL = """
 UPDATE_SQL = 'UPDATE "AdmissionRequirements" SET "Score" = %(score)s WHERE "Id" = %(id)s'
 
 
-def parse_uni_code(filename: str) -> str:
-    """'DLS-ULSA2-2025.csv' → 'DLS'."""
-    return os.path.basename(filename).split("-", 1)[0].strip()
+def parse_uni_code(path: str) -> str:
+    """'.../schools/DLS-ULSA2/admissions/2025/scores.csv' → 'DLS' (đầu tên thư mục trường)."""
+    school = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(path))))
+    return school.split("-", 1)[0].strip()
 
 
-def parse_year(filename: str):
-    """'DLS-ULSA2-2025.csv' → 2025 (phần cuối tên file). None nếu không hợp lệ."""
-    stem = os.path.splitext(os.path.basename(filename))[0]
-    last = stem.rsplit("-", 1)[-1].strip()
-    return int(last) if last.isdigit() else None
+def parse_year(path: str):
+    """'.../admissions/2025/scores.csv' → 2025 (tên thư mục năm). None nếu không hợp lệ."""
+    yr = os.path.basename(os.path.dirname(path))
+    return int(yr) if yr.isdigit() else None
 
 
 def load_file(path: str, year: int):
@@ -133,9 +133,9 @@ def process_uni(cur, uni_code, uni_id, rows):
 
 
 def run():
-    files = sorted(glob.glob(os.path.join(AR_DIR, "*.csv")))
+    files = sorted(glob.glob(os.path.join(SCHOOLS_DIR, "*", "admissions", "*", "scores.csv")))
     if not files:
-        print(f"Không thấy CSV nào trong {AR_DIR}")
+        print(f"Không thấy scores.csv nào trong {SCHOOLS_DIR}/*/admissions/*/")
         return
     print(f"Tìm thấy {len(files)} file điểm chuẩn")
 
@@ -148,12 +148,12 @@ def run():
             uni_code = parse_uni_code(path)
             uni_id = uni_id_by_code.get(uni_code)
             if uni_id is None:
-                print(f"  SKIP file '{os.path.basename(path)}' — không có University Code '{uni_code}'")
+                print(f"  SKIP '{os.path.relpath(path, SCHOOLS_DIR)}' — không có University Code '{uni_code}'")
                 continue
 
             year = parse_year(path)
             if year is None:
-                print(f"  SKIP file '{os.path.basename(path)}' — không suy được Năm từ tên file (cần dạng {{Code}}-{{ShortName}}-{{Năm}}.csv)")
+                print(f"  SKIP '{os.path.relpath(path, SCHOOLS_DIR)}' — thư mục năm không hợp lệ (cần data/schools/{{Code}}-{{ShortName}}/admissions/{{Năm}}/scores.csv)")
                 continue
 
             rows, errors = load_file(path, year)
