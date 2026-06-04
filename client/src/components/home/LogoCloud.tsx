@@ -15,8 +15,8 @@ export interface LogoCloudProps {
 }
 
 export function LogoCloud({
-	title = "Với thông tin của hơn",
-	subtitle = "62 trường đại học",
+	title = "Với thông tin đầy đủ của hơn",
+	subtitle = "64 trường đại học tại TP.Hồ Chí Minh",
 	logos = defaultLogos,
 	className,
 	edgeOpacity = 50,
@@ -54,7 +54,7 @@ export function LogoCloud({
 			<div className="w-full px-4">
 				{/* Title */}
 				<div className="text-center mb-10 md:mb-14 lg:mb-16">
-					<h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-foreground italic">
+					<h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light italic leading-snug text-foreground/85">
 						{title}
 						<br />
 						{subtitle}
