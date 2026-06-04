@@ -8,6 +8,15 @@ import type {
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5309";
 
+/** GET `path` (relative to the API base) and parse the JSON body, throwing on a non-2xx response. */
+async function getJson<T>(path: string): Promise<T> {
+	const response = await fetch(`${API_BASE_URL}${path}`);
+	if (!response.ok) {
+		throw new Error(`API request failed with status ${response.status}`);
+	}
+	return response.json();
+}
+
 // API Request/Response types
 interface RecommendationRequest {
 	examType: ExamType;
@@ -46,13 +55,7 @@ interface RecommendationResponse {
  * Fetch all universities for the universities listing page
  */
 export async function fetchAllUniversities(): Promise<UniversityListItem[]> {
-	const response = await fetch(`${API_BASE_URL}/api/v1/universities`);
-
-	if (!response.ok) {
-		throw new Error(`API request failed with status ${response.status}`);
-	}
-
-	return response.json();
+	return getJson("/api/v1/universities");
 }
 
 /**
@@ -61,13 +64,7 @@ export async function fetchAllUniversities(): Promise<UniversityListItem[]> {
 export async function fetchUniversityById(
 	id: number,
 ): Promise<UniversityListItem> {
-	const response = await fetch(`${API_BASE_URL}/api/v1/universities/${id}`);
-
-	if (!response.ok) {
-		throw new Error(`API request failed with status ${response.status}`);
-	}
-
-	return response.json();
+	return getJson(`/api/v1/universities/${id}`);
 }
 
 /**
@@ -76,15 +73,7 @@ export async function fetchUniversityById(
 export async function fetchUniversityBySlug(
 	slug: string,
 ): Promise<UniversityListItem> {
-	const response = await fetch(
-		`${API_BASE_URL}/api/v1/universities/by-slug/${encodeURIComponent(slug)}`,
-	);
-
-	if (!response.ok) {
-		throw new Error(`API request failed with status ${response.status}`);
-	}
-
-	return response.json();
+	return getJson(`/api/v1/universities/by-slug/${encodeURIComponent(slug)}`);
 }
 
 /**
@@ -93,15 +82,7 @@ export async function fetchUniversityBySlug(
 export async function fetchUniversityMajors(
 	id: number,
 ): Promise<UniversityMajors> {
-	const response = await fetch(
-		`${API_BASE_URL}/api/v1/universities/${id}/majors`,
-	);
-
-	if (!response.ok) {
-		throw new Error(`API request failed with status ${response.status}`);
-	}
-
-	return response.json();
+	return getJson(`/api/v1/universities/${id}/majors`);
 }
 
 /**

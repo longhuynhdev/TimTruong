@@ -3,17 +3,15 @@ import { ChevronRight, MapPin, Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import PageMetadata from "@/components/PageMetadata";
 import { RankingBadges } from "@/components/RankingBadges";
+import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { normalizeVi } from "@/lib/utils";
 import { fetchAllUniversities } from "@/services/api";
 import type { UniversityListItem } from "@/types";
 
 const ALL = "__all__";
-
-/** Bỏ dấu tiếng Việt + lowercase để tìm kiếm khoan dung (vd: "khtn" khớp "KHTN"). */
-const normalize = (s: string) =>
-	s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d");
 
 const UniversitiesPage = () => {
 	const [universities, setUniversities] = useState<UniversityListItem[]>([]);
@@ -48,7 +46,7 @@ const UniversitiesPage = () => {
 	}, []);
 
 	const filtered = useMemo(() => {
-		const q = normalize(query.trim());
+		const q = normalizeVi(query.trim());
 		return universities.filter((u) => {
 			if (selectedType !== ALL && u.type !== selectedType) return false;
 			if (
@@ -64,7 +62,7 @@ const UniversitiesPage = () => {
 			if (selectedDorm === "has-dorm" && u.hasDormitory !== true) return false;
 			if (selectedDorm === "no-dorm" && u.hasDormitory !== false) return false;
 			if (q) {
-				const haystack = normalize(
+				const haystack = normalizeVi(
 					[u.name, u.shortName, u.englishName, u.code]
 						.filter(Boolean)
 						.join(" "),
@@ -242,27 +240,12 @@ const UniversityCard = ({
 					<div className="flex items-center gap-3 sm:gap-4">
 						{/* Logo */}
 						<div className="flex-shrink-0">
-							<div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-card dark:bg-[#181818] border border-border/70 flex items-center justify-center overflow-hidden p-2 sm:p-2.5">
-								{u.imageUrl ? (
-									<img
-										src={u.imageUrl}
-										alt={`Logo ${u.name}`}
-										className="w-full h-full object-contain"
-										onError={(e) => {
-											const target = e.target as HTMLImageElement;
-											target.style.display = "none";
-											const parent = target.parentElement;
-											if (parent) {
-												parent.innerHTML = `<span class="text-sm font-medium text-muted-foreground">${u.name.charAt(0)}</span>`;
-											}
-										}}
-									/>
-								) : (
-									<span className="text-sm font-medium text-muted-foreground">
-										{u.name.charAt(0)}
-									</span>
-								)}
-							</div>
+							<UniversityLogo
+								name={u.name}
+								imageUrl={u.imageUrl}
+								className="w-12 h-12 sm:w-14 sm:h-14 p-2 sm:p-2.5"
+								fallbackClassName="text-sm"
+							/>
 						</div>
 
 						{/* Info */}

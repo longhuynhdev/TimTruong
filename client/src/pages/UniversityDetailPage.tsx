@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
+import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -74,27 +75,12 @@ const UniversityInfoCard = ({
 			<div className="flex flex-col sm:flex-row gap-5">
 				{/* Logo */}
 				<div className="flex-shrink-0 flex sm:items-start">
-					<div className="w-20 h-20 rounded-xl bg-card dark:bg-[#181818] border border-border/70 flex items-center justify-center overflow-hidden p-3">
-						{u.imageUrl ? (
-							<img
-								src={u.imageUrl}
-								alt={`${u.name} logo`}
-								className="w-full h-full object-contain"
-								onError={(e) => {
-									const target = e.target as HTMLImageElement;
-									target.style.display = "none";
-									const parent = target.parentElement;
-									if (parent) {
-										parent.innerHTML = `<span class="text-base font-semibold text-muted-foreground">${u.name.charAt(0)}</span>`;
-									}
-								}}
-							/>
-						) : (
-							<span className="text-base font-semibold text-muted-foreground">
-								{u.name.charAt(0)}
-							</span>
-						)}
-					</div>
+					<UniversityLogo
+						name={u.name}
+						imageUrl={u.imageUrl}
+						className="w-20 h-20 p-3"
+						fallbackClassName="text-base font-semibold"
+					/>
 				</div>
 
 				{/* Details */}
