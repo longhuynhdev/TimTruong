@@ -15,6 +15,11 @@ public class University
     public string? EnglishName { get; set; }
 
     /// <summary>
+    /// Former name of the university (before it was renamed)
+    /// </summary>
+    public string? OldName { get; set; }
+
+    /// <summary>
     /// URL-friendly, ASCII slug derived from the name (+ short name).
     /// Used for SEO-friendly detail URLs, e.g. "dai-hoc-khoa-hoc-tu-nhien-hcmus".
     /// </summary>

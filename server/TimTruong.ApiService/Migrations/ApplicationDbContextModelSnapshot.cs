@@ -35,7 +35,7 @@ namespace TimTruong.ApiService.Migrations
                     b.Property<int>("MajorId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("Score")
+                    b.Property<decimal?>("Score")
                         .HasColumnType("numeric");
 
                     b.Property<int?>("SubjectCombination")
@@ -141,9 +141,6 @@ namespace TimTruong.ApiService.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int?>("EnrollmentQuota")
-                        .HasColumnType("integer");
-
                     b.Property<string>("FieldOfStudy")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -153,11 +150,9 @@ namespace TimTruong.ApiService.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<decimal?>("TuitionFeeAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<int?>("TuitionFeeUnit")
-                        .HasColumnType("integer");
+                    b.Property<string>("OldCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("UniversityId")
                         .HasColumnType("integer");
@@ -167,6 +162,40 @@ namespace TimTruong.ApiService.Migrations
                     b.HasIndex("UniversityId");
 
                     b.ToTable("Majors");
+                });
+
+            modelBuilder.Entity("Core.Models.MajorYear", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("EnrollmentQuota")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MajorId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("TuitionFeeMax")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("TuitionFeeMin")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("TuitionFeeUnit")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MajorId", "Year")
+                        .IsUnique();
+
+                    b.ToTable("MajorYears");
                 });
 
             modelBuilder.Entity("Core.Models.University", b =>
@@ -195,6 +224,9 @@ namespace TimTruong.ApiService.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OldName")
                         .HasColumnType("text");
 
                     b.Property<string>("ShortName")
@@ -299,6 +331,17 @@ namespace TimTruong.ApiService.Migrations
                     b.Navigation("University");
                 });
 
+            modelBuilder.Entity("Core.Models.MajorYear", b =>
+                {
+                    b.HasOne("Core.Models.Major", "Major")
+                        .WithMany("Years")
+                        .HasForeignKey("MajorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Major");
+                });
+
             modelBuilder.Entity("Core.Models.UniversityRanking", b =>
                 {
                     b.HasOne("Core.Models.University", "University")
@@ -328,6 +371,8 @@ namespace TimTruong.ApiService.Migrations
             modelBuilder.Entity("Core.Models.Major", b =>
                 {
                     b.Navigation("AdmissionRequirements");
+
+                    b.Navigation("Years");
                 });
 
             modelBuilder.Entity("Core.Models.University", b =>

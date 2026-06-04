@@ -1,3 +1,4 @@
+import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ExamType, UniversityResult } from "@/types";
@@ -23,27 +24,12 @@ const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
 						<div className="flex items-start gap-5">
 							{/* University Logo */}
 							<div className="flex-shrink-0">
-								<div className="w-20 h-20 rounded-xl bg-card dark:bg-[#181818] border border-border/70 flex items-center justify-center overflow-hidden p-3">
-									{result.logo ? (
-										<img
-											src={result.logo}
-											alt={`${result.universityName} logo`}
-											className="w-full h-full object-contain"
-											onError={(e) => {
-												const target = e.target as HTMLImageElement;
-												target.style.display = "none";
-												const parent = target.parentElement;
-												if (parent) {
-													parent.innerHTML = `<span class="text-base font-medium text-muted-foreground">${result.universityName.charAt(0)}</span>`;
-												}
-											}}
-										/>
-									) : (
-										<span className="text-base font-medium text-muted-foreground">
-											{result.universityName.charAt(0)}
-										</span>
-									)}
-								</div>
+								<UniversityLogo
+									name={result.universityName}
+									imageUrl={result.logo}
+									className="w-20 h-20 p-3"
+									fallbackClassName="text-base"
+								/>
 							</div>
 
 							{/* University Info */}
@@ -80,69 +66,38 @@ const UniversityResults = ({ results, examType }: UniversityResultsProps) => {
 									)}
 
 									{/* Scores */}
-									<div className="space-y-2">
-										<p className="text-sm font-medium text-foreground">
-											Điểm {examType === "THPTQG" ? "THPT" : "ĐGNL"} các năm:
-										</p>
-										<div className="grid grid-cols-3 gap-4 max-w-xs">
-											{examType === "THPTQG" && result.thptScores && (
-												<>
-													<div className="text-center">
-														<p className="text-xs text-muted-foreground">
-															2025
-														</p>
-														<p className="text-base font-semibold text-foreground">
-															{result.thptScores.year2025}
-														</p>
-													</div>
-													<div className="text-center">
-														<p className="text-xs text-muted-foreground">
-															2024
-														</p>
-														<p className="text-base font-semibold text-foreground">
-															{result.thptScores.year2024}
-														</p>
-													</div>
-													<div className="text-center">
-														<p className="text-xs text-muted-foreground">
-															2023
-														</p>
-														<p className="text-base font-semibold text-foreground">
-															{result.thptScores.year2023}
-														</p>
-													</div>
-												</>
-											)}
-											{examType === "ĐGNL" && result.dgnlScores && (
-												<>
-													<div className="text-center">
-														<p className="text-xs text-muted-foreground">
-															2025
-														</p>
-														<p className="text-base font-semibold text-foreground">
-															{result.dgnlScores.year2025}
-														</p>
-													</div>
-													<div className="text-center">
-														<p className="text-xs text-muted-foreground">
-															2024
-														</p>
-														<p className="text-base font-semibold text-foreground">
-															{result.dgnlScores.year2024}
-														</p>
-													</div>
-													<div className="text-center">
-														<p className="text-xs text-muted-foreground">
-															2023
-														</p>
-														<p className="text-base font-semibold text-foreground">
-															{result.dgnlScores.year2023}
-														</p>
-													</div>
-												</>
-											)}
-										</div>
-									</div>
+									{(() => {
+										const scores =
+											examType === "THPTQG"
+												? result.thptScores
+												: result.dgnlScores;
+										if (!scores) return null;
+										const byYear = [
+											["2025", scores.year2025],
+											["2024", scores.year2024],
+											["2023", scores.year2023],
+										] as const;
+										return (
+											<div className="space-y-2">
+												<p className="text-sm font-medium text-foreground">
+													Điểm {examType === "THPTQG" ? "THPT" : "ĐGNL"} các
+													năm:
+												</p>
+												<div className="grid grid-cols-3 gap-4 max-w-xs">
+													{byYear.map(([year, value]) => (
+														<div key={year} className="text-center">
+															<p className="text-xs text-muted-foreground">
+																{year}
+															</p>
+															<p className="text-base font-semibold text-foreground">
+																{value}
+															</p>
+														</div>
+													))}
+												</div>
+											</div>
+										);
+									})()}
 								</div>
 							</div>
 						</div>

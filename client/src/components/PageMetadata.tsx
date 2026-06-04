@@ -12,7 +12,9 @@ function toAbsoluteUrl(input?: string): string {
 	}
 	// Fall back to the current path (client-side only).
 	const path =
-		typeof window !== "undefined" ? window.location.pathname + window.location.search : "/";
+		typeof window !== "undefined"
+			? window.location.pathname + window.location.search
+			: "/";
 	return `${SITE_URL}${path}`;
 }
 

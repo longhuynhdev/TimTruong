@@ -7,10 +7,20 @@ public record MajorWithRequirementsDto(
     int Id,
     string Name,
     string? Code,
-    decimal? TuitionFeeAmount,
-    string? TuitionFeeUnit,
-    int? EnrollmentQuota,
+    List<MajorYearDto> Years,
     List<AdmissionRequirementDto> AdmissionRequirements
+);
+
+/// <summary>
+/// A major's per-year offering data (tuition, quota).
+/// <c>TuitionFeeMax</c> is null for a concrete amount, set for a range.
+/// </summary>
+public record MajorYearDto(
+    int Year,
+    decimal? TuitionFeeMin,
+    decimal? TuitionFeeMax,
+    string? TuitionFeeUnit,
+    int? EnrollmentQuota
 );
 
 /// <summary>
@@ -19,7 +29,7 @@ public record MajorWithRequirementsDto(
 public record AdmissionRequirementDto(
     int Id,
     string ExamType,
-    decimal Score,
+    decimal? Score,
     string? SubjectCombination,
     int Year
 );

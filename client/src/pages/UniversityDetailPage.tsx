@@ -1,11 +1,27 @@
-import { Award, Building2, ExternalLink, MapPin } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Link, useParams } from "@tanstack/react-router";
+import {
+	Award,
+	Building2,
+	ChevronDown,
+	ExternalLink,
+	MapPin,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
+import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
 	AdmissionRequirement,
@@ -14,12 +30,13 @@ import type {
 	UniversityListItem,
 	UniversityMajors,
 } from "@/types";
-import { cn } from "@/lib/utils";
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
 function formatScore(score: number): string {
-	return score % 1 === 0 ? score.toFixed(0) : score.toFixed(2).replace(/\.?0+$/, "");
+	return score % 1 === 0
+		? score.toFixed(0)
+		: score.toFixed(2).replace(/\.?0+$/, "");
 }
 
 const TUITION_UNIT_LABEL: Record<string, string> = {
@@ -28,13 +45,23 @@ const TUITION_UNIT_LABEL: Record<string, string> = {
 	PerYear: "năm",
 };
 
-function formatTuition(fee: number, unit: string | null): string {
-	const suffix = unit ? TUITION_UNIT_LABEL[unit] ?? "năm" : "năm";
-	if (fee >= 1_000_000) {
-		const millions = fee / 1_000_000;
-		return `${millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1)} triệu đồng/${suffix}`;
-	}
-	return `${fee.toLocaleString("vi-VN")} đồng/${suffix}`;
+/** Format a tuition fee as a concrete amount (max null) or a range (min – max). */
+function formatTuition(
+	min: number,
+	max: number | null,
+	unit: string | null,
+): string {
+	const suffix = unit ? (TUITION_UNIT_LABEL[unit] ?? "năm") : "năm";
+	const inMillions = min >= 1_000_000 && (max == null || max >= 1_000_000);
+	const fmt = (v: number) => {
+		if (!inMillions) return v.toLocaleString("vi-VN");
+		const millions = v / 1_000_000;
+		return millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1);
+	};
+	const unitWord = inMillions ? "triệu đồng" : "đồng";
+	const amount =
+		max != null && max !== min ? `${fmt(min)} – ${fmt(max)}` : fmt(min);
+	return `${amount} ${unitWord}/${suffix}`;
 }
 
 /** Group requirements by examType, then build a year × combo grid */
@@ -50,35 +77,32 @@ function uniqueSorted<T>(arr: T[]): T[] {
 	return [...new Set(arr)].sort() as T[];
 }
 
+const hasPublishedScore = (m: MajorWithRequirements) =>
+	m.admissionRequirements.some((r) => r.score != null);
+
+// "Ngành mới": the school published the combos (đề án) but no cutoff in any year yet.
+// A major with no admission-requirement rows at all is "chưa có dữ liệu", not new.
+const isNewMajor = (m: MajorWithRequirements) =>
+	m.admissionRequirements.length > 0 && !hasPublishedScore(m);
+
 // ─── sub-components ───────────────────────────────────────────────────────────
 
-const UniversityInfoCard = ({ university: u }: { university: UniversityListItem }) => (
+const UniversityInfoCard = ({
+	university: u,
+}: {
+	university: UniversityListItem;
+}) => (
 	<Card className="border-border bg-card shadow-sm">
 		<CardContent className="p-6">
 			<div className="flex flex-col sm:flex-row gap-5">
 				{/* Logo */}
 				<div className="flex-shrink-0 flex sm:items-start">
-					<div className="w-20 h-20 rounded-xl bg-card dark:bg-[#181818] border border-border/70 flex items-center justify-center overflow-hidden p-3">
-						{u.imageUrl ? (
-							<img
-								src={u.imageUrl}
-								alt={`${u.name} logo`}
-								className="w-full h-full object-contain"
-								onError={(e) => {
-									const target = e.target as HTMLImageElement;
-									target.style.display = "none";
-									const parent = target.parentElement;
-									if (parent) {
-										parent.innerHTML = `<span class="text-base font-semibold text-muted-foreground">${u.name.charAt(0)}</span>`;
-									}
-								}}
-							/>
-						) : (
-							<span className="text-base font-semibold text-muted-foreground">
-								{u.name.charAt(0)}
-							</span>
-						)}
-					</div>
+					<UniversityLogo
+						name={u.name}
+						imageUrl={u.imageUrl}
+						className="w-20 h-20 p-3"
+						fallbackClassName="text-base font-semibold"
+					/>
 				</div>
 
 				{/* Details */}
@@ -110,7 +134,10 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 							</Badge>
 						)}
 						{u.isFinanciallyAutonomous === false && (
-							<Badge variant="outline" className="text-xs border-border text-muted-foreground">
+							<Badge
+								variant="outline"
+								className="text-xs border-border text-muted-foreground"
+							>
 								Chưa tự chủ tài chính
 							</Badge>
 						)}
@@ -121,9 +148,7 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 							<span className="text-muted-foreground mt-px text-xs">📍</span>
 							<p className="text-sm text-muted-foreground">
 								{u.campuses
-									.map((c) =>
-										[c.district, c.city].filter(Boolean).join(", "),
-									)
+									.map((c) => [c.district, c.city].filter(Boolean).join(", "))
 									.join(" · ")}
 							</p>
 						</div>
@@ -134,7 +159,11 @@ const UniversityInfoCard = ({ university: u }: { university: UniversityListItem 
 	</Card>
 );
 
-const RankingSection = ({ university: u }: { university: UniversityListItem }) => {
+const RankingSection = ({
+	university: u,
+}: {
+	university: UniversityListItem;
+}) => {
 	const items = latestPerSystem(u.rankings ?? []);
 	if (items.length === 0) return null;
 
@@ -143,7 +172,9 @@ const RankingSection = ({ university: u }: { university: UniversityListItem }) =
 			<CardContent className="p-6">
 				<div className="flex items-center gap-2">
 					<Award className="h-5 w-5 text-muted-foreground" />
-					<h2 className="text-base font-semibold text-foreground">Bảng xếp hạng</h2>
+					<h2 className="text-base font-semibold text-foreground">
+						Bảng xếp hạng
+					</h2>
 				</div>
 
 				<div className="mt-4 flex flex-wrap gap-2">
@@ -212,7 +243,11 @@ const DormitoryItem = ({ dorm }: { dorm: Dormitory }) => (
 	</div>
 );
 
-const DormitorySection = ({ university: u }: { university: UniversityListItem }) => {
+const DormitorySection = ({
+	university: u,
+}: {
+	university: UniversityListItem;
+}) => {
 	const dorms = u.dormitories ?? [];
 
 	// Hide entirely when we have no signal at all (unknown flag, no rows).
@@ -265,8 +300,8 @@ const RequirementsTable = ({
 					reqs.map((r) => r.subjectCombination ?? ""),
 				).filter(Boolean);
 
-				// Build lookup: combo → year → score
-				const lookup: Record<string, Record<number, number>> = {};
+				// Build lookup: combo → year → score (null = chưa công bố điểm)
+				const lookup: Record<string, Record<number, number | null>> = {};
 				for (const r of reqs) {
 					const key = r.subjectCombination ?? "";
 					(lookup[key] ??= {})[r.year] = r.score;
@@ -330,7 +365,9 @@ const RequirementsTable = ({
 														key={y}
 														className="px-3 py-2 text-right tabular-nums text-foreground"
 													>
-														{entry ? formatScore(entry.score) : "—"}
+														{entry && entry.score != null
+															? formatScore(entry.score)
+															: "—"}
 													</td>
 												);
 											})}
@@ -346,38 +383,113 @@ const RequirementsTable = ({
 	);
 };
 
-const MajorCard = ({ major: m }: { major: MajorWithRequirements }) => (
-	<Card className="border-border bg-card shadow-sm">
-		<CardContent className="p-4">
-			<div className="flex items-start justify-between gap-3 flex-wrap">
-				<div className="min-w-0">
-					<p className="font-semibold text-foreground leading-snug">{m.name}</p>
+const MajorRow = ({ major: m }: { major: MajorWithRequirements }) => {
+	const [open, setOpen] = useState(false);
+	// years is sorted by year descending (server-side); show the latest offering.
+	const latest = m.years[0];
+	const isNew = isNewMajor(m);
+	const canExpand = m.admissionRequirements.length > 0;
+
+	const tuition =
+		latest?.tuitionFeeMin != null
+			? formatTuition(
+					latest.tuitionFeeMin,
+					latest.tuitionFeeMax,
+					latest.tuitionFeeUnit,
+				)
+			: null;
+	const quota = latest?.enrollmentQuota ?? null;
+
+	const toggle = () => setOpen((v) => !v);
+
+	return (
+		<>
+			<TableRow
+				className={canExpand ? "cursor-pointer" : undefined}
+				onClick={canExpand ? toggle : undefined}
+			>
+				{/* Ngành */}
+				<TableCell className="align-top py-3 whitespace-normal">
+					<div className="flex items-start gap-2 flex-wrap">
+						<span className="font-medium text-foreground leading-snug">
+							{m.name}
+						</span>
+						{isNew && (
+							<Badge
+								variant="outline"
+								className="border-primary/40 text-primary text-[10px]"
+							>
+								Ngành mới
+							</Badge>
+						)}
+					</div>
 					{m.code && (
 						<p className="text-xs text-muted-foreground font-mono mt-0.5">
 							{m.code}
 						</p>
 					)}
-				</div>
-				<div className="flex flex-wrap gap-2 text-xs text-muted-foreground shrink-0">
-					{m.tuitionFeeAmount != null && (
-						<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
-							💰 {formatTuition(m.tuitionFeeAmount, m.tuitionFeeUnit)}
-						</span>
+					{/* Tuition/quota surfaced here on mobile (the columns are hidden < sm). */}
+					{(tuition || quota != null) && (
+						<p className="text-xs text-muted-foreground mt-1 sm:hidden">
+							{tuition && <span>💰 {tuition}</span>}
+							{tuition && quota != null && " · "}
+							{quota != null && <span>🎓 {quota} chỉ tiêu</span>}
+						</p>
 					)}
-					{m.enrollmentQuota != null && (
-						<span className="inline-flex items-center gap-1 bg-muted/50 rounded-md px-2 py-1">
-							🎓 {m.enrollmentQuota} chỉ tiêu
-						</span>
-					)}
-				</div>
-			</div>
+				</TableCell>
 
-			{m.admissionRequirements.length > 0 && (
-				<RequirementsTable requirements={m.admissionRequirements} />
+				{/* Học phí */}
+				<TableCell className="hidden sm:table-cell align-top py-3 text-sm text-muted-foreground">
+					{tuition ?? "—"}
+				</TableCell>
+
+				{/* Chỉ tiêu */}
+				<TableCell className="hidden sm:table-cell align-top py-3 text-sm text-muted-foreground tabular-nums">
+					{quota != null ? quota : "—"}
+				</TableCell>
+
+				{/* Điểm chuẩn / action */}
+				<TableCell className="align-top py-3 text-right">
+					{canExpand ? (
+						<button
+							type="button"
+							onClick={(e) => {
+								e.stopPropagation();
+								toggle();
+							}}
+							aria-expanded={open}
+							className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+						>
+							{open ? "Ẩn" : "Xem"}
+							<ChevronDown
+								className={cn(
+									"h-4 w-4 transition-transform",
+									open && "rotate-180",
+								)}
+							/>
+						</button>
+					) : (
+						<span className="text-sm text-muted-foreground">—</span>
+					)}
+				</TableCell>
+			</TableRow>
+
+			{open && canExpand && (
+				<TableRow className="hover:bg-transparent">
+					<TableCell colSpan={4} className="bg-muted/20 py-3 whitespace-normal">
+						{isNew && (
+							<p className="text-xs text-muted-foreground mb-2">
+								Ngành mới mở — chưa công bố điểm chuẩn. Dưới đây là các tổ hợp
+								xét tuyển.
+							</p>
+						)}
+						<RequirementsTable requirements={m.admissionRequirements} />
+					</TableCell>
+				</TableRow>
 			)}
-		</CardContent>
-	</Card>
-);
+		</>
+	);
+};
 
 const MajorsSkeleton = () => (
 	<div className="space-y-3">
@@ -447,7 +559,9 @@ const UniversityDetailPage = () => {
 						"@context": "https://schema.org",
 						"@type": "CollegeOrUniversity",
 						name: university.name,
-						...(university.englishName && { alternateName: university.englishName }),
+						...(university.englishName && {
+							alternateName: university.englishName,
+						}),
 						url: `https://timtruong.app/danh-sach-truong/${slug}`,
 						...(university.imageUrl && { logo: university.imageUrl }),
 					}}
@@ -518,10 +632,28 @@ const UniversityDetailPage = () => {
 											<p className="text-sm text-muted-foreground mb-4">
 												{majorsData.majors.length} ngành học
 											</p>
-											<div className="space-y-3">
-												{majorsData.majors.map((major) => (
-													<MajorCard key={major.id} major={major} />
-												))}
+											<div className="rounded-lg border border-border overflow-hidden">
+												<Table>
+													<TableHeader>
+														<TableRow className="bg-muted/40 hover:bg-muted/40">
+															<TableHead>Ngành</TableHead>
+															<TableHead className="hidden sm:table-cell">
+																Học phí
+															</TableHead>
+															<TableHead className="hidden sm:table-cell">
+																Chỉ tiêu
+															</TableHead>
+															<TableHead className="text-right">
+																Điểm chuẩn
+															</TableHead>
+														</TableRow>
+													</TableHeader>
+													<TableBody>
+														{majorsData.majors.map((major) => (
+															<MajorRow key={major.id} major={major} />
+														))}
+													</TableBody>
+												</Table>
 											</div>
 										</>
 									) : (

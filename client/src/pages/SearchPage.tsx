@@ -31,9 +31,7 @@ const SearchPage = () => {
 	const [examType, setExamType] = useState<ExamType>(
 		search.examType ?? "THPTQG",
 	);
-	const [selectedSubject, setSelectedSubject] = useState(
-		search.subject ?? "",
-	);
+	const [selectedSubject, setSelectedSubject] = useState(search.subject ?? "");
 
 	// UI-only state (not in URL)
 	const [validationError, setValidationError] = useState("");
@@ -172,6 +170,14 @@ const SearchPage = () => {
 		else if (score.trim()) setValidationError("");
 	};
 
+	// Subject combos matching the popover search (accent-insensitive on code + subjects)
+	const comboQuery = normalizeVi(comboSearch);
+	const filteredCombos = SUBJECT_COMBINATIONS.filter(
+		(combo) =>
+			normalizeVi(combo.code).includes(comboQuery) ||
+			combo.subjects.some((s) => normalizeVi(s).includes(comboQuery)),
+	);
+
 	return (
 		<>
 			<PageMetadata
@@ -285,28 +291,12 @@ const SearchPage = () => {
 												/>
 											</div>
 											<div className="max-h-60 overflow-y-auto">
-												{SUBJECT_COMBINATIONS.filter((combo) => {
-													const q = normalizeVi(comboSearch);
-													return (
-														normalizeVi(combo.code).includes(q) ||
-														combo.subjects.some((s) =>
-															normalizeVi(s).includes(q),
-														)
-													);
-												}).length === 0 ? (
+												{filteredCombos.length === 0 ? (
 													<p className="py-6 text-center text-sm text-muted-foreground">
 														Không tìm thấy tổ hợp.
 													</p>
 												) : (
-													SUBJECT_COMBINATIONS.filter((combo) => {
-														const q = normalizeVi(comboSearch);
-														return (
-															normalizeVi(combo.code).includes(q) ||
-															combo.subjects.some((s) =>
-																normalizeVi(s).includes(q),
-															)
-														);
-													}).map((combo) => (
+													filteredCombos.map((combo) => (
 														<div
 															key={combo.code}
 															className={`flex items-center gap-2 cursor-pointer px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground ${

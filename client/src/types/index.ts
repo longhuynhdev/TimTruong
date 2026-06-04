@@ -51,6 +51,7 @@ export interface UniversityListItem {
 	slug: string | null;
 	shortName: string | null;
 	englishName: string | null;
+	oldName: string | null;
 	code: string;
 	type: "Public" | "Private";
 	imageUrl: string | null;
@@ -65,18 +66,27 @@ export interface UniversityListItem {
 export interface AdmissionRequirement {
 	id: number;
 	examType: string;
-	score: number;
+	// null = tổ hợp có xét nhưng chưa công bố điểm chuẩn (ngành mới / chưa tới mùa)
+	score: number | null;
 	subjectCombination: string | null;
 	year: number;
+}
+
+// Per-year offering data (tuition, quota).
+// tuitionFeeMax is null for a concrete amount, set for a range.
+export interface MajorYear {
+	year: number;
+	tuitionFeeMin: number | null;
+	tuitionFeeMax: number | null;
+	tuitionFeeUnit: TuitionFeeUnit | null;
+	enrollmentQuota: number | null;
 }
 
 export interface MajorWithRequirements {
 	id: number;
 	name: string;
 	code: string | null;
-	tuitionFeeAmount: number | null;
-	tuitionFeeUnit: TuitionFeeUnit | null;
-	enrollmentQuota: number | null;
+	years: MajorYear[];
 	admissionRequirements: AdmissionRequirement[];
 }
 

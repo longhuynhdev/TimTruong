@@ -10,6 +10,7 @@ public record UniversityDto
     public string? Slug { get; init; }
     public string? ShortName { get; init; }
     public string? EnglishName { get; init; }
+    public string? OldName { get; init; }
     public string Code { get; init; } = string.Empty;
     public string Type { get; init; } = string.Empty; // "Public" or "Private"
     public string? ImageUrl { get; init; }

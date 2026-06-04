@@ -16,6 +16,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<University> Universities { get; set; }
     public DbSet<Campus> Campuses { get; set; }
     public DbSet<Major> Majors { get; set; }
+    public DbSet<MajorYear> MajorYears { get; set; }
     public DbSet<AdmissionRequirement> AdmissionRequirements { get; set; }
     public DbSet<Dormitory> Dormitories { get; set; }
     public DbSet<UniversityRanking> UniversityRankings { get; set; }
@@ -51,6 +52,17 @@ public class ApplicationDbContext : DbContext
             .HasOne(r => r.University)
             .WithMany(u => u.Rankings)
             .HasForeignKey(r => r.UniversityId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // A major has one offering row per year — also the ETL upsert key.
+        modelBuilder.Entity<MajorYear>()
+            .HasIndex(my => new { my.MajorId, my.Year })
+            .IsUnique();
+
+        modelBuilder.Entity<MajorYear>()
+            .HasOne(my => my.Major)
+            .WithMany(m => m.Years)
+            .HasForeignKey(my => my.MajorId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // Seed data

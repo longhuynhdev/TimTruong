@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToHopMonRouteImport } from './routes/to-hop-mon'
 import { Route as TimKiemRouteImport } from './routes/tim-kiem'
-import { Route as DanhSachTruongRouteImport } from './routes/danh-sach-truong'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DanhSachTruongIndexRouteImport } from './routes/danh-sach-truong.index'
 import { Route as DanhSachTruongSlugRouteImport } from './routes/danh-sach-truong.$slug'
@@ -26,30 +25,24 @@ const TimKiemRoute = TimKiemRouteImport.update({
   path: '/tim-kiem',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DanhSachTruongRoute = DanhSachTruongRouteImport.update({
-  id: '/danh-sach-truong',
-  path: '/danh-sach-truong',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DanhSachTruongIndexRoute = DanhSachTruongIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DanhSachTruongRoute,
+  id: '/danh-sach-truong/',
+  path: '/danh-sach-truong/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DanhSachTruongSlugRoute = DanhSachTruongSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => DanhSachTruongRoute,
+  id: '/danh-sach-truong/$slug',
+  path: '/danh-sach-truong/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/danh-sach-truong': typeof DanhSachTruongRouteWithChildren
   '/tim-kiem': typeof TimKiemRoute
   '/to-hop-mon': typeof ToHopMonRoute
   '/danh-sach-truong/$slug': typeof DanhSachTruongSlugRoute
@@ -65,7 +58,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/danh-sach-truong': typeof DanhSachTruongRouteWithChildren
   '/tim-kiem': typeof TimKiemRoute
   '/to-hop-mon': typeof ToHopMonRoute
   '/danh-sach-truong/$slug': typeof DanhSachTruongSlugRoute
@@ -75,7 +67,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/danh-sach-truong'
     | '/tim-kiem'
     | '/to-hop-mon'
     | '/danh-sach-truong/$slug'
@@ -90,7 +81,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/danh-sach-truong'
     | '/tim-kiem'
     | '/to-hop-mon'
     | '/danh-sach-truong/$slug'
@@ -99,9 +89,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DanhSachTruongRoute: typeof DanhSachTruongRouteWithChildren
   TimKiemRoute: typeof TimKiemRoute
   ToHopMonRoute: typeof ToHopMonRoute
+  DanhSachTruongSlugRoute: typeof DanhSachTruongSlugRoute
+  DanhSachTruongIndexRoute: typeof DanhSachTruongIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -120,13 +111,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TimKiemRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/danh-sach-truong': {
-      id: '/danh-sach-truong'
-      path: '/danh-sach-truong'
-      fullPath: '/danh-sach-truong'
-      preLoaderRoute: typeof DanhSachTruongRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -136,40 +120,27 @@ declare module '@tanstack/react-router' {
     }
     '/danh-sach-truong/': {
       id: '/danh-sach-truong/'
-      path: '/'
+      path: '/danh-sach-truong'
       fullPath: '/danh-sach-truong/'
       preLoaderRoute: typeof DanhSachTruongIndexRouteImport
-      parentRoute: typeof DanhSachTruongRoute
+      parentRoute: typeof rootRouteImport
     }
     '/danh-sach-truong/$slug': {
       id: '/danh-sach-truong/$slug'
-      path: '/$slug'
+      path: '/danh-sach-truong/$slug'
       fullPath: '/danh-sach-truong/$slug'
       preLoaderRoute: typeof DanhSachTruongSlugRouteImport
-      parentRoute: typeof DanhSachTruongRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface DanhSachTruongRouteChildren {
-  DanhSachTruongSlugRoute: typeof DanhSachTruongSlugRoute
-  DanhSachTruongIndexRoute: typeof DanhSachTruongIndexRoute
-}
-
-const DanhSachTruongRouteChildren: DanhSachTruongRouteChildren = {
-  DanhSachTruongSlugRoute: DanhSachTruongSlugRoute,
-  DanhSachTruongIndexRoute: DanhSachTruongIndexRoute,
-}
-
-const DanhSachTruongRouteWithChildren = DanhSachTruongRoute._addFileChildren(
-  DanhSachTruongRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DanhSachTruongRoute: DanhSachTruongRouteWithChildren,
   TimKiemRoute: TimKiemRoute,
   ToHopMonRoute: ToHopMonRoute,
+  DanhSachTruongSlugRoute: DanhSachTruongSlugRoute,
+  DanhSachTruongIndexRoute: DanhSachTruongIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -13,7 +13,9 @@ import { join } from "node:path";
 
 const SITE_URL = "https://timtruong.app";
 const API_BASE_URL =
-	process.env.SITEMAP_API_URL || process.env.VITE_API_URL || "http://localhost:5309";
+	process.env.SITEMAP_API_URL ||
+	process.env.VITE_API_URL ||
+	"http://localhost:5309";
 const OUTPUT = join(import.meta.dirname, "..", "public", "sitemap.xml");
 
 const STATIC_PATHS = ["/", "/tim-kiem", "/to-hop-mon", "/danh-sach-truong"];

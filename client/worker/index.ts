@@ -47,9 +47,15 @@ class CanonicalHandler {
 	}
 }
 
-async function injectUniversityMeta(slug: string, request: Request, env: Env): Promise<Response> {
+async function injectUniversityMeta(
+	slug: string,
+	request: Request,
+	env: Env,
+): Promise<Response> {
 	// Always start from the SPA shell so the page still works if the API fails.
-	const shell = await env.ASSETS.fetch(new Request(new URL("/", request.url), request));
+	const shell = await env.ASSETS.fetch(
+		new Request(new URL("/", request.url), request),
+	);
 
 	let university: University | null = null;
 	try {
