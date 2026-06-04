@@ -17,10 +17,10 @@ import {
 	ArrowUp,
 	ArrowUpDown,
 	Award,
-	Building2,
 	ChevronDown,
 	ExternalLink,
 	MapPin,
+	Search,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import JsonLd from "@/components/JsonLd";
@@ -260,41 +260,35 @@ const DormitoryItem = ({ dorm }: { dorm: Dormitory }) => (
 	</div>
 );
 
-const DormitorySection = ({
+// Whether a university has any dormitory signal worth a tab (known flag or rows).
+const hasDormitoryInfo = (u: UniversityListItem) =>
+	u.hasDormitory != null || (u.dormitories ?? []).length > 0;
+
+const DormitoryTab = ({
 	university: u,
 }: {
 	university: UniversityListItem;
 }) => {
 	const dorms = u.dormitories ?? [];
 
-	// Hide entirely when we have no signal at all (unknown flag, no rows).
-	if (u.hasDormitory == null && dorms.length === 0) return null;
-
+	if (u.hasDormitory === false) {
+		return (
+			<p className="text-sm text-muted-foreground">Trường không có ký túc xá.</p>
+		);
+	}
+	if (dorms.length > 0) {
+		return (
+			<div className="space-y-3">
+				{dorms.map((d) => (
+					<DormitoryItem key={d.name} dorm={d} />
+				))}
+			</div>
+		);
+	}
 	return (
-		<Card className="border-border bg-card shadow-sm">
-			<CardContent className="p-6">
-				<div className="flex items-center gap-2">
-					<Building2 className="h-5 w-5 text-muted-foreground" />
-					<h2 className="text-base font-semibold text-foreground">Ký túc xá</h2>
-				</div>
-
-				{u.hasDormitory === false ? (
-					<p className="mt-3 text-sm text-muted-foreground">
-						Trường không có ký túc xá.
-					</p>
-				) : dorms.length > 0 ? (
-					<div className="mt-4 space-y-3">
-						{dorms.map((d) => (
-							<DormitoryItem key={d.name} dorm={d} />
-						))}
-					</div>
-				) : (
-					<p className="mt-3 text-sm text-muted-foreground">
-						Trường có ký túc xá — thông tin chi tiết đang được cập nhật.
-					</p>
-				)}
-			</CardContent>
-		</Card>
+		<p className="text-sm text-muted-foreground">
+			Trường có ký túc xá — thông tin chi tiết đang được cập nhật.
+		</p>
 	);
 };
 
@@ -317,14 +311,41 @@ const RequirementsTable = ({
 					reqs.map((r) => r.subjectCombination ?? ""),
 				).filter(Boolean);
 
-				// Build lookup: combo → year → score (null = chưa công bố điểm)
-				const lookup: Record<string, Record<number, number | null>> = {};
+				// Build lookup: year → combo → score (null = chưa công bố điểm).
+				// Combos are columns and years are rows, matching how schools publish
+				// điểm chuẩn (tổ hợp across the top, one score line per year).
+				const lookup: Record<number, Record<string, number | null>> = {};
 				for (const r of reqs) {
 					const key = r.subjectCombination ?? "";
-					(lookup[key] ??= {})[r.year] = r.score;
+					(lookup[r.year] ??= {})[key] = r.score;
 				}
 
 				const hasCombos = combos.length > 0;
+
+				// Merge combos that share the same score across every displayed year into
+				// one column (e.g. UIT, where A00/A01/D01/D07 all carry the same điểm chuẩn
+				// each year). The per-year signature includes nulls, so a combo missing some
+				// years (X06/X26) stays its own column instead of falsely merging.
+				const groups: string[][] = [];
+				if (hasCombos) {
+					const bySig = new Map<string, string[]>();
+					for (const combo of combos) {
+						const sig = years
+							.map((y) => {
+								const s = lookup[y]?.[combo];
+								return s == null ? "·" : String(s);
+							})
+							.join("|");
+						const existing = bySig.get(sig);
+						if (existing) {
+							existing.push(combo);
+						} else {
+							const arr = [combo];
+							bySig.set(sig, arr);
+							groups.push(arr);
+						}
+					}
+				}
 
 				return (
 					<div key={examType}>
@@ -332,64 +353,75 @@ const RequirementsTable = ({
 							{examType === "THPTQG" ? "Tốt nghiệp THPT" : "Đánh giá năng lực"}
 						</p>
 						<div className="overflow-x-auto rounded-md border border-border">
-							<table className="w-full text-xs">
+							<table className="w-full border-collapse text-xs">
 								<thead>
 									<tr className="bg-muted/40">
-										{hasCombos && (
-											<th className="px-3 py-2 text-left font-medium text-muted-foreground w-16">
-												Tổ hợp
+										<th
+											rowSpan={hasCombos ? 2 : 1}
+											className="border-b border-border px-3 py-2 text-left align-bottom font-medium text-muted-foreground w-16"
+										>
+											Năm
+										</th>
+										{hasCombos ? (
+											<th
+												colSpan={groups.length}
+												className="border-b border-l border-border px-3 py-1.5 text-center font-medium text-muted-foreground"
+											>
+												Tổ hợp xét tuyển
+											</th>
+										) : (
+											<th className="border-b border-l border-border px-3 py-2 text-center font-medium text-muted-foreground">
+												Điểm chuẩn
 											</th>
 										)}
-										{years.map((y) => (
-											<th
-												key={y}
-												className="px-3 py-2 text-right font-medium text-muted-foreground"
-											>
-												{y}
-											</th>
-										))}
 									</tr>
-								</thead>
-								<tbody>
-									{hasCombos ? (
-										combos.map((combo) => (
-											<tr
-												key={combo}
-												className="border-t border-border hover:bg-muted/20 transition-colors"
-											>
-												<td className="px-3 py-2 font-mono text-foreground">
-													{combo}
-												</td>
-												{years.map((y) => (
-													<td
-														key={y}
-														className="px-3 py-2 text-right tabular-nums text-foreground"
-													>
-														{lookup[combo]?.[y] != null
-															? formatScore(lookup[combo][y])
-															: "—"}
-													</td>
-												))}
-											</tr>
-										))
-									) : (
-										// No subject combos (e.g. ĐGNL)
-										<tr className="border-t border-border">
-											{years.map((y) => {
-												const entry = reqs.find((r) => r.year === y);
-												return (
-													<td
-														key={y}
-														className="px-3 py-2 text-right tabular-nums text-foreground"
-													>
-														{entry && entry.score != null
-															? formatScore(entry.score)
-															: "—"}
-													</td>
-												);
-											})}
+									{hasCombos && (
+										<tr className="bg-muted/40">
+											{groups.map((g) => (
+												<th
+													key={g.join(",")}
+													className="border-b border-l border-border px-3 py-1.5 text-center font-mono font-medium text-muted-foreground"
+												>
+													<div className="flex flex-wrap justify-center gap-x-1.5 gap-y-0.5">
+														{g.map((c) => (
+															<span key={c}>{c}</span>
+														))}
+													</div>
+												</th>
+											))}
 										</tr>
 									)}
+								</thead>
+								<tbody>
+									{years.map((y) => (
+										<tr
+											key={y}
+											className="border-b border-border last:border-b-0 hover:bg-muted/20 transition-colors"
+										>
+											<td className="px-3 py-2 font-medium text-foreground tabular-nums">
+												{y}
+											</td>
+											{hasCombos ? (
+												groups.map((g) => {
+													const s = lookup[y]?.[g[0]];
+													return (
+														<td
+															key={g.join(",")}
+															className="border-l border-border px-3 py-2 text-center tabular-nums text-foreground"
+														>
+															{s != null ? formatScore(s) : "—"}
+														</td>
+													);
+												})
+											) : (
+												<td className="border-l border-border px-3 py-2 text-center tabular-nums text-foreground">
+													{lookup[y]?.[""] != null
+														? formatScore(lookup[y][""])
+														: "—"}
+												</td>
+											)}
+										</tr>
+									))}
 								</tbody>
 							</table>
 						</div>
@@ -471,7 +503,9 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 						)}
 					</div>
 					{m.code && (
-						<p className="text-xs text-muted-foreground font-mono mt-0.5">{m.code}</p>
+						<p className="text-xs text-muted-foreground mt-0.5">
+							Mã ngành: <span className="font-mono">{m.code}</span>
+						</p>
 					)}
 				</div>
 			);
@@ -604,12 +638,15 @@ const MajorsTable = ({ majors }: { majors: MajorWithRequirements[] }) => {
 
 	return (
 		<div className="space-y-4">
-			<Input
-				placeholder="Tìm kiếm ngành học..."
-				value={globalFilter}
-				onChange={(e) => setGlobalFilter(e.target.value)}
-				className="max-w-sm"
-			/>
+			<div className="relative max-w-sm">
+				<Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+				<Input
+					placeholder="Tìm kiếm ngành học..."
+					value={globalFilter}
+					onChange={(e) => setGlobalFilter(e.target.value)}
+					className="pl-9"
+				/>
+			</div>
 
 			<p className="text-sm text-muted-foreground">
 				{table.getFilteredRowModel().rows.length} ngành học
@@ -681,11 +718,7 @@ const MajorsSkeleton = () => (
 
 // ─── tabs ─────────────────────────────────────────────────────────────────────
 
-type TabId = "majors";
-
-const TABS: { id: TabId; label: string }[] = [
-	{ id: "majors", label: "Danh sách ngành học" },
-];
+type TabId = "majors" | "dormitory";
 
 // ─── page ─────────────────────────────────────────────────────────────────────
 
@@ -721,6 +754,13 @@ const UniversityDetailPage = () => {
 				setLoadingMajors(false);
 			});
 	}, [slug]);
+
+	const tabs: { id: TabId; label: string }[] = [
+		{ id: "majors", label: "Danh sách ngành học" },
+		...(university && hasDormitoryInfo(university)
+			? [{ id: "dormitory" as TabId, label: "Ký túc xá" }]
+			: []),
+	];
 
 	return (
 		<>
@@ -767,21 +807,17 @@ const UniversityDetailPage = () => {
 						<UniversityInfoCard university={university} />
 					) : null}
 
-					{/* Section 1.5 — Dormitory (KTX) */}
+					{/* Section 1.5 — Rankings */}
 					{!loadingInfo && !errorInfo && university && (
 						<RankingSection university={university} />
 					)}
 
-					{!loadingInfo && !errorInfo && university && (
-						<DormitorySection university={university} />
-					)}
-
-					{/* Section 2 — Tabs */}
+					{/* Section 2 — Tabs (majors + dormitory) */}
 					<div>
 						{/* Tab bar */}
 						<div className="border-b border-border">
 							<div className="flex gap-0 -mb-px">
-								{TABS.map((tab) => (
+								{tabs.map((tab) => (
 									<button
 										key={tab.id}
 										type="button"
@@ -815,6 +851,10 @@ const UniversityDetailPage = () => {
 										</p>
 									)}
 								</>
+							)}
+
+							{activeTab === "dormitory" && university && (
+								<DormitoryTab university={university} />
 							)}
 						</div>
 					</div>
