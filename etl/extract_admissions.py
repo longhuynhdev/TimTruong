@@ -16,7 +16,7 @@ chạy etl_admissions.py để nạp vào DB.
 
 Dùng:
   uv run extract_admissions.py                                    # xử lý mọi (trường, năm) có images/
-  uv run extract_admissions.py QST-HCMUS/2025                     # chỉ 1 trường-năm
+  uv run extract_admissions.py QST-HCMUS/2025                     # chỉ 1 trường-năm (hoặc QST-HCMUS-2025)
   uv run extract_admissions.py QST-HCMUS                          # mọi năm của 1 trường
   uv run extract_admissions.py QST-HCMUS/2025 --note "cột cuối là ĐGNL, bỏ dòng Tổng"
 """
@@ -26,6 +26,7 @@ import csv
 import glob
 import json
 import os
+import re
 import sys
 from os.path import join, dirname
 
@@ -49,17 +50,17 @@ COL_COMBO = "SubjectCombination"
 COL_MAXSCORE = "MaxScore"
 COL_SCORE = "Score"
 
-# Header CSV (Năm + Chỉ tiêu đã bỏ; Năm suy từ tên file, Chỉ tiêu ETL riêng sau).
+# Header CSV 
 HEADER = [COL_UNI, COL_CODE, COL_NAME, COL_METHOD, COL_COMBO, COL_MAXSCORE, COL_SCORE]
 
 # Khoá JSON model trả về → cột CSV tương ứng.
 JSON_TO_COL = {
-    "ma_nganh": COL_CODE,
-    "ten_nganh": COL_NAME,
-    "phuong_thuc": COL_METHOD,
-    "to_hop": COL_COMBO,
-    "thang_diem": COL_MAXSCORE,
-    "diem": COL_SCORE,
+    "code": COL_CODE,
+    "name": COL_NAME,
+    "method": COL_METHOD,
+    "subject_combination": COL_COMBO,
+    "max_score": COL_MAXSCORE,
+    "score": COL_SCORE,
 }
 
 MIME_BY_EXT = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
@@ -73,7 +74,7 @@ def load_prompt(uni_code: str, extra: str = "") -> str:
     valid = ", ".join(sorted(SUBJECT_COMBINATION.keys()))
     extra_block = ""
     if extra.strip():
-        extra_block = "\nHƯỚNG DẪN RIÊNG CHO TRƯỜNG NÀY (ưu tiên tuân theo):\n" + extra.strip() + "\n"
+        extra_block = "\nHƯỚNG DẪN RIÊNG CHO TRƯỜNG ĐẠI HỌC NÀY (ưu tiên tuân theo):\n" + extra.strip() + "\n"
     return template.format(uni_code=uni_code, valid_combinations=valid, extra_instructions=extra_block)
 
 
@@ -89,16 +90,22 @@ def discover_targets():
 
 
 def resolve_targets(args_list):
-    """CLI args → list thư mục năm. 'QST-HCMUS/2025' = 1 trường-năm; 'QST-HCMUS' = mọi năm.
-
-    Bỏ trống = tất cả (discover_targets)."""
+    """CLI args → list thư mục năm. 1 trường-năm: 'QST-HCMUS/2025' hoặc 'QST-HCMUS-2025';
+    'QST-HCMUS' = mọi năm. Bỏ trống = tất cả (discover_targets)."""
     if not args_list:
         return discover_targets()
     targets = []
     for raw in args_list:
         spec = raw.strip().strip("/")
+        school = year = None
         if "/" in spec:
             school, year = spec.split("/", 1)
+        else:
+            # 'QST-HCMUS-2025' → (trường 'QST-HCMUS', năm '2025') nếu path tồn tại;
+            m = re.match(r"^(.+)-(\d{4})$", spec)
+            if m and os.path.isdir(join(SCHOOLS_DIR, m.group(1), "admissions", m.group(2), "images")):
+                school, year = m.group(1), m.group(2)
+        if school is not None:
             year_dir = join(SCHOOLS_DIR, school, "admissions", year)
             if os.path.isdir(join(year_dir, "images")):
                 targets.append(year_dir)
@@ -110,7 +117,7 @@ def resolve_targets(args_list):
             if found:
                 targets.extend(found)
             else:
-                print(f"  SKIP '{spec}' — không thấy năm nào có images/")
+                print(f"  SKIP '{spec}' — không thấy năm nào có images/ (dùng SCHOOL/YEAR, SCHOOL-YEAR hoặc SCHOOL)")
     return targets
 
 
@@ -295,7 +302,7 @@ def run():
     )
     parser.add_argument(
         "targets", nargs="*",
-        help="trường-năm cần xử lý: 'QST-HCMUS/2025' (1 năm) hoặc 'QST-HCMUS' (mọi năm); bỏ trống = tất cả",
+        help="trường-năm cần xử lý: 'QST-HCMUS/2025' hay 'QST-HCMUS-2025' (1 năm), 'QST-HCMUS' (mọi năm); bỏ trống = tất cả",
     )
     parser.add_argument(
         "-n", "--note", default="",

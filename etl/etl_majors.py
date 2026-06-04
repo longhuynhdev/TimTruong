@@ -1,8 +1,10 @@
 """ETL ngành theo năm: data/schools/{Code}-{Short}/majors/{Year}.csv → bảng Majors + MajorYears."""
 
+import argparse
 import csv
 import glob
 import os
+import re
 from decimal import Decimal, InvalidOperation
 
 from db import get_connection
@@ -211,8 +213,40 @@ def process_uni(cur, uni_code, uni_id, year, rows):
     return len(rows), my_ins, my_upd, my_del
 
 
-def run():
-    files = sorted(glob.glob(os.path.join(SCHOOLS_DIR, "*", "majors", "*.csv")))
+def resolve_files(args_list):
+    """CLI args → list file ngành. 1 trường-năm: 'QSC-UIT/2026' hoặc 'QSC-UIT-2026';
+    'QSC-UIT' = mọi năm. Bỏ trống = tất cả file majors."""
+    if not args_list:
+        return sorted(glob.glob(os.path.join(SCHOOLS_DIR, "*", "majors", "*.csv")))
+    files = []
+    for raw in args_list:
+        spec = raw.strip().strip("/")
+        school = year = None
+        if "/" in spec:
+            school, year = spec.split("/", 1)
+        else:
+            # 'QSC-UIT-2026' → (trường 'QSC-UIT', năm '2026') nếu file tồn tại;
+            # thư mục trường không bao giờ kết thúc bằng '-{4 chữ số}' nên không nhập nhằng.
+            m = re.match(r"^(.+)-(\d{4})$", spec)
+            if m and os.path.isfile(os.path.join(SCHOOLS_DIR, m.group(1), "majors", m.group(2) + ".csv")):
+                school, year = m.group(1), m.group(2)
+        if school is not None:
+            f = os.path.join(SCHOOLS_DIR, school, "majors", year + ".csv")
+            if os.path.isfile(f):
+                files.append(f)
+            else:
+                print(f"  SKIP '{spec}' — không thấy {school}/majors/{year}.csv")
+        else:
+            found = sorted(glob.glob(os.path.join(SCHOOLS_DIR, spec, "majors", "*.csv")))
+            if found:
+                files.extend(found)
+            else:
+                print(f"  SKIP '{spec}' — không thấy file ngành nào (dùng SCHOOL/YEAR, SCHOOL-YEAR hoặc SCHOOL)")
+    return files
+
+
+def run(args_list=None):
+    files = resolve_files(args_list)
     if not files:
         print(f"Không thấy CSV ngành nào trong {SCHOOLS_DIR}/*/majors/")
         return
@@ -251,4 +285,12 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    parser = argparse.ArgumentParser(
+        description="ETL ngành: data/schools/{Code}-{Short}/majors/{Year}.csv → Majors + MajorYears.",
+    )
+    parser.add_argument(
+        "targets", nargs="*",
+        help="trường-năm: 'QSC-UIT/2026' hay 'QSC-UIT-2026' (1 năm), 'QSC-UIT' (mọi năm); bỏ trống = tất cả",
+    )
+    args = parser.parse_args()
+    run(args.targets)
