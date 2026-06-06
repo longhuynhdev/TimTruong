@@ -216,48 +216,25 @@ public class UniversityService : IUniversityService
 
         var university = await _context.Universities
             .Where(u => u.Id == id)
-            .Select(u => new UniversityMajorsDto(
-                u.Id,
-                u.Name,
-                u.Code,
-                u.Majors
-                    .OrderBy(m => m.Name)
-                    .Select(m => new MajorWithRequirementsDto(
-                        m.Id,
-                        m.Name,
-                        m.Code,
-                        m.Years
-                            .OrderByDescending(my => my.Year)
-                            .Select(my => new MajorYearDto(
-                                my.Year,
-                                my.TuitionFeeMin,
-                                my.TuitionFeeMax,
-                                my.TuitionFeeUnit.HasValue ? my.TuitionFeeUnit.Value.ToString() : null,
-                                my.EnrollmentQuota
-                            ))
-                            .ToList(),
-                        m.AdmissionRequirements
-                            .OrderByDescending(r => r.Year)
-                            .ThenBy(r => r.ExamType)
-                            .Select(r => new AdmissionRequirementDto(
-                                r.Id,
-                                r.ExamType.ToString(),
-                                r.Score,
-                                r.SubjectCombination.HasValue ? r.SubjectCombination.Value.ToString() : null,
-                                r.Year
-                            ))
-                            .ToList()
-                    ))
-                    .ToList()
-            ))
+            .Select(u => new { u.Id, u.Name, u.Code })
             .FirstOrDefaultAsync();
 
         if (university == null)
         {
             _logger.LogWarning("University with ID {Id} not found", id);
+            return null;
         }
 
-        return university;
+        // Built via the shared projection so this matches the recommendation endpoint's
+        // major shape exactly (one source of truth). Separate query because EF can't
+        // inline a referenced expression nested inside the university projection.
+        var majors = await _context.Majors
+            .Where(m => m.UniversityId == id)
+            .OrderBy(m => m.Name)
+            .Select(MajorProjections.ToDto)
+            .ToListAsync();
+
+        return new UniversityMajorsDto(university.Id, university.Name, university.Code, majors);
     }
 
 }

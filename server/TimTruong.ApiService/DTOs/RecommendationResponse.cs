@@ -8,7 +8,10 @@ public record RecommendationResponse(
 );
 
 /// <summary>
-/// A single university recommendation with matching majors
+/// A single university recommendation with matching majors.
+/// Each major carries its full admission requirements (all years, combos and
+/// exam types) so the client can show the complete điểm chuẩn picture, not just
+/// the row that matched the student's criteria.
 /// </summary>
 public record UniversityRecommendation(
     int UniversityId,
@@ -16,22 +19,5 @@ public record UniversityRecommendation(
     string UniversityCode,
     string UniversityType,
     string? UniversityImageUrl,
-    List<MajorRecommendation> Majors
-);
-
-/// <summary>
-/// A major that matches the student's criteria
-/// </summary>
-public record MajorRecommendation(
-    int MajorId,
-    string MajorName,
-    string? MajorCode,
-    string FieldOfStudy,
-    decimal? TuitionFeeMin,
-    decimal? TuitionFeeMax,
-    string? TuitionFeeUnit,
-    int? EnrollmentQuota,
-    decimal AdmissionScore,
-    string SubjectCombination,
-    int Year
+    List<MajorWithRequirementsDto> Majors
 );
