@@ -3,8 +3,8 @@ import { ChevronRight, MapPin, Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import PageMetadata from "@/components/PageMetadata";
 import { RankingBadges } from "@/components/RankingBadges";
+import { UniversityBadges } from "@/components/UniversityBadges";
 import { UniversityLogo } from "@/components/UniversityLogo";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { normalizeVi } from "@/lib/utils";
@@ -285,37 +285,7 @@ const UniversityCard = ({
 							<RankingBadges rankings={u.rankings} className="mt-2" />
 
 							{/* Badges */}
-							<div className="flex flex-wrap gap-1.5 mt-2">
-								<Badge variant="outline" className="text-xs border-border">
-									{u.type === "Public" ? "Trường công lập" : "Trường tư thục"}
-								</Badge>
-								{u.isFinanciallyAutonomous === true && (
-									<Badge variant="outline" className="text-xs border-border">
-										Đã tự chủ tài chính
-									</Badge>
-								)}
-								{u.isFinanciallyAutonomous === false && (
-									<Badge
-										variant="outline"
-										className="text-xs border-border text-muted-foreground"
-									>
-										Chưa tự chủ tài chính
-									</Badge>
-								)}
-								{u.hasDormitory === true && (
-									<Badge variant="outline" className="text-xs border-border">
-										Có ký túc xá
-									</Badge>
-								)}
-								{u.hasDormitory === false && (
-									<Badge
-										variant="outline"
-										className="text-xs border-border text-muted-foreground"
-									>
-										Không có ký túc xá
-									</Badge>
-								)}
-							</div>
+							<UniversityBadges university={u} showDormitory className="mt-2" />
 						</div>
 
 						{/* Affordance: gợi ý bấm để xem chi tiết */}

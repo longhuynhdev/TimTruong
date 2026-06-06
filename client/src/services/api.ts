@@ -1,6 +1,6 @@
 import type {
 	ExamType,
-	TuitionFeeUnit,
+	MajorWithRequirements,
 	UniversityListItem,
 	UniversityMajors,
 	UniversityResult,
@@ -24,27 +24,14 @@ interface RecommendationRequest {
 	subjectCombination?: string;
 }
 
-interface MajorRecommendation {
-	majorId: number;
-	majorName: string;
-	majorCode: string | null;
-	fieldOfStudy: string;
-	tuitionFeeMin: number | null;
-	tuitionFeeMax: number | null;
-	tuitionFeeUnit: TuitionFeeUnit | null;
-	enrollmentQuota: number | null;
-	admissionScore: number;
-	subjectCombination: string;
-	year: number;
-}
-
 interface UniversityRecommendation {
 	universityId: number;
 	universityName: string;
 	universityCode: string;
-	universityType: string;
+	universityType: "Public" | "Private";
 	universityImageUrl: string | null;
-	majors: MajorRecommendation[];
+	// Full major shape, same as GET /universities/{id}/majors.
+	majors: MajorWithRequirements[];
 }
 
 interface RecommendationResponse {
@@ -113,31 +100,14 @@ export async function searchUniversities(
 
 	const data: RecommendationResponse = await response.json();
 
-	// Transform API response to UI format
-	return data.recommendations.flatMap((university) =>
-		university.majors.map((major) => ({
-			id: `${university.universityId}-${major.majorId}`,
-			universityName: university.universityName,
-			major: major.majorName,
-			logo: university.universityImageUrl ?? null,
-			subjectCombinations:
-				examType === "THPTQG" ? [major.subjectCombination] : undefined,
-			thptScores:
-				examType === "THPTQG"
-					? {
-							year2025: major.admissionScore,
-							year2024: major.admissionScore,
-							year2023: major.admissionScore,
-						}
-					: undefined,
-			dgnlScores:
-				examType === "ĐGNL"
-					? {
-							year2025: major.admissionScore,
-							year2024: major.admissionScore,
-							year2023: major.admissionScore,
-						}
-					: undefined,
-		})),
-	);
+	// Map each matched university straight through; majors already carry their full
+	// admission requirements (all combos/years/exam types).
+	return data.recommendations.map((u) => ({
+		universityId: u.universityId,
+		universityName: u.universityName,
+		universityCode: u.universityCode,
+		universityType: u.universityType,
+		logo: u.universityImageUrl ?? null,
+		majors: u.majors,
+	}));
 }

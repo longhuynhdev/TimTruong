@@ -19,13 +19,15 @@ import {
 	Award,
 	ChevronDown,
 	ExternalLink,
+	type LucideIcon,
 	MapPin,
 	Search,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
+import { UniversityBadges } from "@/components/UniversityBadges";
 import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -38,197 +40,160 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { RequirementsTable } from "@/components/RequirementsTable";
+// Chart pulls in visx; lazy so it only loads when a row with trend data expands.
+const MajorScoreChart = lazy(() => import("@/components/MajorScoreChart"));
+import { isNewMajor, majorTuition } from "@/lib/majors";
 import { cn, normalizeVi } from "@/lib/utils";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
-	AdmissionRequirement,
 	Dormitory,
 	MajorWithRequirements,
+	Ranking,
 	UniversityListItem,
 	UniversityMajors,
 } from "@/types";
 
-// ─── helpers ─────────────────────────────────────────────────────────────────
-
-function formatScore(score: number): string {
-	return score % 1 === 0
-		? score.toFixed(0)
-		: score.toFixed(2).replace(/\.?0+$/, "");
-}
-
-const TUITION_UNIT_LABEL: Record<string, string> = {
-	PerCredit: "tín chỉ",
-	PerSemester: "học kỳ",
-	PerYear: "năm",
-};
-
-/** Format a tuition fee as a concrete amount (max null) or a range (min – max). */
-function formatTuition(
-	min: number,
-	max: number | null,
-	unit: string | null,
-): string {
-	const suffix = unit ? (TUITION_UNIT_LABEL[unit] ?? "năm") : "năm";
-	const inMillions = min >= 1_000_000 && (max == null || max >= 1_000_000);
-	const fmt = (v: number) => {
-		if (!inMillions) return v.toLocaleString("vi-VN");
-		const millions = v / 1_000_000;
-		return millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1);
-	};
-	const unitWord = inMillions ? "triệu đồng" : "đồng";
-	const amount =
-		max != null && max !== min ? `${fmt(min)} – ${fmt(max)}` : fmt(min);
-	return `${amount} ${unitWord}/${suffix}`;
-}
-
-/** Group requirements by examType, then build a year × combo grid */
-function groupRequirements(reqs: AdmissionRequirement[]) {
-	const byType: Record<string, AdmissionRequirement[]> = {};
-	for (const r of reqs) {
-		(byType[r.examType] ??= []).push(r);
-	}
-	return byType;
-}
-
-function uniqueSorted<T>(arr: T[]): T[] {
-	return [...new Set(arr)].sort() as T[];
-}
-
-const hasPublishedScore = (m: MajorWithRequirements) =>
-	m.admissionRequirements.some((r) => r.score != null);
-
-// "Ngành mới": the school published the combos (đề án) but no cutoff in any year yet.
-// A major with no admission-requirement rows at all is "chưa có dữ liệu", not new.
-const isNewMajor = (m: MajorWithRequirements) =>
-	m.admissionRequirements.length > 0 && !hasPublishedScore(m);
-
 // ─── sub-components ───────────────────────────────────────────────────────────
+
+/** Một dòng thông tin có nhãn (icon + nhãn trái, nội dung phải) — khuôn dùng
+ *  chung trong card thông tin trường, dễ mở rộng cho các mục về sau. */
+const InfoRow = ({
+	icon: Icon,
+	label,
+	children,
+}: {
+	icon: LucideIcon;
+	label: string;
+	children: React.ReactNode;
+}) => (
+	<div className="flex flex-col gap-1 sm:flex-row sm:gap-3">
+		<span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground sm:w-24 sm:flex-shrink-0 sm:pt-0.5">
+			<Icon className="h-3.5 w-3.5 flex-shrink-0" />
+			{label}
+		</span>
+		<div className="min-w-0 flex-1">{children}</div>
+	</div>
+);
+
+const RANKING_YEAR = 2026;
+
+const RankingRow = ({
+	items,
+	currentYear,
+}: {
+	items: Ranking[];
+	currentYear: number;
+}) => {
+	const chipClass =
+		"inline-flex items-center gap-1 rounded-md border border-amber-300/70 bg-amber-50 px-2 py-0.5 text-xs text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300";
+
+	return (
+		<div className="flex flex-wrap items-center gap-1.5">
+			{items.map((r) => {
+				const content = (
+					<>
+						<span className="font-semibold">{r.system}</span>
+						<span>{rankSentence(r)}</span>
+						{r.year !== currentYear && (
+							<span className="text-amber-700/70 dark:text-amber-300/70">
+								· {r.year}
+							</span>
+						)}
+						{r.sourceUrl && <ExternalLink className="h-3 w-3 opacity-70" />}
+					</>
+				);
+				return r.sourceUrl ? (
+					<a
+						key={r.system}
+						href={r.sourceUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						title={`${r.system} · ${rankSentence(r)} (${r.year})`}
+						className={cn(
+							chipClass,
+							"transition-colors hover:bg-amber-100 dark:hover:bg-amber-500/20",
+						)}
+					>
+						{content}
+					</a>
+				) : (
+					<span
+						key={r.system}
+						title={`${r.system} · ${rankSentence(r)} (${r.year})`}
+						className={chipClass}
+					>
+						{content}
+					</span>
+				);
+			})}
+		</div>
+	);
+};
 
 const UniversityInfoCard = ({
 	university: u,
 }: {
 	university: UniversityListItem;
-}) => (
-	<Card className="border-border bg-card shadow-sm">
-		<CardContent className="p-6">
-			<div className="flex flex-col sm:flex-row gap-5">
-				{/* Logo */}
-				<div className="flex-shrink-0 flex sm:items-start">
-					<UniversityLogo
-						name={u.name}
-						imageUrl={u.imageUrl}
-						className="w-20 h-20 p-3"
-						fallbackClassName="text-base font-semibold"
-					/>
-				</div>
-
-				{/* Details */}
-				<div className="flex-1 min-w-0 space-y-3">
-					<div>
-						<h1 className="text-xl font-bold text-foreground leading-snug">
-							{u.name}
-						</h1>
-						{(u.shortName || u.englishName) && (
-							<p className="text-sm text-muted-foreground mt-0.5">
-								{[u.shortName, u.englishName].filter(Boolean).join(" · ")}
-							</p>
-						)}
-						<p className="text-xs text-muted-foreground mt-1">
-							Mã trường:{" "}
-							<span className="font-mono font-medium text-foreground">
-								{u.code}
-							</span>
-						</p>
-					</div>
-
-					<div className="flex flex-wrap gap-1.5">
-						<Badge variant="outline" className="text-xs border-border">
-							{u.type === "Public" ? "Trường công" : "Trường tư"}
-						</Badge>
-						{u.isFinanciallyAutonomous === true && (
-							<Badge variant="outline" className="text-xs border-border">
-								Tự chủ tài chính
-							</Badge>
-						)}
-						{u.isFinanciallyAutonomous === false && (
-							<Badge
-								variant="outline"
-								className="text-xs border-border text-muted-foreground"
-							>
-								Chưa tự chủ tài chính
-							</Badge>
-						)}
-					</div>
-
-					{u.campuses.length > 0 && (
-						<div className="flex items-start gap-1.5">
-							<span className="text-muted-foreground mt-px text-xs">📍</span>
-							<p className="text-sm text-muted-foreground">
-								{u.campuses
-									.map((c) => [c.district, c.city].filter(Boolean).join(", "))
-									.join(" · ")}
-							</p>
-						</div>
-					)}
-				</div>
-			</div>
-		</CardContent>
-	</Card>
-);
-
-const RankingSection = ({
-	university: u,
-}: {
-	university: UniversityListItem;
 }) => {
-	const items = latestPerSystem(u.rankings ?? []);
-	if (items.length === 0) return null;
+	const rankItems = latestPerSystem(u.rankings ?? []);
+	const campusText = u.campuses
+		.map((c) => [c.district, c.city].filter(Boolean).join(", "))
+		.join(" · ");
+	const hasRows = u.campuses.length > 0 || rankItems.length > 0;
 
 	return (
 		<Card className="border-border bg-card shadow-sm">
 			<CardContent className="p-6">
-				<div className="flex items-center gap-2">
-					<Award className="h-5 w-5 text-muted-foreground" />
-					<h2 className="text-base font-semibold text-foreground">
-						Bảng xếp hạng
-					</h2>
+				<div className="flex flex-col sm:flex-row gap-5">
+					{/* Logo */}
+					<div className="flex-shrink-0 flex sm:items-start">
+						<UniversityLogo
+							name={u.name}
+							imageUrl={u.imageUrl}
+							className="w-20 h-20 p-3"
+							fallbackClassName="text-base font-semibold"
+						/>
+					</div>
+
+					{/* Details */}
+					<div className="flex-1 min-w-0 space-y-3">
+						<div>
+							<h1 className="text-xl font-bold text-foreground leading-snug">
+								{u.name}
+							</h1>
+							{(u.shortName || u.englishName) && (
+								<p className="text-sm text-muted-foreground mt-0.5">
+									{[u.shortName, u.englishName].filter(Boolean).join(" · ")}
+								</p>
+							)}
+							<p className="text-xs text-muted-foreground mt-1">
+								Mã trường:{" "}
+								<span className="font-mono font-medium text-foreground">
+									{u.code}
+								</span>
+							</p>
+						</div>
+
+						<UniversityBadges university={u} showDormitory />
+					</div>
 				</div>
 
-				<div className="mt-4 flex flex-wrap gap-2">
-					{items.map((r) => {
-						const chipClass =
-							"inline-flex items-center gap-1.5 rounded-md border border-amber-300/70 bg-amber-50 px-2.5 py-1 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300";
-						const content = (
-							<>
-								<Award className="h-3.5 w-3.5" />
-								<span className="font-semibold">{r.system}</span>
-								<span>{rankSentence(r)}</span>
-								<span className="text-amber-700/70 dark:text-amber-300/70">
-									· {r.year}
-								</span>
-								{r.sourceUrl && <ExternalLink className="h-3 w-3 opacity-70" />}
-							</>
-						);
-						return r.sourceUrl ? (
-							<a
-								key={r.system}
-								href={r.sourceUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								className={cn(
-									chipClass,
-									"transition-colors hover:bg-amber-100 dark:hover:bg-amber-500/20",
-								)}
-							>
-								{content}
-							</a>
-						) : (
-							<span key={r.system} className={chipClass}>
-								{content}
-							</span>
-						);
-					})}
-				</div>
+				{/* Dòng có nhãn — địa chỉ, xếp hạng, … (mở rộng về sau) */}
+				{hasRows && (
+					<div className="mt-5 border-t border-border pt-4 space-y-3">
+						{u.campuses.length > 0 && (
+							<InfoRow icon={MapPin} label="Địa chỉ">
+								<p className="text-sm text-muted-foreground">{campusText}</p>
+							</InfoRow>
+						)}
+						{rankItems.length > 0 && (
+							<InfoRow icon={Award} label={`Xếp hạng (${RANKING_YEAR})`}>
+								<RankingRow items={rankItems} currentYear={RANKING_YEAR} />
+							</InfoRow>
+						)}
+					</div>
+				)}
 			</CardContent>
 		</Card>
 	);
@@ -273,7 +238,9 @@ const DormitoryTab = ({
 
 	if (u.hasDormitory === false) {
 		return (
-			<p className="text-sm text-muted-foreground">Trường không có ký túc xá.</p>
+			<p className="text-sm text-muted-foreground">
+				Trường không có ký túc xá.
+			</p>
 		);
 	}
 	if (dorms.length > 0) {
@@ -292,155 +259,7 @@ const DormitoryTab = ({
 	);
 };
 
-const RequirementsTable = ({
-	requirements,
-}: {
-	requirements: AdmissionRequirement[];
-}) => {
-	if (requirements.length === 0) return null;
-
-	const byType = groupRequirements(requirements);
-	const examTypes = Object.keys(byType).sort();
-
-	return (
-		<div className="space-y-3 mt-3">
-			{examTypes.map((examType) => {
-				const reqs = byType[examType];
-				const years = uniqueSorted(reqs.map((r) => r.year)).reverse();
-				const combos = uniqueSorted(
-					reqs.map((r) => r.subjectCombination ?? ""),
-				).filter(Boolean);
-
-				// Build lookup: year → combo → score (null = chưa công bố điểm).
-				// Combos are columns and years are rows, matching how schools publish
-				// điểm chuẩn (tổ hợp across the top, one score line per year).
-				const lookup: Record<number, Record<string, number | null>> = {};
-				for (const r of reqs) {
-					const key = r.subjectCombination ?? "";
-					(lookup[r.year] ??= {})[key] = r.score;
-				}
-
-				const hasCombos = combos.length > 0;
-
-				// Merge combos that share the same score across every displayed year into
-				// one column (e.g. UIT, where A00/A01/D01/D07 all carry the same điểm chuẩn
-				// each year). The per-year signature includes nulls, so a combo missing some
-				// years (X06/X26) stays its own column instead of falsely merging.
-				const groups: string[][] = [];
-				if (hasCombos) {
-					const bySig = new Map<string, string[]>();
-					for (const combo of combos) {
-						const sig = years
-							.map((y) => {
-								const s = lookup[y]?.[combo];
-								return s == null ? "·" : String(s);
-							})
-							.join("|");
-						const existing = bySig.get(sig);
-						if (existing) {
-							existing.push(combo);
-						} else {
-							const arr = [combo];
-							bySig.set(sig, arr);
-							groups.push(arr);
-						}
-					}
-				}
-
-				return (
-					<div key={examType}>
-						<p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">
-							{examType === "THPTQG" ? "Tốt nghiệp THPT" : "Đánh giá năng lực"}
-						</p>
-						<div className="overflow-x-auto rounded-md border border-border">
-							<table className="w-full border-collapse text-xs">
-								<thead>
-									<tr className="bg-muted/40">
-										<th
-											rowSpan={hasCombos ? 2 : 1}
-											className="border-b border-border px-3 py-2 text-left align-bottom font-medium text-muted-foreground w-16"
-										>
-											Năm
-										</th>
-										{hasCombos ? (
-											<th
-												colSpan={groups.length}
-												className="border-b border-l border-border px-3 py-1.5 text-center font-medium text-muted-foreground"
-											>
-												Tổ hợp xét tuyển
-											</th>
-										) : (
-											<th className="border-b border-l border-border px-3 py-2 text-center font-medium text-muted-foreground">
-												Điểm chuẩn
-											</th>
-										)}
-									</tr>
-									{hasCombos && (
-										<tr className="bg-muted/40">
-											{groups.map((g) => (
-												<th
-													key={g.join(",")}
-													className="border-b border-l border-border px-3 py-1.5 text-center font-mono font-medium text-muted-foreground"
-												>
-													<div className="flex flex-wrap justify-center gap-x-1.5 gap-y-0.5">
-														{g.map((c) => (
-															<span key={c}>{c}</span>
-														))}
-													</div>
-												</th>
-											))}
-										</tr>
-									)}
-								</thead>
-								<tbody>
-									{years.map((y) => (
-										<tr
-											key={y}
-											className="border-b border-border last:border-b-0 hover:bg-muted/20 transition-colors"
-										>
-											<td className="px-3 py-2 font-medium text-foreground tabular-nums">
-												{y}
-											</td>
-											{hasCombos ? (
-												groups.map((g) => {
-													const s = lookup[y]?.[g[0]];
-													return (
-														<td
-															key={g.join(",")}
-															className="border-l border-border px-3 py-2 text-center tabular-nums text-foreground"
-														>
-															{s != null ? formatScore(s) : "—"}
-														</td>
-													);
-												})
-											) : (
-												<td className="border-l border-border px-3 py-2 text-center tabular-nums text-foreground">
-													{lookup[y]?.[""] != null
-														? formatScore(lookup[y][""])
-														: "—"}
-												</td>
-											)}
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				);
-			})}
-		</div>
-	);
-};
-
 // ─── majors table (TanStack) ──────────────────────────────────────────────────
-
-/** Latest-year tuition string for a major, or null when not published. */
-const majorTuition = (m: MajorWithRequirements): string | null => {
-	const latest = m.years[0];
-	return latest?.tuitionFeeMin != null
-		? formatTuition(latest.tuitionFeeMin, latest.tuitionFeeMax, latest.tuitionFeeUnit)
-		: null;
-};
 
 /** Clickable column header that toggles sorting and shows the current direction. */
 const SortableHeader = ({
@@ -453,7 +272,8 @@ const SortableHeader = ({
 	className?: string;
 }) => {
 	const sorted = column.getIsSorted();
-	const Icon = sorted === "asc" ? ArrowUp : sorted === "desc" ? ArrowDown : ArrowUpDown;
+	const Icon =
+		sorted === "asc" ? ArrowUp : sorted === "desc" ? ArrowDown : ArrowUpDown;
 	return (
 		<button
 			type="button"
@@ -475,11 +295,17 @@ const SortableHeader = ({
 };
 
 // Search by major name + code, diacritic-insensitive (mirrors SubjectCombinationsPage).
-const majorFilter: FilterFn<MajorWithRequirements> = (row, _columnId, filterValue: string) => {
+const majorFilter: FilterFn<MajorWithRequirements> = (
+	row,
+	_columnId,
+	filterValue: string,
+) => {
 	const q = normalizeVi(filterValue);
 	if (!q) return true;
 	const m = row.original;
-	return normalizeVi(m.name).includes(q) || normalizeVi(m.code ?? "").includes(q);
+	return (
+		normalizeVi(m.name).includes(q) || normalizeVi(m.code ?? "").includes(q)
+	);
 };
 
 const majorColumns: ColumnDef<MajorWithRequirements>[] = [
@@ -492,7 +318,9 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 			return (
 				<div className="whitespace-normal">
 					<div className="flex items-start gap-2 flex-wrap">
-						<span className="font-medium text-foreground leading-snug">{m.name}</span>
+						<span className="font-medium text-foreground leading-snug">
+							{m.name}
+						</span>
 						{isNewMajor(m) && (
 							<Badge
 								variant="outline"
@@ -518,7 +346,9 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 		sortUndefined: "last",
 		header: ({ column }) => <SortableHeader column={column} label="Học phí" />,
 		cell: ({ row }) => (
-			<span className="text-sm text-muted-foreground">{majorTuition(row.original) ?? "—"}</span>
+			<span className="text-sm text-muted-foreground">
+				{majorTuition(row.original) ?? "—"}
+			</span>
 		),
 	},
 	{
@@ -581,11 +411,16 @@ const MajorTableRow = ({
 				onClick={canExpand ? row.getToggleExpandedHandler() : undefined}
 			>
 				{row.getVisibleCells().map((cell) => {
-					const align = (cell.column.columnDef.meta as { align?: string } | undefined)?.align;
+					const align = (
+						cell.column.columnDef.meta as { align?: string } | undefined
+					)?.align;
 					return (
 						<TableCell
 							key={cell.id}
-							className={cn("align-top py-3", align === "right" && "text-right")}
+							className={cn(
+								"align-top py-3",
+								align === "right" && "text-right",
+							)}
 						>
 							{flexRender(cell.column.columnDef.cell, cell.getContext())}
 						</TableCell>
@@ -601,11 +436,14 @@ const MajorTableRow = ({
 					>
 						{isNewMajor(m) && (
 							<p className="text-xs text-muted-foreground mb-2">
-								Ngành mới mở — chưa công bố điểm chuẩn. Dưới đây là các tổ hợp xét
-								tuyển.
+								Ngành mới mở — chưa công bố điểm chuẩn. Dưới đây là các tổ hợp
+								xét tuyển.
 							</p>
 						)}
 						<RequirementsTable requirements={m.admissionRequirements} />
+						<Suspense fallback={null}>
+							<MajorScoreChart requirements={m.admissionRequirements} />
+						</Suspense>
 					</TableCell>
 				</TableRow>
 			)}
@@ -663,7 +501,9 @@ const MajorsTable = ({ majors }: { majors: MajorWithRequirements[] }) => {
 							>
 								{headerGroup.headers.map((header) => {
 									const align = (
-										header.column.columnDef.meta as { align?: string } | undefined
+										header.column.columnDef.meta as
+											| { align?: string }
+											| undefined
 									)?.align;
 									return (
 										<TableHead
@@ -806,11 +646,6 @@ const UniversityDetailPage = () => {
 					) : university ? (
 						<UniversityInfoCard university={university} />
 					) : null}
-
-					{/* Section 1.5 — Rankings */}
-					{!loadingInfo && !errorInfo && university && (
-						<RankingSection university={university} />
-					)}
 
 					{/* Section 2 — Tabs (majors + dormitory) */}
 					<div>

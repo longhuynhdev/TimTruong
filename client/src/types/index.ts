@@ -2,23 +2,15 @@
 export type ExamType = "THPTQG" | "ĐGNL";
 export type TuitionFeeUnit = "PerCredit" | "PerSemester" | "PerYear";
 
-// University search result
+// University search result — a matched university with the qualifying majors,
+// each carrying its full admission requirements (all combos/years/exam types).
 export interface UniversityResult {
-	id: string;
+	universityId: number;
 	universityName: string;
-	major: string;
+	universityCode: string;
+	universityType: "Public" | "Private";
 	logo: string | null;
-	subjectCombinations?: string[];
-	thptScores?: {
-		year2025: number;
-		year2024: number;
-		year2023: number;
-	};
-	dgnlScores?: {
-		year2025: number;
-		year2024: number;
-		year2023: number;
-	};
+	majors: MajorWithRequirements[];
 }
 
 // University list item (for the universities listing page)

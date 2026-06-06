@@ -5,7 +5,7 @@ No.,Name,OldName,EnglishName,ShortName,Code,Type,IsFinanciallyAutonomous,ImageUr
 4,"Trường Đại học Quốc tế, Đại học Quốc gia TP.HCM",,VNU-HCM International University,HCMIU,QSQ,0,1,/universities-logo/iu.png,1
 5,"Trường Đại học Khoa học Xã hội và Nhân văn, Đại học Quốc gia TP.HCM",,"University of Social Sciences and Humanities, Vietnam National University Ho Chi Minh City",HCMUSSH,QSX,0,1,/universities-logo/ussh.png,1
 6,"Trường Đại học Kinh tế - Luật, Đại học Quốc gia TP.HCM",,VNU-HCM University of Economics and Law,UEL,QSK,0,1,/universities-logo/uel.png,1
-7,Trường Đại học Khoa học Sức khỏe,Khoa Y - Đại học Quốc gia TP.HCM,"University of Health Sciences, Viet Nam National University Ho Chi Minh City",QSY,QSY,0,1,/universities-logo/uhs.svg,1
+7,"Trường Đại học Khoa học Sức khỏe, Đại học Quốc gia TP.HCM",Khoa Y - Đại học Quốc gia TP.HCM,"University of Health Sciences, Viet Nam National University Ho Chi Minh City",QSY,QSY,0,1,/universities-logo/uhs.svg,1
 8,Trường Đại học Y khoa Phạm Ngọc Thạch,,Pham Ngoc Thach University of Medicine,PNT,TYS,0,1,/universities-logo/pnt.png,0
 9,Đại học Kinh tế TP. Hồ Chí Minh,,University of Economics Ho Chi Minh City,UEH,KSA,0,1,"/universities-logo/ueh.png
 ",1
@@ -15,12 +15,12 @@ No.,Name,OldName,EnglishName,ShortName,Code,Type,IsFinanciallyAutonomous,ImageUr
 13,Trường Đại học Tôn Đức Thắng,,Ton Duc Thang University,TDTU,DTT,0,1,/universities-logo/tdtu.png,1
 14,Trường Đại học Việt - Đức,,Vietnamese–German University,VGU,VGU,0,1,/universities-logo/vgu.avif,1
 15,Trường Đại học Công nghiệp TP.HCM,,Industrial University of Ho Chi Minh City,IUH,IUH,0,1,/universities-logo/iuh.png,1
-16,Trường Đại học Sài Gòn,,Saigon University,SGU,SGD,0,1,/universities-logo/sgu.png,1
-17,Trường Đại học Giao thông Vận tải TP.HCM,,Ho Chi Minh City University of Transport,UTH,GTS,0,1,/universities-logo/uth.png,1
-18,Phân hiệu trường ĐH GTVT tại TP.HCM,,University of Transport and Communications - Campus in Ho Chi Minh City ,UTC2,GSA,0,0,/universities-logo/utc.png,1
-19,Học viện Công nghệ Bưu chính Viễn thông (cơ sở 2) ,,Posts and Telecommunications Institute of Technology,PTIT,BVS,0,1,/universities-logo/ptit.jpg,1
+16,Học Viện Công Nghệ Bưu Chính Viễn Thông cơ sở tại TP.HCM ,,Posts and Telecommunications Institute of Technology,PTIT,BVS,0,1,/universities-logo/ptit.jpg,1
+17,Trường Đại học Sài Gòn,,Saigon University,SGU,SGD,0,1,/universities-logo/sgu.png,1
+18,Trường Đại học Giao thông Vận tải TP.HCM,,Ho Chi Minh City University of Transport,UTH,GTS,0,1,/universities-logo/uth.png,1
+19,Phân hiệu trường ĐH GTVT tại TP.HCM,,University of Transport and Communications - Campus in Ho Chi Minh City ,UTC2,GSA,0,0,/universities-logo/utc.png,1
 20,Học viện Kỹ thuật Mật mã ,,Vietnam Academy of Cryptography Techniques,KMA,KMA,0,0,/universities-logo/kma.png,0
-21,Trường Đại học Ngân hàng TP.HCM,,Ho Chi Minh University of Banking,HUB,NHS,0,0,/universities-logo/hub.jpg,1
+21,Trường Đại học Ngân hàng TP.HCM,,Ho Chi Minh University of Banking,HUB,NHS,0,1,/universities-logo/hub.jpg,1
 22,Trường Đại học Luật TP.HCM,,Ho Chi Minh City University of Law,ULAW,LPS,0,1,/universities-logo/ulaw.webp,1
 23,Trường Đại học Công Thương TP.HCM,Trường Đại học Công nghiệp Thực phẩm Thành phố Hồ Chí Minh,Ho Chi Minh City University of Industry and Trade,HUIT,DCT,0,1,/universities-logo/huit.png,1
 24,Trường Đại học Kiến trúc TP.HCM,,University of Architecture Ho Chi Minh City,UAH,KTS,0,1,/universities-logo/uah.webp,1
@@ -67,6 +67,6 @@ Ho Chi Minh Conservatory of Music",HCMCONS,NVS,0,0,/universities-logo/hcmcons.jp
 60,Trường Đại học Bình Dương,,Binh Duong University,BDU,DBD,1,1,/universities-logo/bdu.jpg,0
 61,Trường Đại học Kinh tế - Kỹ thuật Bình Dương,,Binh Duong Economics and Technology University,BETU,DKB,1,1,/universities-logo/betu.jpg,1
 62,Học Viện Kỹ Thuật Quân Sự - Cơ sở phía Nam ,,Military Technical Academy,MTA,KQH,0,0,/universities-logo/mta.png,0
-63,Trường Đại học An ninh nhân dân (Thành phố Hồ Chí Minh),,People's Security University,VPSU,ANS,0,,/universities-logo/annd.png,
-64,Trường Đại học Trần Đại Nghĩa,,Tran Dai Nghia University,TDNU,ZPH,0,,/universities-logo/tdnu.png,
-65,Trường Đại học Cảnh sát Nhân dân,,Vietnam People's Police University,VPPU,CCS,0,,/universities-logo/csnd.png,
+63,Trường Đại học An ninh nhân dân (Thành phố Hồ Chí Minh),,People's Security University,VPSU,ANS,0,0,/universities-logo/annd.png,
+64,Trường Đại học Trần Đại Nghĩa,,Tran Dai Nghia University,TDNU,ZPH,0,0,/universities-logo/tdnu.png,
+65,Trường Đại học Cảnh sát Nhân dân,,Vietnam People's Police University,VPPU,CCS,0,0,/universities-logo/csnd.png,
