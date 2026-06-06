@@ -26,6 +26,7 @@ import { useEffect, useMemo, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
+import { UniversityBadges } from "@/components/UniversityBadges";
 import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -141,24 +142,7 @@ const UniversityInfoCard = ({
 						</p>
 					</div>
 
-					<div className="flex flex-wrap gap-1.5">
-						<Badge variant="outline" className="text-xs border-border">
-							{u.type === "Public" ? "Trường công" : "Trường tư"}
-						</Badge>
-						{u.isFinanciallyAutonomous === true && (
-							<Badge variant="outline" className="text-xs border-border">
-								Tự chủ tài chính
-							</Badge>
-						)}
-						{u.isFinanciallyAutonomous === false && (
-							<Badge
-								variant="outline"
-								className="text-xs border-border text-muted-foreground"
-							>
-								Chưa tự chủ tài chính
-							</Badge>
-						)}
-					</div>
+					<UniversityBadges university={u} showDormitory />
 
 					{u.campuses.length > 0 && (
 						<div className="flex items-start gap-1.5">
@@ -273,7 +257,9 @@ const DormitoryTab = ({
 
 	if (u.hasDormitory === false) {
 		return (
-			<p className="text-sm text-muted-foreground">Trường không có ký túc xá.</p>
+			<p className="text-sm text-muted-foreground">
+				Trường không có ký túc xá.
+			</p>
 		);
 	}
 	if (dorms.length > 0) {
@@ -438,7 +424,11 @@ const RequirementsTable = ({
 const majorTuition = (m: MajorWithRequirements): string | null => {
 	const latest = m.years[0];
 	return latest?.tuitionFeeMin != null
-		? formatTuition(latest.tuitionFeeMin, latest.tuitionFeeMax, latest.tuitionFeeUnit)
+		? formatTuition(
+				latest.tuitionFeeMin,
+				latest.tuitionFeeMax,
+				latest.tuitionFeeUnit,
+			)
 		: null;
 };
 
@@ -453,7 +443,8 @@ const SortableHeader = ({
 	className?: string;
 }) => {
 	const sorted = column.getIsSorted();
-	const Icon = sorted === "asc" ? ArrowUp : sorted === "desc" ? ArrowDown : ArrowUpDown;
+	const Icon =
+		sorted === "asc" ? ArrowUp : sorted === "desc" ? ArrowDown : ArrowUpDown;
 	return (
 		<button
 			type="button"
@@ -475,11 +466,17 @@ const SortableHeader = ({
 };
 
 // Search by major name + code, diacritic-insensitive (mirrors SubjectCombinationsPage).
-const majorFilter: FilterFn<MajorWithRequirements> = (row, _columnId, filterValue: string) => {
+const majorFilter: FilterFn<MajorWithRequirements> = (
+	row,
+	_columnId,
+	filterValue: string,
+) => {
 	const q = normalizeVi(filterValue);
 	if (!q) return true;
 	const m = row.original;
-	return normalizeVi(m.name).includes(q) || normalizeVi(m.code ?? "").includes(q);
+	return (
+		normalizeVi(m.name).includes(q) || normalizeVi(m.code ?? "").includes(q)
+	);
 };
 
 const majorColumns: ColumnDef<MajorWithRequirements>[] = [
@@ -492,7 +489,9 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 			return (
 				<div className="whitespace-normal">
 					<div className="flex items-start gap-2 flex-wrap">
-						<span className="font-medium text-foreground leading-snug">{m.name}</span>
+						<span className="font-medium text-foreground leading-snug">
+							{m.name}
+						</span>
 						{isNewMajor(m) && (
 							<Badge
 								variant="outline"
@@ -518,7 +517,9 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 		sortUndefined: "last",
 		header: ({ column }) => <SortableHeader column={column} label="Học phí" />,
 		cell: ({ row }) => (
-			<span className="text-sm text-muted-foreground">{majorTuition(row.original) ?? "—"}</span>
+			<span className="text-sm text-muted-foreground">
+				{majorTuition(row.original) ?? "—"}
+			</span>
 		),
 	},
 	{
@@ -581,11 +582,16 @@ const MajorTableRow = ({
 				onClick={canExpand ? row.getToggleExpandedHandler() : undefined}
 			>
 				{row.getVisibleCells().map((cell) => {
-					const align = (cell.column.columnDef.meta as { align?: string } | undefined)?.align;
+					const align = (
+						cell.column.columnDef.meta as { align?: string } | undefined
+					)?.align;
 					return (
 						<TableCell
 							key={cell.id}
-							className={cn("align-top py-3", align === "right" && "text-right")}
+							className={cn(
+								"align-top py-3",
+								align === "right" && "text-right",
+							)}
 						>
 							{flexRender(cell.column.columnDef.cell, cell.getContext())}
 						</TableCell>
@@ -601,8 +607,8 @@ const MajorTableRow = ({
 					>
 						{isNewMajor(m) && (
 							<p className="text-xs text-muted-foreground mb-2">
-								Ngành mới mở — chưa công bố điểm chuẩn. Dưới đây là các tổ hợp xét
-								tuyển.
+								Ngành mới mở — chưa công bố điểm chuẩn. Dưới đây là các tổ hợp
+								xét tuyển.
 							</p>
 						)}
 						<RequirementsTable requirements={m.admissionRequirements} />
@@ -663,7 +669,9 @@ const MajorsTable = ({ majors }: { majors: MajorWithRequirements[] }) => {
 							>
 								{headerGroup.headers.map((header) => {
 									const align = (
-										header.column.columnDef.meta as { align?: string } | undefined
+										header.column.columnDef.meta as
+											| { align?: string }
+											| undefined
 									)?.align;
 									return (
 										<TableHead
