@@ -19,6 +19,7 @@ import {
 	Award,
 	ChevronDown,
 	ExternalLink,
+	type LucideIcon,
 	MapPin,
 	Search,
 } from "lucide-react";
@@ -45,6 +46,7 @@ import type {
 	AdmissionRequirement,
 	Dormitory,
 	MajorWithRequirements,
+	Ranking,
 	UniversityListItem,
 	UniversityMajors,
 } from "@/types";
@@ -105,114 +107,144 @@ const isNewMajor = (m: MajorWithRequirements) =>
 
 // ─── sub-components ───────────────────────────────────────────────────────────
 
+/** Một dòng thông tin có nhãn (icon + nhãn trái, nội dung phải) — khuôn dùng
+ *  chung trong card thông tin trường, dễ mở rộng cho các mục về sau. */
+const InfoRow = ({
+	icon: Icon,
+	label,
+	children,
+}: {
+	icon: LucideIcon;
+	label: string;
+	children: React.ReactNode;
+}) => (
+	<div className="flex flex-col gap-1 sm:flex-row sm:gap-3">
+		<span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground sm:w-24 sm:flex-shrink-0 sm:pt-0.5">
+			<Icon className="h-3.5 w-3.5 flex-shrink-0" />
+			{label}
+		</span>
+		<div className="min-w-0 flex-1">{children}</div>
+	</div>
+);
+
+const RANKING_YEAR = 2026;
+
+const RankingRow = ({
+	items,
+	currentYear,
+}: {
+	items: Ranking[];
+	currentYear: number;
+}) => {
+	const chipClass =
+		"inline-flex items-center gap-1 rounded-md border border-amber-300/70 bg-amber-50 px-2 py-0.5 text-xs text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300";
+
+	return (
+		<div className="flex flex-wrap items-center gap-1.5">
+			{items.map((r) => {
+				const content = (
+					<>
+						<span className="font-semibold">{r.system}</span>
+						<span>{rankSentence(r)}</span>
+						{r.year !== currentYear && (
+							<span className="text-amber-700/70 dark:text-amber-300/70">
+								· {r.year}
+							</span>
+						)}
+						{r.sourceUrl && <ExternalLink className="h-3 w-3 opacity-70" />}
+					</>
+				);
+				return r.sourceUrl ? (
+					<a
+						key={r.system}
+						href={r.sourceUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						title={`${r.system} · ${rankSentence(r)} (${r.year})`}
+						className={cn(
+							chipClass,
+							"transition-colors hover:bg-amber-100 dark:hover:bg-amber-500/20",
+						)}
+					>
+						{content}
+					</a>
+				) : (
+					<span
+						key={r.system}
+						title={`${r.system} · ${rankSentence(r)} (${r.year})`}
+						className={chipClass}
+					>
+						{content}
+					</span>
+				);
+			})}
+		</div>
+	);
+};
+
 const UniversityInfoCard = ({
 	university: u,
 }: {
 	university: UniversityListItem;
-}) => (
-	<Card className="border-border bg-card shadow-sm">
-		<CardContent className="p-6">
-			<div className="flex flex-col sm:flex-row gap-5">
-				{/* Logo */}
-				<div className="flex-shrink-0 flex sm:items-start">
-					<UniversityLogo
-						name={u.name}
-						imageUrl={u.imageUrl}
-						className="w-20 h-20 p-3"
-						fallbackClassName="text-base font-semibold"
-					/>
-				</div>
-
-				{/* Details */}
-				<div className="flex-1 min-w-0 space-y-3">
-					<div>
-						<h1 className="text-xl font-bold text-foreground leading-snug">
-							{u.name}
-						</h1>
-						{(u.shortName || u.englishName) && (
-							<p className="text-sm text-muted-foreground mt-0.5">
-								{[u.shortName, u.englishName].filter(Boolean).join(" · ")}
-							</p>
-						)}
-						<p className="text-xs text-muted-foreground mt-1">
-							Mã trường:{" "}
-							<span className="font-mono font-medium text-foreground">
-								{u.code}
-							</span>
-						</p>
-					</div>
-
-					<UniversityBadges university={u} showDormitory />
-
-					{u.campuses.length > 0 && (
-						<div className="flex items-start gap-1.5">
-							<span className="text-muted-foreground mt-px text-xs">📍</span>
-							<p className="text-sm text-muted-foreground">
-								{u.campuses
-									.map((c) => [c.district, c.city].filter(Boolean).join(", "))
-									.join(" · ")}
-							</p>
-						</div>
-					)}
-				</div>
-			</div>
-		</CardContent>
-	</Card>
-);
-
-const RankingSection = ({
-	university: u,
-}: {
-	university: UniversityListItem;
 }) => {
-	const items = latestPerSystem(u.rankings ?? []);
-	if (items.length === 0) return null;
+	const rankItems = latestPerSystem(u.rankings ?? []);
+	const campusText = u.campuses
+		.map((c) => [c.district, c.city].filter(Boolean).join(", "))
+		.join(" · ");
+	const hasRows = u.campuses.length > 0 || rankItems.length > 0;
 
 	return (
 		<Card className="border-border bg-card shadow-sm">
 			<CardContent className="p-6">
-				<div className="flex items-center gap-2">
-					<Award className="h-5 w-5 text-muted-foreground" />
-					<h2 className="text-base font-semibold text-foreground">
-						Bảng xếp hạng
-					</h2>
+				<div className="flex flex-col sm:flex-row gap-5">
+					{/* Logo */}
+					<div className="flex-shrink-0 flex sm:items-start">
+						<UniversityLogo
+							name={u.name}
+							imageUrl={u.imageUrl}
+							className="w-20 h-20 p-3"
+							fallbackClassName="text-base font-semibold"
+						/>
+					</div>
+
+					{/* Details */}
+					<div className="flex-1 min-w-0 space-y-3">
+						<div>
+							<h1 className="text-xl font-bold text-foreground leading-snug">
+								{u.name}
+							</h1>
+							{(u.shortName || u.englishName) && (
+								<p className="text-sm text-muted-foreground mt-0.5">
+									{[u.shortName, u.englishName].filter(Boolean).join(" · ")}
+								</p>
+							)}
+							<p className="text-xs text-muted-foreground mt-1">
+								Mã trường:{" "}
+								<span className="font-mono font-medium text-foreground">
+									{u.code}
+								</span>
+							</p>
+						</div>
+
+						<UniversityBadges university={u} showDormitory />
+					</div>
 				</div>
 
-				<div className="mt-4 flex flex-wrap gap-2">
-					{items.map((r) => {
-						const chipClass =
-							"inline-flex items-center gap-1.5 rounded-md border border-amber-300/70 bg-amber-50 px-2.5 py-1 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300";
-						const content = (
-							<>
-								<Award className="h-3.5 w-3.5" />
-								<span className="font-semibold">{r.system}</span>
-								<span>{rankSentence(r)}</span>
-								<span className="text-amber-700/70 dark:text-amber-300/70">
-									· {r.year}
-								</span>
-								{r.sourceUrl && <ExternalLink className="h-3 w-3 opacity-70" />}
-							</>
-						);
-						return r.sourceUrl ? (
-							<a
-								key={r.system}
-								href={r.sourceUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								className={cn(
-									chipClass,
-									"transition-colors hover:bg-amber-100 dark:hover:bg-amber-500/20",
-								)}
-							>
-								{content}
-							</a>
-						) : (
-							<span key={r.system} className={chipClass}>
-								{content}
-							</span>
-						);
-					})}
-				</div>
+				{/* Dòng có nhãn — địa chỉ, xếp hạng, … (mở rộng về sau) */}
+				{hasRows && (
+					<div className="mt-5 border-t border-border pt-4 space-y-3">
+						{u.campuses.length > 0 && (
+							<InfoRow icon={MapPin} label="Địa chỉ">
+								<p className="text-sm text-muted-foreground">{campusText}</p>
+							</InfoRow>
+						)}
+						{rankItems.length > 0 && (
+							<InfoRow icon={Award} label={`Xếp hạng (${RANKING_YEAR})`}>
+								<RankingRow items={rankItems} currentYear={RANKING_YEAR} />
+							</InfoRow>
+						)}
+					</div>
+				)}
 			</CardContent>
 		</Card>
 	);
@@ -344,7 +376,7 @@ const RequirementsTable = ({
 									<tr className="bg-muted/40">
 										<th
 											rowSpan={hasCombos ? 2 : 1}
-											className="border-b border-border px-3 py-2 text-left align-bottom font-medium text-muted-foreground w-16"
+											className="border-b border-border px-3 py-2 text-center align-middle font-medium text-muted-foreground w-16"
 										>
 											Năm
 										</th>
@@ -384,7 +416,7 @@ const RequirementsTable = ({
 											key={y}
 											className="border-b border-border last:border-b-0 hover:bg-muted/20 transition-colors"
 										>
-											<td className="px-3 py-2 font-medium text-foreground tabular-nums">
+											<td className="px-3 py-2 text-center font-medium text-foreground tabular-nums">
 												{y}
 											</td>
 											{hasCombos ? (
@@ -814,11 +846,6 @@ const UniversityDetailPage = () => {
 					) : university ? (
 						<UniversityInfoCard university={university} />
 					) : null}
-
-					{/* Section 1.5 — Rankings */}
-					{!loadingInfo && !errorInfo && university && (
-						<RankingSection university={university} />
-					)}
 
 					{/* Section 2 — Tabs (majors + dormitory) */}
 					<div>
