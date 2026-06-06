@@ -23,7 +23,7 @@ import {
 	MapPin,
 	Search,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
@@ -41,6 +41,8 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { RequirementsTable } from "@/components/RequirementsTable";
+// Chart pulls in visx; lazy so it only loads when a row with trend data expands.
+const MajorScoreChart = lazy(() => import("@/components/MajorScoreChart"));
 import { isNewMajor, majorTuition } from "@/lib/majors";
 import { cn, normalizeVi } from "@/lib/utils";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
@@ -439,6 +441,9 @@ const MajorTableRow = ({
 							</p>
 						)}
 						<RequirementsTable requirements={m.admissionRequirements} />
+						<Suspense fallback={null}>
+							<MajorScoreChart requirements={m.admissionRequirements} />
+						</Suspense>
 					</TableCell>
 				</TableRow>
 			)}
