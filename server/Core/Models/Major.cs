@@ -23,12 +23,6 @@ public class Major
     [MaxLength(50)]
     public string? OldCode { get; set; }
 
-    /// <summary>
-    /// Field of study category (e.g., 'CNTT', 'Điện - Điện tử', 'Y Dược')
-    /// </summary>
-    [MaxLength(100)]
-    public string? FieldOfStudy { get; set; }
-
     [Required]
     public int UniversityId { get; set; }
 

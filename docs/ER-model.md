@@ -36,8 +36,9 @@ erDiagram
         string Address
         string City "e.g. TP HCM, Hà Nội"
         string District "e.g. Quận 5, Quận 1"
-        string OldAddress
-        string OldCity "e.g. TP HCM, Hà Nội"
+        string OldAddress "Nullable — địa chỉ (trước sáp nhập)"
+        string OldCity "Nullable — tỉnh/TP cũ (trước sáp nhập)"
+        string OldDistrict "Nullable — quận/huyện cũ (trước sáp nhập)"
     }
 
     Majors {
@@ -46,7 +47,6 @@ erDiagram
         string Name
         string Code "mã hiện hành, e.g. 7480201"
         string OldCode "Nullable — mã năm trước (khi trường đổi mã)"
-        string FieldOfStudy "e.g. CNTT, Y Dược"
     }
 
     MajorYears {

@@ -32,13 +32,15 @@ public class Campus
     /// </summary>
     [MaxLength(100)]
     public string? District { get; set; }
-    
+
     [MaxLength(500)]
     public string? OldAddress { get; set; }
 
-    [Required]
     [MaxLength(100)]
-    public string OldCity { get; set; } = string.Empty;
+    public string? OldCity { get; set; }
+
+    [MaxLength(100)]
+    public string? OldDistrict { get; set; }
 
 
     // Navigation properties
