@@ -19,7 +19,7 @@ MajorCode,OldCode,MajorName,EnrollmentQuota,TuitionFeeMin,TuitionFeeMax,TuitionF
 7460101_NN,,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",180,"40,500,000",,PerYear
 7460112_DKD,,Toán ứng dụng (Chương trình tăng cường tiếng Anh) (dự kiến),40,"50,800,000",,PerYear
 7460117_DKD,,Toán tin (Chương trình tăng cường tiếng Anh) (dự kiến),40,"50,800,000",,PerYear
-7460108_NN,,"Nhóm ngành Khoa học dữ liệu (CT:40), Thống kê (CT:40)",80,"40,500,000",,PerYear
+7460108_NN,7460108,"Nhóm ngành Khoa học dữ liệu (CT:40), Thống kê (CT:40)",80,"40,500,000",,PerYear
 7460108_DKD,,Khoa học dữ liệu (Chương trình tăng cường tiếng Anh) (dự kiến),60,"50,800,000",,PerYear
 7480101_TT,,Khoa học máy tính (Chương trình Tiên tiến),90,"70,000,000",,PerYear
 7480107,,Trí tuệ nhân tạo,90,"40,500,000",,PerYear
@@ -29,7 +29,7 @@ MajorCode,OldCode,MajorName,EnrollmentQuota,TuitionFeeMin,TuitionFeeMax,TuitionF
 7510402,,Công nghệ Vật liệu,180,"40,500,000",,PerYear
 7510402_DKD,,Công nghệ Vật liệu (Chương trình tăng cường tiếng Anh) (dự kiến),60,"54,600,000",,PerYear
 7510406,,Công nghệ Kỹ thuật Môi trường,125,"32,600,000",,PerYear
-7520207,,Kỹ thuật điện tử – viễn thông,150,"40,500,000",,PerYear
+7520207,7520207_NN,Kỹ thuật điện tử – viễn thông,150,"40,500,000",,PerYear
 75202a1,,Thiết kế vi mạch,80,"40,500,000",,PerYear
 7520207_DKD,,Kỹ thuật điện tử – viễn thông (Chương trình tăng cường tiếng Anh),120,"49,000,000",,PerYear
 7520402,,Kỹ thuật hạt nhân,60,"32,600,000",,PerYear
