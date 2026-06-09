@@ -1,4 +1,4 @@
-"""ETL ngành theo năm: data/schools/{Code}-{Short}/majors/{Year}.csv → bảng Majors + MajorYears."""
+"""ETL ngành theo năm: data/schools/{Code}-{Short}/majors/{Year}/{School}-Majors-{Year}.csv → bảng Majors + MajorYears."""
 
 import argparse
 import csv
@@ -44,15 +44,15 @@ MY_UPDATE_SQL = """
 
 
 def parse_uni_code(path: str) -> str:
-    """'.../schools/QSC-UIT/majors/2026.csv' → 'QSC' (đầu tên thư mục trường)."""
-    school = os.path.basename(os.path.dirname(os.path.dirname(path)))
+    """'.../schools/QSC-UIT/majors/2026/QSC-UIT-Majors-2026.csv' → 'QSC' (đầu tên thư mục trường)."""
+    school = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(path))))
     return school.split("-", 1)[0].strip()
 
 
 def parse_year(path: str):
-    """'.../majors/2026.csv' → 2026 (tên file). None nếu không hợp lệ."""
-    stem = os.path.splitext(os.path.basename(path))[0]
-    return int(stem) if stem.isdigit() else None
+    """'.../majors/2026/QSC-UIT-Majors-2026.csv' → 2026 (tên thư mục năm). None nếu không hợp lệ."""
+    yr = os.path.basename(os.path.dirname(path))
+    return int(yr) if yr.isdigit() else None
 
 
 def parse_money(value: str):
@@ -213,11 +213,16 @@ def process_uni(cur, uni_code, uni_id, year, rows):
     return len(rows), my_ins, my_upd, my_del
 
 
+def csv_path(school: str, year: str) -> str:
+    """'.../{school}/majors/{year}/{school}-Majors-{year}.csv'."""
+    return os.path.join(SCHOOLS_DIR, school, "majors", year, f"{school}-Majors-{year}.csv")
+
+
 def resolve_files(args_list):
     """CLI args → list file ngành. 1 trường-năm: 'QSC-UIT/2026' hoặc 'QSC-UIT-2026';
-    'QSC-UIT' = mọi năm. Bỏ trống = tất cả file majors."""
+    'QSC-UIT' = mọi năm. Bỏ trống = tất cả file Majors."""
     if not args_list:
-        return sorted(glob.glob(os.path.join(SCHOOLS_DIR, "*", "majors", "*.csv")))
+        return sorted(glob.glob(os.path.join(SCHOOLS_DIR, "*", "majors", "*", "*-Majors-*.csv")))
     files = []
     for raw in args_list:
         spec = raw.strip().strip("/")
@@ -228,16 +233,16 @@ def resolve_files(args_list):
             # 'QSC-UIT-2026' → (trường 'QSC-UIT', năm '2026') nếu file tồn tại;
             # thư mục trường không bao giờ kết thúc bằng '-{4 chữ số}' nên không nhập nhằng.
             m = re.match(r"^(.+)-(\d{4})$", spec)
-            if m and os.path.isfile(os.path.join(SCHOOLS_DIR, m.group(1), "majors", m.group(2) + ".csv")):
+            if m and os.path.isfile(csv_path(m.group(1), m.group(2))):
                 school, year = m.group(1), m.group(2)
         if school is not None:
-            f = os.path.join(SCHOOLS_DIR, school, "majors", year + ".csv")
+            f = csv_path(school, year)
             if os.path.isfile(f):
                 files.append(f)
             else:
-                print(f"  SKIP '{spec}' — không thấy {school}/majors/{year}.csv")
+                print(f"  SKIP '{spec}' — không thấy {os.path.relpath(f, SCHOOLS_DIR)}")
         else:
-            found = sorted(glob.glob(os.path.join(SCHOOLS_DIR, spec, "majors", "*.csv")))
+            found = sorted(glob.glob(os.path.join(SCHOOLS_DIR, spec, "majors", "*", "*-Majors-*.csv")))
             if found:
                 files.extend(found)
             else:
@@ -266,7 +271,7 @@ def run(args_list=None):
 
             year = parse_year(path)
             if year is None:
-                print(f"  SKIP '{os.path.relpath(path, SCHOOLS_DIR)}' — tên file không phải Năm (cần data/schools/{{Code}}-{{ShortName}}/majors/{{Năm}}.csv)")
+                print(f"  SKIP '{os.path.relpath(path, SCHOOLS_DIR)}' — tên file không hợp lệ (cần data/schools/{{Code}}-{{ShortName}}/majors/{{Năm}}/{{...}}-Majors-{{Năm}}.csv)")
                 continue
 
             rows, errors = load_file(path, year)
@@ -286,7 +291,7 @@ def run(args_list=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="ETL ngành: data/schools/{Code}-{Short}/majors/{Year}.csv → Majors + MajorYears.",
+        description="ETL ngành: data/schools/{Code}-{Short}/majors/{Year}/{School}-Majors-{Year}.csv → Majors + MajorYears.",
     )
     parser.add_argument(
         "targets", nargs="*",
