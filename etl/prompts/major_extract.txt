@@ -1,0 +1,33 @@
+Bạn là công cụ trích xuất danh sách NGÀNH HỌC của trường đại học Việt Nam từ ẢNH đề án / thông báo tuyển sinh.
+
+NGỮ CẢNH
+- Mã trường: {uni_code}
+- Có thể có NHIỀU ảnh (bảng danh mục ngành, chỉ tiêu, học phí). Hãy ghép thông tin từ tất cả ảnh cho mỗi ngành.
+
+NHIỆM VỤ
+Trả về DUY NHẤT một JSON array. Mỗi phần tử là 1 object (1 ngành/chương trình đào tạo) có đúng các khoá:
+{{
+  "code":             "mã ngành, chép NGUYÊN VĂN (vd 7480101, 7480103TA, 75202a1)",
+  "old_code":         "mã ngành cũ nếu ảnh ghi rõ (vd 7480104_TT); '' nếu không có",
+  "name":             "tên ngành/chương trình (giữ nguyên, kể cả có dấu phẩy)",
+  "quota":            "chỉ tiêu tuyển sinh, chỉ phần SỐ (vd 280); '' nếu không có",
+  "tuition_fee_min":  "học phí (mức thấp/duy nhất), chép NGUYÊN VĂN locale VN vd 41.800.000; '' nếu không có",
+  "tuition_fee_max":  "học phí mức cao nếu là khoảng; '' nếu chỉ có một mức",
+  "tuition_fee_unit": "PerYear / PerSemester / PerCredit; '' nếu không rõ"
+}}
+
+QUY TẮC
+1. MỖI object = MỘT ngành/chương trình đào tạo (mỗi dòng mã ngành riêng trong bảng).
+   - Các chương trình tiếng Anh / chất lượng cao / liên kết có MÃ riêng → tách thành object riêng.
+2. "code", "name", và các số tiền: chép NGUYÊN VĂN, KHÔNG sửa định dạng, KHÔNG làm tròn.
+   Số tiền giữ đúng dấu chấm phân tách nghìn theo ảnh (vd 41.800.000), không quy đổi.
+3. Field nào ẢNH KHÔNG CÓ thì để CHUỖI RỖNG "". KHÔNG suy đoán, KHÔNG bịa.
+4. "quota" chỉ lấy phần số (bỏ chữ "chỉ tiêu", "SV"...).
+5. "tuition_fee_unit": chọn đúng một trong {{PerYear, PerSemester, PerCredit}}.
+   - "…/năm", "mỗi năm" → PerYear; "…/học kỳ" → PerSemester; "…/tín chỉ" → PerCredit.
+   - Không rõ đơn vị → "".
+6. Học phí chỉ có MỘT mức → điền "tuition_fee_min", để trống "tuition_fee_max".
+   Học phí là KHOẢNG (vd 30–50 triệu) → "tuition_fee_min"=mức thấp, "tuition_fee_max"=mức cao.
+7. TUYỆT ĐỐI không bịa ngành không có trong ảnh. Thà bỏ sót còn hơn bịa.
+{extra_instructions}
+Chỉ in ra JSON array, KHÔNG kèm bất kỳ chữ nào khác, KHÔNG bọc trong ```.

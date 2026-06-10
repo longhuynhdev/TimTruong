@@ -10,7 +10,6 @@ public class Campus
     [Required]
     [MaxLength(200)]
     public string Name { get; set; } = string.Empty;
-    
     [Required]
     public int UniversityId { get; set; }
 
@@ -32,14 +31,15 @@ public class Campus
     /// </summary>
     [MaxLength(100)]
     public string? District { get; set; }
-    
+
     [MaxLength(500)]
     public string? OldAddress { get; set; }
 
-    [Required]
     [MaxLength(100)]
-    public string OldCity { get; set; } = string.Empty;
+    public string? OldCity { get; set; }
 
+    [MaxLength(100)]
+    public string? OldDistrict { get; set; }
 
     // Navigation properties
     public University University { get; set; } = null!;

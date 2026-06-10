@@ -1,3 +1,5 @@
+#TODO: Doc cũ, không còn đúng. 
+# CHECK Bảng `MajorYears`
 # Tuition Fee Validation Guide
 
 This document explains how to implement code-level validation for `TuitionFeeAmount` and `TuitionFeeUnit` fields when creating Major management API endpoints.

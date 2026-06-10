@@ -191,8 +191,17 @@ public enum SubjectCombination
     /// <summary>Toán, Hóa học, Công nghệ công nghiệp</summary>
     X11 = 511,
 
+    /// <summary>Toán, Hóa học, Công nghệ nông nghiệp</summary>
+    X12 = 512,
+
     /// <summary>Toán, Sinh học, Tin học</summary>
     X14 = 514,
+
+    /// <summary>Toán, Công nghệ công nghiệp, Sinh học</summary>
+    X15 = 515,
+
+    /// <summary>Toán, Công nghệ nông nghiệp, Sinh học</summary>
+    X16 = 516,
 
     /// <summary>Toán, Anh, GDKTPL </summary>
     X25 = 525,

@@ -1,4 +1,4 @@
-"""ETL điểm chuẩn: data/schools/{Code}-{Short}/admissions/{Year}/scores.csv → bảng AdmissionRequirements."""
+"""ETL điểm chuẩn: data/schools/{Code}-{Short}/admissions/{Year}/{School}-Admissions-{Year}.csv → bảng AdmissionRequirements."""
 
 import argparse
 import csv
@@ -26,22 +26,27 @@ UPDATE_SQL = 'UPDATE "AdmissionRequirements" SET "Score" = %(score)s WHERE "Id" 
 
 
 def parse_uni_code(path: str) -> str:
-    """'.../schools/DLS-ULSA2/admissions/2025/scores.csv' → 'DLS' (đầu tên thư mục trường)."""
+    """'.../schools/DLS-ULSA2/admissions/2025/DLS-ULSA2-Admissions-2025.csv' → 'DLS' (đầu tên thư mục trường)."""
     school = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(path))))
     return school.split("-", 1)[0].strip()
 
 
 def parse_year(path: str):
-    """'.../admissions/2025/scores.csv' → 2025 (tên thư mục năm). None nếu không hợp lệ."""
+    """'.../admissions/2025/QSC-UIT-Admissions-2025.csv' → 2025 (tên thư mục năm). None nếu không hợp lệ."""
     yr = os.path.basename(os.path.dirname(path))
     return int(yr) if yr.isdigit() else None
 
 
+def csv_path(school: str, year: str) -> str:
+    """'.../{school}/admissions/{year}/{school}-Admissions-{year}.csv'."""
+    return os.path.join(SCHOOLS_DIR, school, "admissions", year, f"{school}-Admissions-{year}.csv")
+
+
 def resolve_files(args_list):
-    """CLI args → list scores.csv. 1 trường-năm: 'QSC-UIT/2025' hoặc 'QSC-UIT-2025';
-    'QSC-UIT' = mọi năm. Bỏ trống = tất cả scores.csv."""
+    """CLI args → list file điểm. 1 trường-năm: 'QSC-UIT/2025' hoặc 'QSC-UIT-2025';
+    'QSC-UIT' = mọi năm. Bỏ trống = tất cả file Admissions."""
     if not args_list:
-        return sorted(glob.glob(os.path.join(SCHOOLS_DIR, "*", "admissions", "*", "scores.csv")))
+        return sorted(glob.glob(os.path.join(SCHOOLS_DIR, "*", "admissions", "*", "*-Admissions-*.csv")))
     files = []
     for raw in args_list:
         spec = raw.strip().strip("/")
@@ -49,23 +54,23 @@ def resolve_files(args_list):
         if "/" in spec:
             school, year = spec.split("/", 1)
         else:
-            # 'QSC-UIT-2025' → (trường 'QSC-UIT', năm '2025') nếu scores.csv tồn tại;
+            # 'QSC-UIT-2025' → (trường 'QSC-UIT', năm '2025') nếu file tồn tại;
             # thư mục trường không bao giờ kết thúc bằng '-{4 chữ số}' nên không nhập nhằng.
             m = re.match(r"^(.+)-(\d{4})$", spec)
-            if m and os.path.isfile(os.path.join(SCHOOLS_DIR, m.group(1), "admissions", m.group(2), "scores.csv")):
+            if m and os.path.isfile(csv_path(m.group(1), m.group(2))):
                 school, year = m.group(1), m.group(2)
         if school is not None:
-            f = os.path.join(SCHOOLS_DIR, school, "admissions", year, "scores.csv")
+            f = csv_path(school, year)
             if os.path.isfile(f):
                 files.append(f)
             else:
-                print(f"  SKIP '{spec}' — không thấy {school}/admissions/{year}/scores.csv")
+                print(f"  SKIP '{spec}' — không thấy {os.path.relpath(f, SCHOOLS_DIR)}")
         else:
-            found = sorted(glob.glob(os.path.join(SCHOOLS_DIR, spec, "admissions", "*", "scores.csv")))
+            found = sorted(glob.glob(os.path.join(SCHOOLS_DIR, spec, "admissions", "*", "*-Admissions-*.csv")))
             if found:
                 files.extend(found)
             else:
-                print(f"  SKIP '{spec}' — không thấy scores.csv nào (dùng SCHOOL/YEAR, SCHOOL-YEAR hoặc SCHOOL)")
+                print(f"  SKIP '{spec}' — không thấy file điểm nào (dùng SCHOOL/YEAR, SCHOOL-YEAR hoặc SCHOOL)")
     return files
 
 
@@ -111,7 +116,7 @@ def load_file(path: str, year: int):
 def process_uni(cur, uni_code, uni_id, rows, src=""):
     """Upsert AdmissionRequirements cho 1 trường. Trả (ins, upd, deleted, skipped).
 
-    `src` = nhãn file nguồn (vd 'QSC-UIT/admissions/2024/scores.csv') để in trong cảnh báo SKIP."""
+    `src` = nhãn file nguồn (vd 'QSC-UIT/admissions/2024/QSC-UIT-Admissions-2024.csv') để in trong cảnh báo SKIP."""
     # Khớp mã đúng nguyên văn + qua OldCode (mã năm cũ → ngành đã đổi mã).
     cur.execute('SELECT "Id", "Code", "OldCode" FROM "Majors" WHERE "UniversityId" = %s', (uni_id,))
     major_id_by_code = {}
@@ -171,7 +176,7 @@ def process_uni(cur, uni_code, uni_id, rows, src=""):
 def run(args_list=None):
     files = resolve_files(args_list)
     if not files:
-        print(f"Không thấy scores.csv nào trong {SCHOOLS_DIR}/*/admissions/*/")
+        print(f"Không thấy file Admissions nào trong {SCHOOLS_DIR}/*/admissions/*/")
         return
     print(f"Tìm thấy {len(files)} file điểm chuẩn")
 
@@ -190,7 +195,7 @@ def run(args_list=None):
 
             year = parse_year(path)
             if year is None:
-                print(f"  SKIP '{src}' — thư mục năm không hợp lệ (cần data/schools/{{Code}}-{{ShortName}}/admissions/{{Năm}}/scores.csv)")
+                print(f"  SKIP '{src}' — thư mục năm không hợp lệ (cần data/schools/{{Code}}-{{ShortName}}/admissions/{{Năm}}/{{...}}-Admissions-{{Năm}}.csv)")
                 continue
 
             rows, errors = load_file(path, year)
@@ -210,7 +215,7 @@ def run(args_list=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="ETL điểm chuẩn: data/schools/{Code}-{Short}/admissions/{Year}/scores.csv → AdmissionRequirements.",
+        description="ETL điểm chuẩn: data/schools/{Code}-{Short}/admissions/{Year}/{School}-Admissions-{Year}.csv → AdmissionRequirements.",
     )
     parser.add_argument(
         "targets", nargs="*",
