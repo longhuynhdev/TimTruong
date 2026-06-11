@@ -229,6 +229,10 @@ def run_cli(category, description, targets_help, note_help, process_target):
     parser.add_argument("targets", nargs="*", help=targets_help)
     parser.add_argument("-n", "--note", default="", help=note_help)
     parser.add_argument(
+        "-s", "--source-url", default="",
+        help="URL trang nguồn (đề án / công bố điểm) — điền vào cột SourceUrl của mọi dòng; để trống thì điền tay khi review",
+    )
+    parser.add_argument(
         "-y", "--yes", action="store_true",
         help="tự động ghi đè CSV đã tồn tại, không hỏi (tiện chạy batch)",
     )
@@ -243,8 +247,8 @@ def run_cli(category, description, targets_help, note_help, process_target):
     if not targets:
         sys.exit(f"Không có (trường, năm) nào có images/ trong {SCHOOLS_DIR}/*/{category}/")
 
-    if args.note and len(targets) > 1:
-        print("  (lưu ý: --note áp dụng cho TẤT CẢ trường-năm trong lần chạy này)")
+    if (args.note or args.source_url) and len(targets) > 1:
+        print("  (lưu ý: --note/--source-url áp dụng cho TẤT CẢ trường-năm trong lần chạy này)")
     print(f"Xử lý {len(targets)} trường-năm:")
     for year_dir in targets:
-        process_target(year_dir, args.note, args.yes)
+        process_target(year_dir, args.note, args.yes, args.source_url)

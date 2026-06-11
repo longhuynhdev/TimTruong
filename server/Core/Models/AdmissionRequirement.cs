@@ -34,6 +34,13 @@ public class AdmissionRequirement
     [Required]
     public int Year { get; set; }
 
+    /// <summary>
+    /// Source page for this cutoff (the school's điểm chuẩn announcement).
+    /// May be shared across many rows of the same school-year.
+    /// </summary>
+    [MaxLength(500)]
+    public string? SourceUrl { get; set; }
+
     // Navigation properties
     public Major Major { get; set; } = null!;
 }

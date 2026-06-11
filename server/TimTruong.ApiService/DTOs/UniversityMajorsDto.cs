@@ -20,7 +20,9 @@ public record MajorYearDto(
     decimal? TuitionFeeMin,
     decimal? TuitionFeeMax,
     string? TuitionFeeUnit,
-    int? EnrollmentQuota
+    int? EnrollmentQuota,
+    string? Note,
+    string? SourceUrl
 );
 
 /// <summary>
@@ -31,7 +33,8 @@ public record AdmissionRequirementDto(
     string ExamType,
     decimal? Score,
     string? SubjectCombination,
-    int Year
+    int Year,
+    string? SourceUrl
 );
 
 /// <summary>

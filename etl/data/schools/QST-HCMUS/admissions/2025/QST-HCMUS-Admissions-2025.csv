@@ -1,162 +1,163 @@
-UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score
-QST,7140103,Công nghệ giáo dục,THPTQG,A00,30,24.25
-QST,7140103,Công nghệ giáo dục,THPTQG,A01,30,22.88
-QST,7140103,Công nghệ giáo dục,THPTQG,B00,30,23.13
-QST,7140103,Công nghệ giáo dục,THPTQG,C01,30,24.25
-QST,7140103,Công nghệ giáo dục,THPTQG,D01,30,22.50
-QST,7140103,Công nghệ giáo dục,THPTQG,D07,30,22.50
-QST,7420101,Sinh học,THPTQG,A00,30,22.10
-QST,7420101,Sinh học,THPTQG,B00,30,20.96
-QST,7420101,Sinh học,THPTQG,D01,30,20.57
-QST,7420101_DKD,Sinh học (CT TCTA),THPTQG,A00,30,21.50
-QST,7420101_DKD,Sinh học (CT TCTA),THPTQG,B00,30,20.25
-QST,7420101_DKD,Sinh học (CT TCTA),THPTQG,D01,30,20.06
-QST,7420201,Công nghệ Sinh học,THPTQG,A00,30,24.72
-QST,7420201,Công nghệ Sinh học,THPTQG,B00,30,23.72
-QST,7420201,Công nghệ Sinh học,THPTQG,D01,30,22.86
-QST,7420201_DKD,Công nghệ Sinh học (CT TCTA),THPTQG,A00,30,24.30
-QST,7420201_DKD,Công nghệ Sinh học (CT TCTA),THPTQG,B00,30,23.15
-QST,7420201_DKD,Công nghệ Sinh học (CT TCTA),THPTQG,D01,30,22.55
-QST,7440102_DKD,Vật lý học (CT TCTA),THPTQG,A00,30,24.40
-QST,7440102_DKD,Vật lý học (CT TCTA),THPTQG,A01,30,23.10
-QST,7440102_DKD,Vật lý học (CT TCTA),THPTQG,C01,30,24.40
-QST,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)",THPTQG,A00,30,26.75
-QST,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)",THPTQG,A01,30,25.50
-QST,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)",THPTQG,C01,30,26.25
-QST,7440112,Hóa học,THPTQG,A00,30,26.18
-QST,7440112,Hóa học,THPTQG,B00,30,25.37
-QST,7440112,Hóa học,THPTQG,C01,30,25.87
-QST,7440112,Hóa học,THPTQG,D07,30,24.68
-QST,7440112_DKD,Hóa học (CT TCTA),THPTQG,A00,30,24.25
-QST,7440112_DKD,Hóa học (CT TCTA),THPTQG,B00,30,23.13
-QST,7440112_DKD,Hóa học (CT TCTA),THPTQG,C01,30,24.25
-QST,7440112_DKD,Hóa học (CT TCTA),THPTQG,D07,30,22.50
-QST,7440122,Khoa học Vật liệu,THPTQG,A00,30,24.10
-QST,7440122,Khoa học Vật liệu,THPTQG,A01,30,22.65
-QST,7440122,Khoa học Vật liệu,THPTQG,B00,30,23.05
-QST,7440122,Khoa học Vật liệu,THPTQG,C01,30,24.10
-QST,7440122,Khoa học Vật liệu,THPTQG,D07,30,22.35
-QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,A00,30,23.20
-QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,A01,30,21.85
-QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,B00,30,22.10
-QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,C01,30,23.35
-QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,D07,30,21.35
-QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,A00,30,22.30
-QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,A01,30,21.05
-QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,B00,30,21.19
-QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,C01,30,22.55
-QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,D01,30,20.71
-QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,D07,30,20.46
-QST,7440228,Hải dương học,THPTQG,A00,30,22.40
-QST,7440228,Hải dương học,THPTQG,A01,30,21.15
-QST,7440228,Hải dương học,THPTQG,C01,30,22.65
-QST,7440301,Khoa học Môi trường,THPTQG,A00,30,21.20
-QST,7440301,Khoa học Môi trường,THPTQG,A01,30,20.06
-QST,7440301,Khoa học Môi trường,THPTQG,B00,30,19.95
-QST,7440301,Khoa học Môi trường,THPTQG,C01,30,21.81
-QST,7440301,Khoa học Môi trường,THPTQG,D07,30,19.39
-QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,A00,30,19.00
-QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,A01,30,18.00
-QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,B00,30,17.60
-QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,C01,30,20.00
-QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,D07,30,17.00
-QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,A00,30,26.61
-QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,A01,30,25.36
-QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,B00,30,25.66
-QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,D01,30,24.66
-QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,D07,30,25.11
-QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,A00,30,28.50
-QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,A01,30,27.92
-QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,B00,30,27.92
-QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,D01,30,27.17
-QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,D07,30,27.67
-QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),THPTQG,A00,30,29.92
-QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),THPTQG,A01,30,29.81
-QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),THPTQG,B00,30,29.81
-QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),THPTQG,D07,30,29.56
-QST,7480107,Trí tuệ nhân tạo,THPTQG,A00,30,29.39
-QST,7480107,Trí tuệ nhân tạo,THPTQG,A01,30,29.10
-QST,7480107,Trí tuệ nhân tạo,THPTQG,B00,30,29.10
-QST,7480107,Trí tuệ nhân tạo,THPTQG,D07,30,28.85
-QST,7480201_DKD,Công nghệ thông tin (CT TCTA),THPTQG,A00,30,25.87
-QST,7480201_DKD,Công nghệ thông tin (CT TCTA),THPTQG,A01,30,24.62
-QST,7480201_DKD,Công nghệ thông tin (CT TCTA),THPTQG,B00,30,24.99
-QST,7480201_DKD,Công nghệ thông tin (CT TCTA),THPTQG,D07,30,24.37
-QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),THPTQG,A00,30,27.27
-QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),THPTQG,A01,30,26.27
-QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),THPTQG,B00,30,26.66
-QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),THPTQG,D07,30,26.16
-QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),THPTQG,A00,30,25.22
-QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),THPTQG,B00,30,24.22
-QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),THPTQG,C01,30,25.08
-QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),THPTQG,D07,30,23.61
-QST,7510402,Công nghệ Vật liệu,THPTQG,A00,30,25.07
-QST,7510402,Công nghệ Vật liệu,THPTQG,A01,30,23.82
-QST,7510402,Công nghệ Vật liệu,THPTQG,B00,30,24.07
-QST,7510402,Công nghệ Vật liệu,THPTQG,C01,30,24.86
-QST,7510402,Công nghệ Vật liệu,THPTQG,D07,30,23.54
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,A00,30,21.50
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,A01,30,20.25
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,B00,30,20.25
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,C01,30,22.00
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,D07,30,19.56
-QST,7520207,Kỹ thuật điện tử - viễn thông,THPTQG,A00,30,26.60
-QST,7520207,Kỹ thuật điện tử - viễn thông,THPTQG,A01,30,25.35
-QST,7520207,Kỹ thuật điện tử - viễn thông,THPTQG,C01,30,26.15
-QST,7520207,Kỹ thuật điện tử - viễn thông,THPTQG,D07,30,25.10
-QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),THPTQG,A00,30,25.70
-QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),THPTQG,A01,30,24.45
-QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),THPTQG,C01,30,25.50
-QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),THPTQG,D07,30,24.15
-QST,75202a1,Thiết kế vi mạch,THPTQG,A00,30,28.27
-QST,75202a1,Thiết kế vi mạch,THPTQG,A01,30,27.61
-QST,75202a1,Thiết kế vi mạch,THPTQG,C01,30,27.77
-QST,75202a1,Thiết kế vi mạch,THPTQG,D07,30,27.36
-QST,7520402,Kỹ thuật hạt nhân,THPTQG,A00,30,25.95
-QST,7520402,Kỹ thuật hạt nhân,THPTQG,A01,30,24.70
-QST,7520402,Kỹ thuật hạt nhân,THPTQG,C01,30,25.70
-QST,7520403,Vật lý y khoa,THPTQG,A00,30,26.13
-QST,7520403,Vật lý y khoa,THPTQG,A01,30,24.88
-QST,7520403,Vật lý y khoa,THPTQG,C01,30,25.84
-QST,7520501,Kỹ thuật địa chất,THPTQG,A00,30,22.70
-QST,7520501,Kỹ thuật địa chất,THPTQG,A01,30,21.45
-QST,7520501,Kỹ thuật địa chất,THPTQG,B00,30,21.45
-QST,7520501,Kỹ thuật địa chất,THPTQG,C01,30,22.95
-QST,7520501,Kỹ thuật địa chất,THPTQG,D01,30,21.15
-QST,7520501,Kỹ thuật địa chất,THPTQG,D07,30,20.90
-QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,A00,30,22.00
-QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,A01,30,20.75
-QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,B00,30,20.75
-QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,C01,30,22.25
-QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,D07,30,20.25
-QST,7140103,Công nghệ giáo dục,ĐGNL,,1200,797
-QST,7420101,Sinh học,ĐGNL,,1200,696
-QST,7420101_DKD,Sinh học (CT TCTA),ĐGNL,,1200,673
-QST,7420201,Công nghệ Sinh học,ĐGNL,,1200,817
-QST,7420201_DKD,Công nghệ Sinh học (CT TCTA),ĐGNL,,1200,800
-QST,7440102_DKD,Vật lý học (CT TCTA),ĐGNL,,1200,804
-QST,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)",ĐGNL,,1200,917
-QST,7440112,Hóa học,ĐGNL,,1200,886
-QST,7440112_DKD,Hóa học (CT TCTA),ĐGNL,,1200,797
-QST,7440122,Khoa học Vật liệu,ĐGNL,,1200,790
-QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),ĐGNL,,1200,742
-QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",ĐGNL,,1200,707
-QST,7440228,Hải dương học,ĐGNL,,1200,711
-QST,7440301,Khoa học Môi trường,ĐGNL,,1200,658
-QST,7440301_DKD,Khoa học Môi trường (CT TCTA),ĐGNL,,1200,573
-QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",ĐGNL,,1200,910
-QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",ĐGNL,,1200,1019
-QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),ĐGNL,,1200,1136
-QST,7480107,Trí tuệ nhân tạo,ĐGNL,,1200,1092
-QST,7480201_DKD,Công nghệ thông tin (CT TCTA),ĐGNL,,1200,906
-QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),ĐGNL,,1200,972
-QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),ĐGNL,,1200,842
-QST,7510402,Công nghệ Vật liệu,ĐGNL,,1200,832
-QST,7510406,Công nghệ Kỹ thuật Môi trường,ĐGNL,,1200,673
-QST,7520207,Kỹ thuật điện tử - viễn thông,ĐGNL,,1200,910
-QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),ĐGNL,,1200,864
-QST,75202a1,Thiết kế vi mạch,ĐGNL,,1200,1002
-QST,7520402,Kỹ thuật hạt nhân,ĐGNL,,1200,876
-QST,7520403,Vật lý y khoa,ĐGNL,,1200,882
-QST,7520501,Kỹ thuật địa chất,ĐGNL,,1200,723
-QST,7850101,Quản lý tài nguyên và môi trường,ĐGNL,,1200,693
+UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score,SourceUrl
+QST,7140103,Công nghệ giáo dục,THPTQG,A00,30,24.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7140103,Công nghệ giáo dục,THPTQG,A01,30,22.88,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7140103,Công nghệ giáo dục,THPTQG,B00,30,23.13,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7140103,Công nghệ giáo dục,THPTQG,C01,30,24.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7140103,Công nghệ giáo dục,THPTQG,D01,30,22.50,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7140103,Công nghệ giáo dục,THPTQG,D07,30,22.50,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420101,Sinh học,THPTQG,A00,30,22.10,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420101,Sinh học,THPTQG,B00,30,20.96,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420101,Sinh học,THPTQG,D01,30,20.57,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420101_DKD,Sinh học (CT TCTA),THPTQG,A00,30,21.50,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420101_DKD,Sinh học (CT TCTA),THPTQG,B00,30,20.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420101_DKD,Sinh học (CT TCTA),THPTQG,D01,30,20.06,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420201,Công nghệ Sinh học,THPTQG,A00,30,24.72,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420201,Công nghệ Sinh học,THPTQG,B00,30,23.72,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420201,Công nghệ Sinh học,THPTQG,D01,30,22.86,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420201_DKD,Công nghệ Sinh học (CT TCTA),THPTQG,A00,30,24.30,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420201_DKD,Công nghệ Sinh học (CT TCTA),THPTQG,B00,30,23.15,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420201_DKD,Công nghệ Sinh học (CT TCTA),THPTQG,D01,30,22.55,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440102_DKD,Vật lý học (CT TCTA),THPTQG,A00,30,24.40,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440102_DKD,Vật lý học (CT TCTA),THPTQG,A01,30,23.10,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440102_DKD,Vật lý học (CT TCTA),THPTQG,C01,30,24.40,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)",THPTQG,A00,30,26.75,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)",THPTQG,A01,30,25.50,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)",THPTQG,C01,30,26.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112,Hóa học,THPTQG,A00,30,26.18,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112,Hóa học,THPTQG,B00,30,25.37,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112,Hóa học,THPTQG,C01,30,25.87,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112,Hóa học,THPTQG,D07,30,24.68,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112_DKD,Hóa học (CT TCTA),THPTQG,A00,30,24.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112_DKD,Hóa học (CT TCTA),THPTQG,B00,30,23.13,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112_DKD,Hóa học (CT TCTA),THPTQG,C01,30,24.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112_DKD,Hóa học (CT TCTA),THPTQG,D07,30,22.50,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122,Khoa học Vật liệu,THPTQG,A00,30,24.10,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122,Khoa học Vật liệu,THPTQG,A01,30,22.65,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122,Khoa học Vật liệu,THPTQG,B00,30,23.05,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122,Khoa học Vật liệu,THPTQG,C01,30,24.10,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122,Khoa học Vật liệu,THPTQG,D07,30,22.35,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,A00,30,23.20,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,A01,30,21.85,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,B00,30,22.10,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,C01,30,23.35,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),THPTQG,D07,30,21.35,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,A00,30,22.30,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,A01,30,21.05,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,B00,30,21.19,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,C01,30,22.55,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,D01,30,20.71,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",THPTQG,D07,30,20.46,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440228,Hải dương học,THPTQG,A00,30,22.40,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440228,Hải dương học,THPTQG,A01,30,21.15,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440228,Hải dương học,THPTQG,C01,30,22.65,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301,Khoa học Môi trường,THPTQG,A00,30,21.20,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301,Khoa học Môi trường,THPTQG,A01,30,20.06,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301,Khoa học Môi trường,THPTQG,B00,30,19.95,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301,Khoa học Môi trường,THPTQG,C01,30,21.81,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301,Khoa học Môi trường,THPTQG,D07,30,19.39,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,A00,30,19.00,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,A01,30,18.00,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,B00,30,17.60,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,C01,30,20.00,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301_DKD,Khoa học Môi trường (CT TCTA),THPTQG,D07,30,17.00,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,A00,30,26.61,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,A01,30,25.36,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,B00,30,25.66,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,D01,30,24.66,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",THPTQG,D07,30,25.11,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,A00,30,28.50,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,A01,30,27.92,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,B00,30,27.92,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,D01,30,27.17,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",THPTQG,D07,30,27.67,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),THPTQG,A00,30,29.92,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),THPTQG,A01,30,29.81,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),THPTQG,B00,30,29.81,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),THPTQG,D07,30,29.56,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480107,Trí tuệ nhân tạo,THPTQG,A00,30,29.39,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480107,Trí tuệ nhân tạo,THPTQG,A01,30,29.10,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480107,Trí tuệ nhân tạo,THPTQG,B00,30,29.10,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480107,Trí tuệ nhân tạo,THPTQG,D07,30,28.85,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_DKD,Công nghệ thông tin (CT TCTA),THPTQG,A00,30,25.87,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_DKD,Công nghệ thông tin (CT TCTA),THPTQG,A01,30,24.62,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_DKD,Công nghệ thông tin (CT TCTA),THPTQG,B00,30,24.99,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_DKD,Công nghệ thông tin (CT TCTA),THPTQG,D07,30,24.37,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),THPTQG,A00,30,27.27,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),THPTQG,A01,30,26.27,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),THPTQG,B00,30,26.66,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),THPTQG,D07,30,26.16,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),THPTQG,A00,30,25.22,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),THPTQG,B00,30,24.22,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),THPTQG,C01,30,25.08,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),THPTQG,D07,30,23.61,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510402,Công nghệ Vật liệu,THPTQG,A00,30,25.07,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510402,Công nghệ Vật liệu,THPTQG,A01,30,23.82,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510402,Công nghệ Vật liệu,THPTQG,B00,30,24.07,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510402,Công nghệ Vật liệu,THPTQG,C01,30,24.86,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510402,Công nghệ Vật liệu,THPTQG,D07,30,23.54,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,A00,30,21.50,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,A01,30,20.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,B00,30,20.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,C01,30,22.00,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,D07,30,19.56,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207,Kỹ thuật điện tử - viễn thông,THPTQG,A00,30,26.60,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207,Kỹ thuật điện tử - viễn thông,THPTQG,A01,30,25.35,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207,Kỹ thuật điện tử - viễn thông,THPTQG,C01,30,26.15,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207,Kỹ thuật điện tử - viễn thông,THPTQG,D07,30,25.10,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),THPTQG,A00,30,25.70,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),THPTQG,A01,30,24.45,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),THPTQG,C01,30,25.50,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),THPTQG,D07,30,24.15,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,75202a1,Thiết kế vi mạch,THPTQG,A00,30,28.27,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,75202a1,Thiết kế vi mạch,THPTQG,A01,30,27.61,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,75202a1,Thiết kế vi mạch,THPTQG,C01,30,27.77,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,75202a1,Thiết kế vi mạch,THPTQG,D07,30,27.36,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520402,Kỹ thuật hạt nhân,THPTQG,A00,30,25.95,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520402,Kỹ thuật hạt nhân,THPTQG,A01,30,24.70,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520402,Kỹ thuật hạt nhân,THPTQG,C01,30,25.70,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520403,Vật lý y khoa,THPTQG,A00,30,26.13,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520403,Vật lý y khoa,THPTQG,A01,30,24.88,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520403,Vật lý y khoa,THPTQG,C01,30,25.84,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520501,Kỹ thuật địa chất,THPTQG,A00,30,22.70,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520501,Kỹ thuật địa chất,THPTQG,A01,30,21.45,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520501,Kỹ thuật địa chất,THPTQG,B00,30,21.45,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520501,Kỹ thuật địa chất,THPTQG,C01,30,22.95,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520501,Kỹ thuật địa chất,THPTQG,D01,30,21.15,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520501,Kỹ thuật địa chất,THPTQG,D07,30,20.90,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,A00,30,22.00,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,A01,30,20.75,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,B00,30,20.75,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,C01,30,22.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7850101,Quản lý tài nguyên và môi trường,THPTQG,D07,30,20.25,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7140103,Công nghệ giáo dục,ĐGNL,,1200,797,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420101,Sinh học,ĐGNL,,1200,696,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420101_DKD,Sinh học (CT TCTA),ĐGNL,,1200,673,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420201,Công nghệ Sinh học,ĐGNL,,1200,817,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7420201_DKD,Công nghệ Sinh học (CT TCTA),ĐGNL,,1200,800,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440102_DKD,Vật lý học (CT TCTA),ĐGNL,,1200,804,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440102_NN,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 60), Công nghệ bán dẫn (CT: 60)",ĐGNL,,1200,917,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112,Hóa học,ĐGNL,,1200,886,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440112_DKD,Hóa học (CT TCTA),ĐGNL,,1200,797,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122,Khoa học Vật liệu,ĐGNL,,1200,790,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440122_DKD,Khoa học Vật liệu (CT TCTA),ĐGNL,,1200,742,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440201_NN,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 50)",ĐGNL,,1200,707,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440228,Hải dương học,ĐGNL,,1200,711,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301,Khoa học Môi trường,ĐGNL,,1200,658,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7440301_DKD,Khoa học Môi trường (CT TCTA),ĐGNL,,1200,573,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460101_NN,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",ĐGNL,,1200,910,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7460108_NN,"Nhóm ngành Khoa học dữ liệu (CT:80), Thống kê (CT:40)",ĐGNL,,1200,1019,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480101_TT,Khoa học máy tính (CT Tiên tiến),ĐGNL,,1200,1136,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480107,Trí tuệ nhân tạo,ĐGNL,,1200,1092,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_DKD,Công nghệ thông tin (CT TCTA),ĐGNL,,1200,906,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7480201_NN,Nhóm ngành máy tính và Công nghệ thông tin (Công nghệ thông tin; Kỹ thuật phần mềm; Hệ thống thông tin; Khoa học máy tính),ĐGNL,,1200,972,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510401_DKD,Công nghệ kỹ thuật Hóa học (CT TCTA),ĐGNL,,1200,842,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510402,Công nghệ Vật liệu,ĐGNL,,1200,832,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,ĐGNL,,1200,673,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207,Kỹ thuật điện tử - viễn thông,ĐGNL,,1200,910,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520207_DKD,Kỹ thuật điện tử - viễn thông (CT TCTA),ĐGNL,,1200,864,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,75202a1,Thiết kế vi mạch,ĐGNL,,1200,1002,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520402,Kỹ thuật hạt nhân,ĐGNL,,1200,876,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520403,Vật lý y khoa,ĐGNL,,1200,882,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7520501,Kỹ thuật địa chất,ĐGNL,,1200,723,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+QST,7850101,Quản lý tài nguyên và môi trường,ĐGNL,,1200,693,https://tuyensinh.hcmus.edu.vn/2025-diem-chuan-cac-phuong-thuc/
+,,,,,,,

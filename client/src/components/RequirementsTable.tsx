@@ -1,3 +1,4 @@
+import { ExternalLink } from "lucide-react";
 import { buildScoreSeries, formatScore } from "@/lib/majors";
 import type { AdmissionRequirement } from "@/types";
 
@@ -17,6 +18,16 @@ export const RequirementsTable = ({ requirements }: RequirementsTableProps) => {
 	if (requirements.length === 0) return null;
 
 	const blocks = buildScoreSeries(requirements);
+
+	// Nguồn công bố điểm chuẩn theo (examType, year) — các dòng cùng trường-năm
+	// thường chung một link, lấy link đầu tiên có giá trị.
+	const sourceByTypeYear = new Map<string, string>();
+	for (const r of requirements) {
+		const key = `${r.examType}|${r.year}`;
+		if (r.sourceUrl && !sourceByTypeYear.has(key)) {
+			sourceByTypeYear.set(key, r.sourceUrl);
+		}
+	}
 
 	return (
 		<div className="space-y-3 mt-3">
@@ -80,8 +91,21 @@ export const RequirementsTable = ({ requirements }: RequirementsTableProps) => {
 											key={y}
 											className="border-b border-border last:border-b-0 hover:bg-muted/20 transition-colors"
 										>
-											<td className="px-3 py-2 text-center font-medium text-foreground tabular-nums">
+											<td className="px-3 py-2 text-center font-medium text-foreground tabular-nums whitespace-nowrap">
 												{y}
+												{sourceByTypeYear.has(`${block.examType}|${y}`) && (
+													<a
+														href={sourceByTypeYear.get(
+															`${block.examType}|${y}`,
+														)}
+														target="_blank"
+														rel="noopener noreferrer"
+														title="Nguồn công bố điểm chuẩn"
+														className="ml-1 inline-flex align-middle text-muted-foreground hover:text-primary"
+													>
+														<ExternalLink className="h-3 w-3" />
+													</a>
+												)}
 											</td>
 											{block.series.map((s, i) => {
 												const score = scoreByYear[i].get(y);

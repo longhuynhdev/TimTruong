@@ -4,6 +4,7 @@ Dùng:
   uv run extract_admissions.py QST-HCMUS/2025                     # chỉ 1 trường-năm (hoặc QST-HCMUS-2025)
   uv run extract_admissions.py QST-HCMUS                          # mọi năm của 1 trường
   uv run extract_admissions.py QST-HCMUS/2025 --note "cột cuối là ĐGNL, bỏ dòng Tổng"
+  uv run extract_admissions.py QST-HCMUS/2025 --source-url "https://..."  # nguồn công bố điểm → cột SourceUrl
   uv run extract_admissions.py QST-HCMUS/2025 -y                  # ghi đè CSV cũ không hỏi
 
 Scaffolding chung (định vị target, nạp ảnh, gọi model, merge, ghi CSV) ở extract_common.
@@ -32,8 +33,10 @@ COL_METHOD = "Method"
 COL_COMBO = "SubjectCombination"
 COL_MAXSCORE = "MaxScore"
 COL_SCORE = "Score"
+COL_SOURCE = "SourceUrl"
 
-HEADER = [COL_UNI, COL_CODE, COL_NAME, COL_METHOD, COL_COMBO, COL_MAXSCORE, COL_SCORE]
+# SourceUrl không do LLM emit (không có trong JSON_TO_COL) — điền qua --source-url hoặc tay khi review.
+HEADER = [COL_UNI, COL_CODE, COL_NAME, COL_METHOD, COL_COMBO, COL_MAXSCORE, COL_SCORE, COL_SOURCE]
 
 # Khoá JSON model trả về → cột CSV tương ứng.
 JSON_TO_COL = {
@@ -96,7 +99,7 @@ def validate_row(row: dict):
     return warns
 
 
-def process_target(year_dir: str, note: str, assume_yes: bool):
+def process_target(year_dir: str, note: str, assume_yes: bool, source_url: str):
     label = common.target_label(year_dir)
     uni_code = common.parse_uni_code(common.school_of(year_dir))
     out_csv = common.output_csv_path(year_dir, CATEGORY)
@@ -130,6 +133,8 @@ def process_target(year_dir: str, note: str, assume_yes: bool):
         return
 
     rows, flags = common.merge_passes(passes, row_key, validate_row, diverge_fields=[COL_SCORE])
+    for r in rows:
+        r[COL_SOURCE] = source_url
     review_path, n_flag = common.write_outputs(out_csv, rows, flags, HEADER)
     print(f"    → {os.path.relpath(out_csv, common.BASE_DIR)} ({len(rows)} dòng)")
     if n_flag:

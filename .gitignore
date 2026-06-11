@@ -13,3 +13,4 @@ etl/data/schools/**/*.review.md
 
 .claude/settings.local.json
 CLAUDE.md
+etl/data/schools/QSY-QSY/majors/2026/images/

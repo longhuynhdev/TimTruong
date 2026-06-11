@@ -2,6 +2,7 @@ import type {
 	AdmissionRequirement,
 	ExamType,
 	MajorWithRequirements,
+	MajorYear,
 } from "@/types";
 
 /** Format a điểm chuẩn: drop trailing zeros (24 not 24.00, 24.5 not 24.50). */
@@ -159,14 +160,39 @@ export function latestCutoff(
 	return { year, min: Math.min(...scores), max: Math.max(...scores) };
 }
 
-/** Latest-year tuition string for a major, or null when not published. */
+/** Năm tuyển sinh Y → năm học "Y–Y+1" (tuyển sinh 2025 → nhập học năm học 2025–2026). */
+export function formatAcademicYear(year: number): string {
+	return `${year}–${year + 1}`;
+}
+
+/**
+ * The most recent MajorYear carrying a published tuition, or null. Falls back past
+ * years whose tuition is still unpublished (e.g. a 2026 row with only quota), so the
+ * UI can show last year's figure instead of nothing — mirrors `latestCutoff`.
+ */
+export const latestTuition = (m: MajorWithRequirements): MajorYear | null =>
+	m.years.find((y) => y.tuitionFeeMin != null) ?? null;
+
+/** True when the displayed tuition comes from an older year than the newest row. */
+export const isTuitionFallback = (m: MajorWithRequirements): boolean => {
+	const t = latestTuition(m);
+	return t != null && t.year !== m.years[0]?.year;
+};
+
+/**
+ * Latest published tuition string for a major, or null when no year has one.
+ * When falling back to an older year, the academic year is appended so the
+ * reader knows the figure is not this year's: "25 triệu đồng/năm (2025–2026)".
+ */
 export const majorTuition = (m: MajorWithRequirements): string | null => {
-	const latest = m.years[0];
-	return latest?.tuitionFeeMin != null
-		? formatTuition(
-				latest.tuitionFeeMin,
-				latest.tuitionFeeMax,
-				latest.tuitionFeeUnit,
-			)
-		: null;
+	const t = latestTuition(m);
+	if (t?.tuitionFeeMin == null) return null;
+	const text = formatTuition(
+		t.tuitionFeeMin,
+		t.tuitionFeeMax,
+		t.tuitionFeeUnit,
+	);
+	return isTuitionFallback(m)
+		? `${text} (${formatAcademicYear(t.year)})`
+		: text;
 };

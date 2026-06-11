@@ -16,13 +16,18 @@ COL_CODE = "MajorCode"
 COL_METHOD = "Method"
 COL_COMBO = "SubjectCombination"
 COL_SCORE = "Score"
+COL_SOURCE = "SourceUrl"
 
 INSERT_SQL = """
     INSERT INTO "AdmissionRequirements"
-        ("MajorId", "ExamType", "Score", "SubjectCombination", "Year")
-    VALUES (%(major_id)s, %(exam_type)s, %(score)s, %(combo)s, %(year)s)
+        ("MajorId", "ExamType", "Score", "SubjectCombination", "Year", "SourceUrl")
+    VALUES (%(major_id)s, %(exam_type)s, %(score)s, %(combo)s, %(year)s, %(source_url)s)
 """
-UPDATE_SQL = 'UPDATE "AdmissionRequirements" SET "Score" = %(score)s WHERE "Id" = %(id)s'
+UPDATE_SQL = """
+    UPDATE "AdmissionRequirements"
+       SET "Score" = %(score)s, "SourceUrl" = %(source_url)s
+     WHERE "Id" = %(id)s
+"""
 
 
 def parse_uni_code(path: str) -> str:
@@ -109,6 +114,8 @@ def load_file(path: str, year: int):
                 "combo": combo,
                 "score": score,
                 "year": year,
+                # File cũ không có cột này → None (NULL)
+                "source_url": (raw.get(COL_SOURCE) or "").strip() or None,
             })
     return rows, errors
 
@@ -157,7 +164,7 @@ def process_uni(cur, uni_code, uni_id, rows, src=""):
         key = (r["major_id"], r["exam_type"], r["combo"], r["year"])
         csv_keys.add(key)
         if key in existing:
-            cur.execute(UPDATE_SQL, {"id": existing[key], "score": r["score"]})
+            cur.execute(UPDATE_SQL, {"id": existing[key], "score": r["score"], "source_url": r["source_url"]})
             upd += 1
         else:
             cur.execute(INSERT_SQL, r)

@@ -19,6 +19,8 @@ COL_QUOTA = "EnrollmentQuota"
 COL_FEE_MIN = "TuitionFeeMin"
 COL_FEE_MAX = "TuitionFeeMax"
 COL_UNIT = "TuitionFeeUnit"
+COL_NOTE = "Note"
+COL_SOURCE = "SourceUrl"
 
 MAJOR_INSERT_SQL = """
     INSERT INTO "Majors" ("Name", "Code", "OldCode", "UniversityId")
@@ -32,13 +34,16 @@ MAJOR_UPDATE_SQL = """
 
 MY_INSERT_SQL = """
     INSERT INTO "MajorYears"
-        ("MajorId", "Year", "TuitionFeeMin", "TuitionFeeMax", "TuitionFeeUnit", "EnrollmentQuota")
-    VALUES (%(major_id)s, %(year)s, %(fee_min)s, %(fee_max)s, %(unit)s, %(quota)s)
+        ("MajorId", "Year", "TuitionFeeMin", "TuitionFeeMax", "TuitionFeeUnit", "EnrollmentQuota",
+         "Note", "SourceUrl")
+    VALUES (%(major_id)s, %(year)s, %(fee_min)s, %(fee_max)s, %(unit)s, %(quota)s,
+            %(note)s, %(source_url)s)
 """
 MY_UPDATE_SQL = """
     UPDATE "MajorYears"
        SET "TuitionFeeMin" = %(fee_min)s, "TuitionFeeMax" = %(fee_max)s,
-           "TuitionFeeUnit" = %(unit)s, "EnrollmentQuota" = %(quota)s
+           "TuitionFeeUnit" = %(unit)s, "EnrollmentQuota" = %(quota)s,
+           "Note" = %(note)s, "SourceUrl" = %(source_url)s
      WHERE "Id" = %(id)s
 """
 
@@ -129,6 +134,9 @@ def load_file(path: str, year: int):
                 "fee_min": fee_min,
                 "fee_max": fee_max,
                 "unit": unit,
+                # File cũ không có 2 cột này → None (NULL)
+                "note": (raw.get(COL_NOTE) or "").strip() or None,
+                "source_url": (raw.get(COL_SOURCE) or "").strip() or None,
             })
     return rows, errors
 
@@ -195,7 +203,8 @@ def process_uni(cur, uni_code, uni_id, year, rows):
     for r, major_id in zip(rows, major_ids):
         seen.add(major_id)
         params = {"major_id": major_id, "year": year, "fee_min": r["fee_min"],
-                  "fee_max": r["fee_max"], "unit": r["unit"], "quota": r["quota"]}
+                  "fee_max": r["fee_max"], "unit": r["unit"], "quota": r["quota"],
+                  "note": r["note"], "source_url": r["source_url"]}
         if major_id in my_existing:
             cur.execute(MY_UPDATE_SQL, {**params, "id": my_existing[major_id]})
             my_upd += 1

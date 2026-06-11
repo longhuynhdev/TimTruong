@@ -62,6 +62,8 @@ export interface AdmissionRequirement {
 	score: number | null;
 	subjectCombination: string | null;
 	year: number;
+	// Nguồn công bố điểm chuẩn — thường dùng chung cho cả trường-năm
+	sourceUrl: string | null;
 }
 
 // Per-year offering data (tuition, quota).
@@ -72,6 +74,10 @@ export interface MajorYear {
 	tuitionFeeMax: number | null;
 	tuitionFeeUnit: TuitionFeeUnit | null;
 	enrollmentQuota: number | null;
+	// Chú thích tuyển sinh năm đó (vd "tuyển theo phương thức riêng")
+	note: string | null;
+	// Nguồn học phí/chỉ tiêu (đề án tuyển sinh)
+	sourceUrl: string | null;
 }
 
 export interface MajorWithRequirements {

@@ -34,9 +34,12 @@ COL_QUOTA = "EnrollmentQuota"
 COL_FEE_MIN = "TuitionFeeMin"
 COL_FEE_MAX = "TuitionFeeMax"
 COL_FEE_UNIT = "TuitionFeeUnit"
+COL_NOTE = "Note"
+COL_SOURCE = "SourceUrl"
 
 # UniversityCode không nằm trong file etl_majors đọc → không đưa vào HEADER, chỉ để định danh.
-HEADER = [COL_CODE, COL_OLD, COL_NAME, COL_QUOTA, COL_FEE_MIN, COL_FEE_MAX, COL_FEE_UNIT]
+# Note/SourceUrl không do LLM emit: Note điền tay khi review, SourceUrl qua --source-url.
+HEADER = [COL_CODE, COL_OLD, COL_NAME, COL_QUOTA, COL_FEE_MIN, COL_FEE_MAX, COL_FEE_UNIT, COL_NOTE, COL_SOURCE]
 
 # Khoá JSON model trả về → cột CSV tương ứng.
 JSON_TO_COL = {
@@ -97,7 +100,7 @@ def validate_row(row: dict):
     return warns
 
 
-def process_target(year_dir: str, note: str, assume_yes: bool):
+def process_target(year_dir: str, note: str, assume_yes: bool, source_url: str):
     label = common.target_label(year_dir)
     uni_code = common.parse_uni_code(common.school_of(year_dir))
     out_csv = common.output_csv_path(year_dir, CATEGORY)
@@ -135,6 +138,8 @@ def process_target(year_dir: str, note: str, assume_yes: bool):
     )
     # Bỏ cột UniversityCode khỏi mỗi dòng — file ngành chỉ gồm các cột trong HEADER.
     rows = [{c: r.get(c, "") for c in HEADER} for r in rows]
+    for r in rows:
+        r[COL_SOURCE] = source_url
     review_path, n_flag = common.write_outputs(out_csv, rows, flags, HEADER)
     print(f"    → {os.path.relpath(out_csv, common.BASE_DIR)} ({len(rows)} dòng)")
     if n_flag:
