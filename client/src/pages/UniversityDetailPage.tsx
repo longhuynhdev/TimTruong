@@ -358,8 +358,8 @@ const TuitionCell = ({ major }: { major: MajorWithRequirements }) => {
 				</p>
 				{fallback && latestYear != null && (
 					<p className="text-xs text-muted-foreground">
-						Năm {latestYear} trường chưa công bố học phí — hiển thị học phí của năm
-						học {formatAcademicYear(t.year)} để tham khảo.
+						Năm {latestYear} trường chưa công bố học phí — hiển thị học phí của
+						năm học {formatAcademicYear(t.year)} để tham khảo.
 					</p>
 				)}
 				{t.tuitionSourceUrl && (
@@ -428,10 +428,23 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 		sortUndefined: "last",
 		header: ({ column }) => <SortableHeader column={column} label="Chỉ tiêu" />,
 		cell: ({ row }) => {
-			const quota = row.original.years[0]?.enrollmentQuota ?? null;
+			const y = row.original.years[0];
 			return (
-				<span className="text-sm text-muted-foreground tabular-nums">
-					{quota != null ? quota : "—"}
+				<span className="text-sm text-muted-foreground tabular-nums whitespace-nowrap">
+					{y?.enrollmentQuota ?? "—"}
+					{y?.enrollmentQuota != null && y.quotaSourceUrl && (
+						<a
+							href={y.quotaSourceUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							title="Nguồn chỉ tiêu (đề án tuyển sinh)"
+							// Row click toggles expand — keep the link click from bubbling up.
+							onClick={(e) => e.stopPropagation()}
+							className="ml-1 inline-flex align-middle hover:text-primary"
+						>
+							<ExternalLink className="h-3 w-3" />
+						</a>
+					)}
 				</span>
 			);
 		},
