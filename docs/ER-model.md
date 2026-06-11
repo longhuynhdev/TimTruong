@@ -57,6 +57,9 @@ erDiagram
         decimal TuitionFeeMax "null nếu là số cụ thể; >Min nếu là khoảng"
         enum TuitionFeeUnit "Nullable — PerCredit/PerSemester/PerYear"
         int EnrollmentQuota "Nullable — chỉ tiêu năm đó"
+        string Note "Nullable — chú thích tuyển sinh năm đó (vd phương thức riêng, điểm kết hợp)"
+        string TuitionSourceUrl "Nullable — nguồn học phí; trùng QuotaSourceUrl nếu chung 1 đề án"
+        string QuotaSourceUrl "Nullable — nguồn chỉ tiêu (đề án), có thể dùng chung"
     }
 
     AdmissionRequirements {
@@ -66,6 +69,7 @@ erDiagram
         decimal Score "Nullable — null nếu tổ hợp đã công bố nhưng chưa có điểm chuẩn"
         SubjectCombination SubjectCombination "Nullable"
         int Year "e.g. 2024"
+        string SourceUrl "Nullable — nguồn công bố điểm chuẩn, có thể dùng chung"
     }
 
     UniversityRankings {

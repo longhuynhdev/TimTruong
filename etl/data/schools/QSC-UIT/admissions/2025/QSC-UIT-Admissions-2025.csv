@@ -1,98 +1,99 @@
-UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score
-QSC,7320104,Truyền thông đa phương tiện,ĐGNL,,1200,911
-QSC,7320104,Truyền thông đa phương tiện,THPTQG,A01,30,25
-QSC,7320104,Truyền thông đa phương tiện,THPTQG,D01,30,25
-QSC,7320104,Truyền thông đa phương tiện,THPTQG,X26,30,25
-QSC,7320104,Truyền thông đa phương tiện,THPTQG,D09,30,25
-QSC,7320104,Truyền thông đa phương tiện,THPTQG,D10,30,25
-QSC,7320104,Truyền thông đa phương tiện,THPTQG,X02,30,25
-QSC,7340122,Thương mại điện tử,ĐGNL,,1200,889
-QSC,7340122,Thương mại điện tử,THPTQG,A00,30,24.57
-QSC,7340122,Thương mại điện tử,THPTQG,A01,30,24.57
-QSC,7340122,Thương mại điện tử,THPTQG,D01,30,24.57
-QSC,7340122,Thương mại điện tử,THPTQG,X26,30,24.57
-QSC,7340122,Thương mại điện tử,THPTQG,X06,30,24.57
-QSC,7340122,Thương mại điện tử,THPTQG,D07,30,24.57
-QSC,7460108,Khoa học dữ liệu,ĐGNL,,1200,1010
-QSC,7460108,Khoa học dữ liệu,THPTQG,A00,30,27.7
-QSC,7460108,Khoa học dữ liệu,THPTQG,A01,30,27.7
-QSC,7460108,Khoa học dữ liệu,THPTQG,D01,30,27.7
-QSC,7460108,Khoa học dữ liệu,THPTQG,X26,30,27.7
-QSC,7460108,Khoa học dữ liệu,THPTQG,X06,30,27.7
-QSC,7460108,Khoa học dữ liệu,THPTQG,D07,30,27.7
-QSC,7460108,Khoa học dữ liệu,THPTQG,A02,30,27.7
-QSC,7480101,Khoa học Máy tính,ĐGNL,,1200,993
-QSC,7480101,Khoa học Máy tính,THPTQG,A00,30,27.2
-QSC,7480101,Khoa học Máy tính,THPTQG,A01,30,27.2
-QSC,7480101,Khoa học Máy tính,THPTQG,D01,30,27.2
-QSC,7480101,Khoa học Máy tính,THPTQG,X26,30,27.2
-QSC,7480101,Khoa học Máy tính,THPTQG,X06,30,27.2
-QSC,7480101,Khoa học Máy tính,THPTQG,D07,30,27.2
-QSC,7480102,Mạng máy tính và TTDL,ĐGNL,,1200,854
-QSC,7480102,Mạng máy tính và TTDL,THPTQG,A00,30,24
-QSC,7480102,Mạng máy tính và TTDL,THPTQG,A01,30,24
-QSC,7480102,Mạng máy tính và TTDL,THPTQG,D01,30,24
-QSC,7480102,Mạng máy tính và TTDL,THPTQG,X26,30,24
-QSC,7480102,Mạng máy tính và TTDL,THPTQG,X06,30,24
-QSC,7480102,Mạng máy tính và TTDL,THPTQG,D07,30,24
-QSC,7480102,Mạng máy tính và TTDL,THPTQG,X14,30,24
-QSC,7480103,Kỹ thuật Phần mềm,ĐGNL,,1200,946
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,A00,30,26
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,A01,30,26
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,D01,30,26
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,X26,30,26
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,X06,30,26
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,D07,30,26
-QSC,7480104,Hệ thống Thông tin,ĐGNL,,1200,891
-QSC,7480104,Hệ thống Thông tin,THPTQG,A00,30,24.7
-QSC,7480104,Hệ thống Thông tin,THPTQG,A01,30,24.7
-QSC,7480104,Hệ thống Thông tin,THPTQG,D01,30,24.7
-QSC,7480104,Hệ thống Thông tin,THPTQG,X26,30,24.7
-QSC,7480104,Hệ thống Thông tin,THPTQG,X06,30,24.7
-QSC,7480104,Hệ thống Thông tin,THPTQG,D07,30,24.7
-QSC,7480104,Hệ thống Thông tin,THPTQG,D08,30,24.7
-QSC,7480104TT,Hệ thống Thông tin (CTTT),ĐGNL,,1200,867
-QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,A01,30,24.2
-QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,D01,30,24.2
-QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,X26,30,24.2
-QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,D07,30,24.2
-QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,D08,30,24.2
-QSC,7480106,Kỹ thuật Máy tính,ĐGNL,,1200,923
-QSC,7480106,Kỹ thuật Máy tính,THPTQG,A00,30,25.3
-QSC,7480106,Kỹ thuật Máy tính,THPTQG,A01,30,25.3
-QSC,7480106,Kỹ thuật Máy tính,THPTQG,X06,30,25.3
-QSC,7480106,Kỹ thuật Máy tính,THPTQG,X26,30,25.3
-QSC,7480107,Trí tuệ nhân tạo,ĐGNL,,1200,1098
-QSC,7480107,Trí tuệ nhân tạo,THPTQG,A00,30,29.6
-QSC,7480107,Trí tuệ nhân tạo,THPTQG,A01,30,29.6
-QSC,7480107,Trí tuệ nhân tạo,THPTQG,D01,30,29.6
-QSC,7480107,Trí tuệ nhân tạo,THPTQG,X26,30,29.6
-QSC,7480107,Trí tuệ nhân tạo,THPTQG,X06,30,29.6
-QSC,7480107,Trí tuệ nhân tạo,THPTQG,D07,30,29.6
-QSC,7480201,Công nghệ Thông tin,ĐGNL,,1200,969
-QSC,7480201,Công nghệ Thông tin,THPTQG,A00,30,26.6
-QSC,7480201,Công nghệ Thông tin,THPTQG,A01,30,26.6
-QSC,7480201,Công nghệ Thông tin,THPTQG,D01,30,26.6
-QSC,7480201,Công nghệ Thông tin,THPTQG,X26,30,26.6
-QSC,7480201,Công nghệ Thông tin,THPTQG,X06,30,26.6
-QSC,7480201,Công nghệ Thông tin,THPTQG,D07,30,26.6
-QSC,7480201VN,Công nghệ Thông tin Việt Nhật,ĐGNL,,1200,867
-QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,A00,30,24.2
-QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,A01,30,24.2
-QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,D01,30,24.2
-QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,X26,30,24.2
-QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,X06,30,24.2
-QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,D07,30,24.2
-QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,D06,30,24.2
-QSC,7480202,An toàn thông tin,ĐGNL,,1200,956
-QSC,7480202,An toàn thông tin,THPTQG,A00,30,26.27
-QSC,7480202,An toàn thông tin,THPTQG,A01,30,26.27
-QSC,7480202,An toàn thông tin,THPTQG,D01,30,26.27
-QSC,7480202,An toàn thông tin,THPTQG,X26,30,26.27
-QSC,7480202,An toàn thông tin,THPTQG,X06,30,26.27
-QSC,7480202,An toàn thông tin,THPTQG,D07,30,26.27
-QSC,75202A1,Thiết kế vi mạch,ĐGNL,,1200,984
-QSC,75202A1,Thiết kế vi mạch,THPTQG,A00,30,27
-QSC,75202A1,Thiết kế vi mạch,THPTQG,A01,30,27
-QSC,75202A1,Thiết kế vi mạch,THPTQG,X06,30,27
-QSC,75202A1,Thiết kế vi mạch,THPTQG,X26,30,27
+UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score,Note,SourceUrl
+QSC,7320104,Truyền thông đa phương tiện,ĐGNL,,1200,911,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7320104,Truyền thông đa phương tiện,THPTQG,A01,30,25,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7320104,Truyền thông đa phương tiện,THPTQG,D01,30,25,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7320104,Truyền thông đa phương tiện,THPTQG,X26,30,25,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7320104,Truyền thông đa phương tiện,THPTQG,D09,30,25,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7320104,Truyền thông đa phương tiện,THPTQG,D10,30,25,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7320104,Truyền thông đa phương tiện,THPTQG,X02,30,25,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7340122,Thương mại điện tử,ĐGNL,,1200,889,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7340122,Thương mại điện tử,THPTQG,A00,30,24.57,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7340122,Thương mại điện tử,THPTQG,A01,30,24.57,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7340122,Thương mại điện tử,THPTQG,D01,30,24.57,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7340122,Thương mại điện tử,THPTQG,X26,30,24.57,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7340122,Thương mại điện tử,THPTQG,X06,30,24.57,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7340122,Thương mại điện tử,THPTQG,D07,30,24.57,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7460108,Khoa học dữ liệu,ĐGNL,,1200,1010,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7460108,Khoa học dữ liệu,THPTQG,A00,30,27.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7460108,Khoa học dữ liệu,THPTQG,A01,30,27.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7460108,Khoa học dữ liệu,THPTQG,D01,30,27.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7460108,Khoa học dữ liệu,THPTQG,X26,30,27.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7460108,Khoa học dữ liệu,THPTQG,X06,30,27.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7460108,Khoa học dữ liệu,THPTQG,D07,30,27.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7460108,Khoa học dữ liệu,THPTQG,A02,30,27.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480101,Khoa học Máy tính,ĐGNL,,1200,993,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480101,Khoa học Máy tính,THPTQG,A00,30,27.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480101,Khoa học Máy tính,THPTQG,A01,30,27.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480101,Khoa học Máy tính,THPTQG,D01,30,27.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480101,Khoa học Máy tính,THPTQG,X26,30,27.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480101,Khoa học Máy tính,THPTQG,X06,30,27.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480101,Khoa học Máy tính,THPTQG,D07,30,27.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480102,Mạng máy tính và TTDL,ĐGNL,,1200,854,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480102,Mạng máy tính và TTDL,THPTQG,A00,30,24,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480102,Mạng máy tính và TTDL,THPTQG,A01,30,24,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480102,Mạng máy tính và TTDL,THPTQG,D01,30,24,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480102,Mạng máy tính và TTDL,THPTQG,X26,30,24,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480102,Mạng máy tính và TTDL,THPTQG,X06,30,24,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480102,Mạng máy tính và TTDL,THPTQG,D07,30,24,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480102,Mạng máy tính và TTDL,THPTQG,X14,30,24,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480103,Kỹ thuật Phần mềm,ĐGNL,,1200,946,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,A00,30,26,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,A01,30,26,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,D01,30,26,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,X26,30,26,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,X06,30,26,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,D07,30,26,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104,Hệ thống Thông tin,ĐGNL,,1200,891,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480104,Hệ thống Thông tin,THPTQG,A00,30,24.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104,Hệ thống Thông tin,THPTQG,A01,30,24.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104,Hệ thống Thông tin,THPTQG,D01,30,24.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104,Hệ thống Thông tin,THPTQG,X26,30,24.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104,Hệ thống Thông tin,THPTQG,X06,30,24.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104,Hệ thống Thông tin,THPTQG,D07,30,24.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104,Hệ thống Thông tin,THPTQG,D08,30,24.7,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104TT,Hệ thống Thông tin (CTTT),ĐGNL,,1200,867,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,A01,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,D01,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,X26,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,D07,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480104TT,Hệ thống Thông tin (CTTT),THPTQG,D08,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480106,Kỹ thuật Máy tính,ĐGNL,,1200,923,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480106,Kỹ thuật Máy tính,THPTQG,A00,30,25.3,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480106,Kỹ thuật Máy tính,THPTQG,A01,30,25.3,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480106,Kỹ thuật Máy tính,THPTQG,X06,30,25.3,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480106,Kỹ thuật Máy tính,THPTQG,X26,30,25.3,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480107,Trí tuệ nhân tạo,ĐGNL,,1200,1098,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480107,Trí tuệ nhân tạo,THPTQG,A00,30,29.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480107,Trí tuệ nhân tạo,THPTQG,A01,30,29.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480107,Trí tuệ nhân tạo,THPTQG,D01,30,29.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480107,Trí tuệ nhân tạo,THPTQG,X26,30,29.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480107,Trí tuệ nhân tạo,THPTQG,X06,30,29.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480107,Trí tuệ nhân tạo,THPTQG,D07,30,29.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201,Công nghệ Thông tin,ĐGNL,,1200,969,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480201,Công nghệ Thông tin,THPTQG,A00,30,26.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201,Công nghệ Thông tin,THPTQG,A01,30,26.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201,Công nghệ Thông tin,THPTQG,D01,30,26.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201,Công nghệ Thông tin,THPTQG,X26,30,26.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201,Công nghệ Thông tin,THPTQG,X06,30,26.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201,Công nghệ Thông tin,THPTQG,D07,30,26.6,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201VN,Công nghệ Thông tin Việt Nhật,ĐGNL,,1200,867,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,A00,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,A01,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,D01,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,X26,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,X06,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,D07,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480201VN,Công nghệ Thông tin Việt Nhật,THPTQG,D06,30,24.2,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480202,An toàn thông tin,ĐGNL,,1200,956,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,7480202,An toàn thông tin,THPTQG,A00,30,26.27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480202,An toàn thông tin,THPTQG,A01,30,26.27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480202,An toàn thông tin,THPTQG,D01,30,26.27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480202,An toàn thông tin,THPTQG,X26,30,26.27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480202,An toàn thông tin,THPTQG,X06,30,26.27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,7480202,An toàn thông tin,THPTQG,D07,30,26.27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,75202A1,Thiết kế vi mạch,ĐGNL,,1200,984,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2025
+QSC,75202A1,Thiết kế vi mạch,THPTQG,A00,30,27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,75202A1,Thiết kế vi mạch,THPTQG,A01,30,27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,75202A1,Thiết kế vi mạch,THPTQG,X06,30,27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+QSC,75202A1,Thiết kế vi mạch,THPTQG,X26,30,27,,https://tuyensinh.uit.edu.vn/2025-thong-bao-diem-trung-tuyen-phuong-thuc-xet-ket-qua-thi-tot-nghiep-thpt-nam-2025
+,,,,,,,,

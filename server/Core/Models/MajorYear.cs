@@ -45,6 +45,28 @@ public class MajorYear
     /// </summary>
     public int? EnrollmentQuota { get; set; }
 
+    /// <summary>
+    /// Editorial note about this year's offering — e.g. "tuyển sinh theo phương thức riêng",
+    /// "xét điểm kết hợp". Year-scoped on purpose: admission methods change year to year.
+    /// </summary>
+    [MaxLength(500)]
+    public string? Note { get; set; }
+
+    /// <summary>
+    /// Source page for this year's tuition (thông báo học phí / đề án tuyển sinh).
+    /// Split from <see cref="QuotaSourceUrl"/> because some schools publish tuition and
+    /// quota on different pages; when one đề án covers both, the two hold the same URL.
+    /// May be shared across many majors of the same school-year.
+    /// </summary>
+    [MaxLength(500)]
+    public string? TuitionSourceUrl { get; set; }
+
+    /// <summary>
+    /// Source page for this year's enrollment quota (đề án tuyển sinh).
+    /// </summary>
+    [MaxLength(500)]
+    public string? QuotaSourceUrl { get; set; }
+
     // Navigation properties
     public Major Major { get; set; } = null!;
 }

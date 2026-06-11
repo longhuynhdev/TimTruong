@@ -27,11 +27,17 @@ import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
 import { latestPerSystem, rankSentence } from "@/components/RankingBadges";
+import { RequirementsTable } from "@/components/RequirementsTable";
 import { UniversityBadges } from "@/components/UniversityBadges";
 import { UniversityLogo } from "@/components/UniversityLogo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import {
 	Table,
 	TableBody,
@@ -40,10 +46,20 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { RequirementsTable } from "@/components/RequirementsTable";
-// Chart pulls in visx; lazy so it only loads when a row with trend data expands.
+
+// Charts pull in visx; lazy so they only load when a row expands.
 const MajorScoreChart = lazy(() => import("@/components/MajorScoreChart"));
-import { isNewMajor, majorTuition } from "@/lib/majors";
+const MajorTuitionHistory = lazy(
+	() => import("@/components/MajorTuitionHistory"),
+);
+
+import {
+	formatAcademicYear,
+	isNewMajor,
+	isTuitionFallback,
+	latestTuition,
+	majorTuition,
+} from "@/lib/majors";
 import { cn, normalizeVi } from "@/lib/utils";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
@@ -308,6 +324,59 @@ const majorFilter: FilterFn<MajorWithRequirements> = (
 	);
 };
 
+/**
+ * Tuition figure with a fact-check popover: academic year the figure belongs to,
+ * a notice when it's a fallback from an older year (this year's not published yet),
+ * and the source link. Popover (not tooltip) so it also works by tap on mobile.
+ */
+const TuitionCell = ({ major }: { major: MajorWithRequirements }) => {
+	const t = latestTuition(major);
+	const text = majorTuition(major);
+	if (!t || text == null) {
+		return <span className="text-sm text-muted-foreground">—</span>;
+	}
+	const fallback = isTuitionFallback(major);
+	const latestYear = major.years[0]?.year;
+	return (
+		<Popover>
+			<PopoverTrigger asChild>
+				<button
+					type="button"
+					// Row click toggles expand — keep the popover tap from bubbling up.
+					onClick={(e) => e.stopPropagation()}
+					className="text-left text-sm text-muted-foreground underline decoration-dotted underline-offset-4 hover:text-foreground transition-colors"
+				>
+					{text}
+				</button>
+			</PopoverTrigger>
+			<PopoverContent
+				className="w-72 text-sm space-y-1.5"
+				onClick={(e) => e.stopPropagation()}
+			>
+				<p className="font-medium">
+					Học phí năm học {formatAcademicYear(t.year)}
+				</p>
+				{fallback && latestYear != null && (
+					<p className="text-xs text-muted-foreground">
+						Năm {latestYear} trường chưa công bố học phí — hiển thị học phí của năm
+						học {formatAcademicYear(t.year)} để tham khảo.
+					</p>
+				)}
+				{t.tuitionSourceUrl && (
+					<a
+						href={t.tuitionSourceUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+					>
+						Nguồn <ExternalLink className="h-3 w-3" />
+					</a>
+				)}
+			</PopoverContent>
+		</Popover>
+	);
+};
+
 const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 	{
 		id: "name",
@@ -335,6 +404,11 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 							Mã ngành: <span className="font-mono">{m.code}</span>
 						</p>
 					)}
+					{m.years[0]?.note && (
+						<p className="text-xs text-muted-foreground italic mt-0.5">
+							{m.years[0].note}
+						</p>
+					)}
 				</div>
 			);
 		},
@@ -342,14 +416,11 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 	{
 		id: "tuition",
 		// undefined (not null) so sortUndefined keeps "chưa công bố" rows last either direction.
-		accessorFn: (m) => m.years[0]?.tuitionFeeMin ?? undefined,
+		// latestTuition (not years[0]) so sorting matches the displayed fallback figure.
+		accessorFn: (m) => latestTuition(m)?.tuitionFeeMin ?? undefined,
 		sortUndefined: "last",
 		header: ({ column }) => <SortableHeader column={column} label="Học phí" />,
-		cell: ({ row }) => (
-			<span className="text-sm text-muted-foreground">
-				{majorTuition(row.original) ?? "—"}
-			</span>
-		),
+		cell: ({ row }) => <TuitionCell major={row.original} />,
 	},
 	{
 		id: "quota",
@@ -443,6 +514,7 @@ const MajorTableRow = ({
 						<RequirementsTable requirements={m.admissionRequirements} />
 						<Suspense fallback={null}>
 							<MajorScoreChart requirements={m.admissionRequirements} />
+							<MajorTuitionHistory years={m.years} />
 						</Suspense>
 					</TableCell>
 				</TableRow>
@@ -464,7 +536,10 @@ const MajorsTable = ({ majors }: { majors: MajorWithRequirements[] }) => {
 		onSortingChange: setSorting,
 		onGlobalFilterChange: setGlobalFilter,
 		globalFilterFn: majorFilter,
-		getRowCanExpand: (row) => row.original.admissionRequirements.length > 0,
+		// Mở rộng được khi có điểm chuẩn HOẶC có lịch sử học phí/chỉ tiêu (≥2 năm).
+		getRowCanExpand: (row) =>
+			row.original.admissionRequirements.length > 0 ||
+			row.original.years.length >= 2,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),

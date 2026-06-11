@@ -223,15 +223,25 @@ def confirm_overwrite(out_csv: str, label: str, assume_yes: bool) -> bool:
 
 
 # ── CLI ─────────────────────────────────────────────────────────────────────────
-def run_cli(category, description, targets_help, note_help, process_target):
-    """Khung CLI chung: argparse + validate_env + resolve_targets + vòng lặp process_target."""
+def run_cli(category, description, targets_help, note_help, process_target, add_args=None):
+    """Khung CLI chung: argparse + validate_env + resolve_targets + vòng lặp process_target.
+
+    `add_args(parser)` (tuỳ chọn) để script khai báo thêm flag riêng (vd extract_majors
+    tách 2 cột nguồn); process_target(year_dir, args) nhận cả namespace đã parse.
+    """
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("targets", nargs="*", help=targets_help)
     parser.add_argument("-n", "--note", default="", help=note_help)
     parser.add_argument(
+        "-s", "--source-url", default="",
+        help="URL trang nguồn (đề án / công bố điểm) — điền vào (các) cột nguồn của mọi dòng; để trống thì điền tay khi review",
+    )
+    parser.add_argument(
         "-y", "--yes", action="store_true",
         help="tự động ghi đè CSV đã tồn tại, không hỏi (tiện chạy batch)",
     )
+    if add_args:
+        add_args(parser)
     args = parser.parse_args()
 
     vision.validate_env()
@@ -243,8 +253,14 @@ def run_cli(category, description, targets_help, note_help, process_target):
     if not targets:
         sys.exit(f"Không có (trường, năm) nào có images/ trong {SCHOOLS_DIR}/*/{category}/")
 
-    if args.note and len(targets) > 1:
-        print("  (lưu ý: --note áp dụng cho TẤT CẢ trường-năm trong lần chạy này)")
+    # Cảnh báo các flag giá-trị (note, các nguồn...) khi chạy nhiều trường-năm một lượt.
+    flagged = [
+        f"--{name.replace('_', '-')}"
+        for name, value in vars(args).items()
+        if name not in ("targets", "yes") and value
+    ]
+    if flagged and len(targets) > 1:
+        print(f"  (lưu ý: {'/'.join(flagged)} áp dụng cho TẤT CẢ trường-năm trong lần chạy này)")
     print(f"Xử lý {len(targets)} trường-năm:")
     for year_dir in targets:
-        process_target(year_dir, args.note, args.yes)
+        process_target(year_dir, args)

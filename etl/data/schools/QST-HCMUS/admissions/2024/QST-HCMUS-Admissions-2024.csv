@@ -1,144 +1,144 @@
-UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score
-QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",THPTQG,A00,30,25.10
-QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",THPTQG,A01,30,25.10
-QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",THPTQG,A02,30,25.10
-QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",THPTQG,D90,30,25.10
-QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),THPTQG,A00,30,23.00
-QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),THPTQG,A01,30,23.00
-QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),THPTQG,A02,30,23.00
-QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),THPTQG,D90,30,23.00
-QST,7440228,Hải dương học,THPTQG,A00,30,20.00
-QST,7440228,Hải dương học,THPTQG,A01,30,20.00
-QST,7440228,Hải dương học,THPTQG,B00,30,20.00
-QST,7440228,Hải dương học,THPTQG,D07,30,20.00
-QST,7440112,Hóa học,THPTQG,A00,30,25.42
-QST,7440112,Hóa học,THPTQG,B00,30,25.42
-QST,7440112,Hóa học,THPTQG,D07,30,25.42
-QST,7440112,Hóa học,THPTQG,D90,30,25.42
-QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),THPTQG,A00,30,24.65
-QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),THPTQG,B00,30,24.65
-QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),THPTQG,D07,30,24.65
-QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),THPTQG,D90,30,24.65
-QST,7440122,Khoa học Vật liệu,THPTQG,A00,30,22.30
-QST,7440122,Khoa học Vật liệu,THPTQG,A01,30,22.30
-QST,7440122,Khoa học Vật liệu,THPTQG,B00,30,22.30
-QST,7440122,Khoa học Vật liệu,THPTQG,D07,30,22.30
-QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),THPTQG,A00,30,22.30
-QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),THPTQG,A01,30,22.30
-QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),THPTQG,B00,30,22.30
-QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),THPTQG,D07,30,22.30
-QST,7440201_NN,Nhóm ngành Địa chất học,THPTQG,A00,30,19.50
-QST,7440201_NN,Nhóm ngành Địa chất học,THPTQG,B00,30,19.50
-QST,7440201_NN,Nhóm ngành Địa chất học,THPTQG,C04,30,19.50
-QST,7440201_NN,Nhóm ngành Địa chất học,THPTQG,D07,30,19.50
-QST,7440301,Khoa học Môi trường,THPTQG,A00,30,19.00
-QST,7440301,Khoa học Môi trường,THPTQG,B00,30,19.00
-QST,7440301,Khoa học Môi trường,THPTQG,B08,30,19.00
-QST,7440301,Khoa học Môi trường,THPTQG,D07,30,19.00
-QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),THPTQG,A00,30,18.50
-QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),THPTQG,B00,30,18.50
-QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),THPTQG,B08,30,18.50
-QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),THPTQG,D07,30,18.50
-QST,7420101,Sinh học,THPTQG,A02,30,23.50
-QST,7420101,Sinh học,THPTQG,B00,30,23.50
-QST,7420101,Sinh học,THPTQG,B08,30,23.50
-QST,7420101_DKD,Sinh học (CT tăng cường tiếng Anh),THPTQG,A02,30,23.50
-QST,7420101_DKD,Sinh học (CT tăng cường tiếng Anh),THPTQG,B00,30,23.50
-QST,7420101_DKD,Sinh học (CT tăng cường tiếng Anh),THPTQG,B08,30,23.50
-QST,7420201,Công nghệ Sinh học,THPTQG,A02,30,24.90
-QST,7420201,Công nghệ Sinh học,THPTQG,B00,30,24.90
-QST,7420201,Công nghệ Sinh học,THPTQG,B08,30,24.90
-QST,7420201,Công nghệ Sinh học,THPTQG,D90,30,24.90
-QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),THPTQG,A02,30,24.90
-QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),THPTQG,B00,30,24.90
-QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),THPTQG,B08,30,24.90
-QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),THPTQG,D90,30,24.90
-QST,7850101,Quản lý Tài nguyên và Môi trường,THPTQG,A00,30,22.00
-QST,7850101,Quản lý Tài nguyên và Môi trường,THPTQG,B00,30,22.00
-QST,7850101,Quản lý Tài nguyên và Môi trường,THPTQG,B08,30,22.00
-QST,7850101,Quản lý Tài nguyên và Môi trường,THPTQG,D07,30,22.00
-QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",THPTQG,A00,30,25.55
-QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",THPTQG,A01,30,25.55
-QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",THPTQG,B00,30,25.55
-QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",THPTQG,D01,30,25.55
-QST,7460108,Khoa học Dữ liệu,THPTQG,A00,30,26.85
-QST,7460108,Khoa học Dữ liệu,THPTQG,A01,30,26.85
-QST,7460108,Khoa học Dữ liệu,THPTQG,B08,30,26.85
-QST,7460108,Khoa học Dữ liệu,THPTQG,D07,30,26.85
-QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,THPTQG,A00,30,26.75
-QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,THPTQG,A01,30,26.75
-QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,THPTQG,B08,30,26.75
-QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,THPTQG,D07,30,26.75
-QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),THPTQG,A00,30,26.00
-QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),THPTQG,A01,30,26.00
-QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),THPTQG,B08,30,26.00
-QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),THPTQG,D07,30,26.00
-QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),THPTQG,A00,30,28.50
-QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),THPTQG,A01,30,28.50
-QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),THPTQG,B08,30,28.50
-QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),THPTQG,D07,30,28.50
-QST,7480107,Trí tuệ nhân tạo,THPTQG,A00,30,27.70
-QST,7480107,Trí tuệ nhân tạo,THPTQG,A01,30,27.70
-QST,7480107,Trí tuệ nhân tạo,THPTQG,B08,30,27.70
-QST,7480107,Trí tuệ nhân tạo,THPTQG,D07,30,27.70
-QST,7520402,Kỹ thuật Hạt nhân,THPTQG,A00,30,23.60
-QST,7520402,Kỹ thuật Hạt nhân,THPTQG,A01,30,23.60
-QST,7520402,Kỹ thuật Hạt nhân,THPTQG,A02,30,23.60
-QST,7520402,Kỹ thuật Hạt nhân,THPTQG,D90,30,23.60
-QST,7520403,Vật lý Y khoa,THPTQG,A00,30,24.60
-QST,7520403,Vật lý Y khoa,THPTQG,A01,30,24.60
-QST,7520403,Vật lý Y khoa,THPTQG,A02,30,24.60
-QST,7520403,Vật lý Y khoa,THPTQG,D90,30,24.60
-QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),THPTQG,A00,30,25.00
-QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),THPTQG,B00,30,25.00
-QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),THPTQG,D07,30,25.00
-QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),THPTQG,D90,30,25.00
-QST,7510402,Công nghệ Vật liệu,THPTQG,A00,30,24.00
-QST,7510402,Công nghệ Vật liệu,THPTQG,A01,30,24.00
-QST,7510402,Công nghệ Vật liệu,THPTQG,B00,30,24.00
-QST,7510402,Công nghệ Vật liệu,THPTQG,D07,30,24.00
-QST,7520501,Kỹ thuật Địa chất,THPTQG,A00,30,19.50
-QST,7520501,Kỹ thuật Địa chất,THPTQG,A01,30,19.50
-QST,7520501,Kỹ thuật Địa chất,THPTQG,B00,30,19.50
-QST,7520501,Kỹ thuật Địa chất,THPTQG,D07,30,19.50
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,A00,30,19.00
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,B00,30,19.00
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,B08,30,19.00
-QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,D07,30,19.00
-QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",THPTQG,A00,30,25.90
-QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",THPTQG,A01,30,25.90
-QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",THPTQG,D07,30,25.90
-QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",THPTQG,D90,30,25.90
-QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),THPTQG,A00,30,25.40
-QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),THPTQG,A01,30,25.40
-QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),THPTQG,D07,30,25.40
-QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),THPTQG,D90,30,25.40
-QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",ĐGNL,,1200,840
-QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),ĐGNL,,1200,720
-QST,7440228,Hải dương học,ĐGNL,,1200,630
-QST,7440112,Hóa học,ĐGNL,,1200,860
-QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),ĐGNL,,1200,860
-QST,7440122,Khoa học Vật liệu,ĐGNL,,1200,700
-QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),ĐGNL,,1200,700
-QST,7440201_NN,"Nhóm ngành Địa chất học, Kinh tế đất đai",ĐGNL,,1200,630
-QST,7440301,Khoa học Môi trường,ĐGNL,,1200,630
-QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),ĐGNL,,1200,630
-QST,7420101,Sinh học,ĐGNL,,1200,665
-QST,7420101_DKD,Sinh học (CT tăng cường tiếng Anh),ĐGNL,,1200,665
-QST,7420201,Công nghệ Sinh học,ĐGNL,,1200,835
-QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),ĐGNL,,1200,835
-QST,7850101,Quản lý Tài nguyên và Môi trường,ĐGNL,,1200,690
-QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",ĐGNL,,1200,870
-QST,7460108,Khoa học Dữ liệu,ĐGNL,,1200,980
-QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,ĐGNL,,1200,945
-QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),ĐGNL,,1200,925
-QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),ĐGNL,,1200,1052
-QST,7480107,Trí tuệ nhân tạo,ĐGNL,,1200,1032
-QST,7520402,Kỹ thuật Hạt nhân,ĐGNL,,1200,735
-QST,7520403,Vật lý Y khoa,ĐGNL,,1200,840
-QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),ĐGNL,,1200,870
-QST,7510402,Công nghệ Vật liệu,ĐGNL,,1200,780
-QST,7520501,Kỹ thuật Địa chất,ĐGNL,,1200,630
-QST,7510406,Công nghệ Kỹ thuật Môi trường,ĐGNL,,1200,640
-QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",ĐGNL,,1200,910
-QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),ĐGNL,,1200,820
+UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score,Note,SourceUrl
+QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",THPTQG,A00,30,25.10,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",THPTQG,A01,30,25.10,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",THPTQG,A02,30,25.10,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",THPTQG,D90,30,25.10,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),THPTQG,A00,30,23.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),THPTQG,A01,30,23.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),THPTQG,A02,30,23.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),THPTQG,D90,30,23.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440228,Hải dương học,THPTQG,A00,30,20.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440228,Hải dương học,THPTQG,A01,30,20.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440228,Hải dương học,THPTQG,B00,30,20.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440228,Hải dương học,THPTQG,D07,30,20.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440112,Hóa học,THPTQG,A00,30,25.42,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440112,Hóa học,THPTQG,B00,30,25.42,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440112,Hóa học,THPTQG,D07,30,25.42,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440112,Hóa học,THPTQG,D90,30,25.42,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),THPTQG,A00,30,24.65,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),THPTQG,B00,30,24.65,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),THPTQG,D07,30,24.65,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),THPTQG,D90,30,24.65,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440122,Khoa học Vật liệu,THPTQG,A00,30,22.30,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440122,Khoa học Vật liệu,THPTQG,A01,30,22.30,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440122,Khoa học Vật liệu,THPTQG,B00,30,22.30,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440122,Khoa học Vật liệu,THPTQG,D07,30,22.30,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),THPTQG,A00,30,22.30,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),THPTQG,A01,30,22.30,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),THPTQG,B00,30,22.30,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),THPTQG,D07,30,22.30,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440201_NN,Nhóm ngành Địa chất học,THPTQG,A00,30,19.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440201_NN,Nhóm ngành Địa chất học,THPTQG,B00,30,19.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440201_NN,Nhóm ngành Địa chất học,THPTQG,C04,30,19.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440201_NN,Nhóm ngành Địa chất học,THPTQG,D07,30,19.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440301,Khoa học Môi trường,THPTQG,A00,30,19.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440301,Khoa học Môi trường,THPTQG,B00,30,19.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440301,Khoa học Môi trường,THPTQG,B08,30,19.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440301,Khoa học Môi trường,THPTQG,D07,30,19.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),THPTQG,A00,30,18.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),THPTQG,B00,30,18.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),THPTQG,B08,30,18.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),THPTQG,D07,30,18.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420101,Sinh học,THPTQG,A02,30,23.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420101,Sinh học,THPTQG,B00,30,23.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420101,Sinh học,THPTQG,B08,30,23.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420101_DKD,Sinh học (CT tăng cường tiếng Anh),THPTQG,A02,30,23.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420101_DKD,Sinh học (CT tăng cường tiếng Anh),THPTQG,B00,30,23.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420101_DKD,Sinh học (CT tăng cường tiếng Anh),THPTQG,B08,30,23.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420201,Công nghệ Sinh học,THPTQG,A02,30,24.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420201,Công nghệ Sinh học,THPTQG,B00,30,24.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420201,Công nghệ Sinh học,THPTQG,B08,30,24.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420201,Công nghệ Sinh học,THPTQG,D90,30,24.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),THPTQG,A02,30,24.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),THPTQG,B00,30,24.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),THPTQG,B08,30,24.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),THPTQG,D90,30,24.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7850101,Quản lý Tài nguyên và Môi trường,THPTQG,A00,30,22.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7850101,Quản lý Tài nguyên và Môi trường,THPTQG,B00,30,22.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7850101,Quản lý Tài nguyên và Môi trường,THPTQG,B08,30,22.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7850101,Quản lý Tài nguyên và Môi trường,THPTQG,D07,30,22.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",THPTQG,A00,30,25.55,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",THPTQG,A01,30,25.55,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",THPTQG,B00,30,25.55,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",THPTQG,D01,30,25.55,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7460108,Khoa học Dữ liệu,THPTQG,A00,30,26.85,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7460108,Khoa học Dữ liệu,THPTQG,A01,30,26.85,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7460108,Khoa học Dữ liệu,THPTQG,B08,30,26.85,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7460108,Khoa học Dữ liệu,THPTQG,D07,30,26.85,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,THPTQG,A00,30,26.75,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,THPTQG,A01,30,26.75,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,THPTQG,B08,30,26.75,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,THPTQG,D07,30,26.75,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),THPTQG,A00,30,26.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),THPTQG,A01,30,26.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),THPTQG,B08,30,26.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),THPTQG,D07,30,26.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),THPTQG,A00,30,28.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),THPTQG,A01,30,28.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),THPTQG,B08,30,28.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),THPTQG,D07,30,28.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480107,Trí tuệ nhân tạo,THPTQG,A00,30,27.70,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480107,Trí tuệ nhân tạo,THPTQG,A01,30,27.70,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480107,Trí tuệ nhân tạo,THPTQG,B08,30,27.70,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7480107,Trí tuệ nhân tạo,THPTQG,D07,30,27.70,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520402,Kỹ thuật Hạt nhân,THPTQG,A00,30,23.60,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520402,Kỹ thuật Hạt nhân,THPTQG,A01,30,23.60,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520402,Kỹ thuật Hạt nhân,THPTQG,A02,30,23.60,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520402,Kỹ thuật Hạt nhân,THPTQG,D90,30,23.60,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520403,Vật lý Y khoa,THPTQG,A00,30,24.60,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520403,Vật lý Y khoa,THPTQG,A01,30,24.60,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520403,Vật lý Y khoa,THPTQG,A02,30,24.60,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520403,Vật lý Y khoa,THPTQG,D90,30,24.60,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),THPTQG,A00,30,25.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),THPTQG,B00,30,25.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),THPTQG,D07,30,25.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),THPTQG,D90,30,25.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510402,Công nghệ Vật liệu,THPTQG,A00,30,24.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510402,Công nghệ Vật liệu,THPTQG,A01,30,24.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510402,Công nghệ Vật liệu,THPTQG,B00,30,24.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510402,Công nghệ Vật liệu,THPTQG,D07,30,24.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520501,Kỹ thuật Địa chất,THPTQG,A00,30,19.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520501,Kỹ thuật Địa chất,THPTQG,A01,30,19.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520501,Kỹ thuật Địa chất,THPTQG,B00,30,19.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520501,Kỹ thuật Địa chất,THPTQG,D07,30,19.50,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,A00,30,19.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,B00,30,19.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,B08,30,19.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,THPTQG,D07,30,19.00,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",THPTQG,A00,30,25.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",THPTQG,A01,30,25.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",THPTQG,D07,30,25.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",THPTQG,D90,30,25.90,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),THPTQG,A00,30,25.40,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),THPTQG,A01,30,25.40,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),THPTQG,D07,30,25.40,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),THPTQG,D90,30,25.40,,https://hcmus.edu.vn/diem-chuan-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-tot-nghiep-thpt-2024/
+QST,7440102_NN,"Nhóm ngành Vật lý học, Công nghệ Vật lý điện tử và tin học, Công nghệ bán dẫn",ĐGNL,,1200,840,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440102_DKD,Vật lý học (CT tăng cường tiếng Anh),ĐGNL,,1200,720,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440228,Hải dương học,ĐGNL,,1200,630,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440112,Hóa học,ĐGNL,,1200,860,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440112_DKD,Hóa học (CT tăng cường tiếng Anh),ĐGNL,,1200,860,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440122,Khoa học Vật liệu,ĐGNL,,1200,700,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440122_DKD,Khoa học Vật liệu (CT tăng cường tiếng Anh),ĐGNL,,1200,700,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440201_NN,"Nhóm ngành Địa chất học, Kinh tế đất đai",ĐGNL,,1200,630,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440301,Khoa học Môi trường,ĐGNL,,1200,630,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7440301_DKD,Khoa học Môi trường (CT tăng cường tiếng Anh),ĐGNL,,1200,630,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7420101,Sinh học,ĐGNL,,1200,665,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7420101_DKD,Sinh học (CT tăng cường tiếng Anh),ĐGNL,,1200,665,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7420201,Công nghệ Sinh học,ĐGNL,,1200,835,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7420201_DKD,Công nghệ Sinh học (CT tăng cường tiếng Anh),ĐGNL,,1200,835,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7850101,Quản lý Tài nguyên và Môi trường,ĐGNL,,1200,690,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7460101_NN,"Nhóm ngành Toán học, Toán tin, Toán ứng dụng",ĐGNL,,1200,870,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7460108,Khoa học Dữ liệu,ĐGNL,,1200,980,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7480201_NN,Nhóm ngành Máy tính và Công nghệ Thông tin,ĐGNL,,1200,945,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7480201_DKD,Công nghệ Thông tin (CT tăng cường tiếng Anh),ĐGNL,,1200,925,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7480101_TT,Khoa học Máy tính (CT Tiên tiến),ĐGNL,,1200,1052,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7480107,Trí tuệ nhân tạo,ĐGNL,,1200,1032,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7520402,Kỹ thuật Hạt nhân,ĐGNL,,1200,735,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7520403,Vật lý Y khoa,ĐGNL,,1200,840,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7510401_DKD,Công nghệ Kỹ thuật Hóa học (CT tăng cường tiếng Anh),ĐGNL,,1200,870,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7510402,Công nghệ Vật liệu,ĐGNL,,1200,780,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7520501,Kỹ thuật Địa chất,ĐGNL,,1200,630,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7510406,Công nghệ Kỹ thuật Môi trường,ĐGNL,,1200,640,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7520207_NN,"Nhóm ngành Kỹ thuật Điện tử - Viễn thông, Thiết kế vi mạch",ĐGNL,,1200,910,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/
+QST,7520207_DKD,Kỹ thuật Điện tử - Viễn thông (CT tăng cường tiếng Anh),ĐGNL,,1200,820,,https://hcmus.edu.vn/diem-chuan-trung-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-cua-dhqg-hcm-nam-2024/

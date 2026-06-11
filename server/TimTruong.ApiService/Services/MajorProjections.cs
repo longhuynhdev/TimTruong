@@ -28,7 +28,10 @@ public static class MajorProjections
                 my.TuitionFeeMin,
                 my.TuitionFeeMax,
                 my.TuitionFeeUnit.HasValue ? my.TuitionFeeUnit.Value.ToString() : null,
-                my.EnrollmentQuota
+                my.EnrollmentQuota,
+                my.Note,
+                my.TuitionSourceUrl,
+                my.QuotaSourceUrl
             ))
             .ToList(),
         m.AdmissionRequirements
@@ -39,7 +42,8 @@ public static class MajorProjections
                 r.ExamType.ToString(),
                 r.Score,
                 r.SubjectCombination.HasValue ? r.SubjectCombination.Value.ToString() : null,
-                r.Year
+                r.Year,
+                r.SourceUrl
             ))
             .ToList()
     );

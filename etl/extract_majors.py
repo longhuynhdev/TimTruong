@@ -4,6 +4,8 @@ Dùng:
   uv run extract_majors.py QSC-UIT/2026                        # chỉ 1 trường-năm (hoặc QSC-UIT-2026)
   uv run extract_majors.py QSC-UIT                             # mọi năm của 1 trường
   uv run extract_majors.py QSC-UIT/2026 --note "bỏ các CTĐT liên kết quốc tế"
+  uv run extract_majors.py QSC-UIT/2026 -s "https://..."       # 1 đề án chung → điền cả TuitionSourceUrl + QuotaSourceUrl
+  uv run extract_majors.py QSC-UIT/2026 --tuition-source-url "https://.../hoc-phi" --quota-source-url "https://.../de-an"
   uv run extract_majors.py QSC-UIT/2026 -y                     # ghi đè CSV cũ không hỏi
 
 Header CSV khớp etl_majors.py. Field nào ảnh không có (vd học phí, OldCode) → để TRỐNG.
@@ -34,9 +36,15 @@ COL_QUOTA = "EnrollmentQuota"
 COL_FEE_MIN = "TuitionFeeMin"
 COL_FEE_MAX = "TuitionFeeMax"
 COL_FEE_UNIT = "TuitionFeeUnit"
+COL_NOTE = "Note"
+COL_TUITION_SRC = "TuitionSourceUrl"
+COL_QUOTA_SRC = "QuotaSourceUrl"
 
 # UniversityCode không nằm trong file etl_majors đọc → không đưa vào HEADER, chỉ để định danh.
-HEADER = [COL_CODE, COL_OLD, COL_NAME, COL_QUOTA, COL_FEE_MIN, COL_FEE_MAX, COL_FEE_UNIT]
+# Note/nguồn không do LLM emit: Note điền tay khi review; --source-url điền cả 2 cột nguồn
+# (sửa tay cột học phí khi trường công bố học phí ở trang riêng).
+HEADER = [COL_CODE, COL_OLD, COL_NAME, COL_QUOTA, COL_FEE_MIN, COL_FEE_MAX, COL_FEE_UNIT,
+          COL_NOTE, COL_TUITION_SRC, COL_QUOTA_SRC]
 
 # Khoá JSON model trả về → cột CSV tương ứng.
 JSON_TO_COL = {
@@ -97,13 +105,26 @@ def validate_row(row: dict):
     return warns
 
 
-def process_target(year_dir: str, note: str, assume_yes: bool):
+def add_args(parser):
+    """Flag riêng: tách nguồn học phí / chỉ tiêu (nhiều trường công bố ở 2 trang khác nhau)."""
+    parser.add_argument(
+        "--tuition-source-url", default="",
+        help="URL nguồn HỌC PHÍ — ghi đè --source-url cho cột TuitionSourceUrl",
+    )
+    parser.add_argument(
+        "--quota-source-url", default="",
+        help="URL nguồn CHỈ TIÊU (đề án) — ghi đè --source-url cho cột QuotaSourceUrl",
+    )
+
+
+def process_target(year_dir: str, args):
     label = common.target_label(year_dir)
     uni_code = common.parse_uni_code(common.school_of(year_dir))
     out_csv = common.output_csv_path(year_dir, CATEGORY)
-    if not common.confirm_overwrite(out_csv, label, assume_yes):
+    if not common.confirm_overwrite(out_csv, label, args.yes):
         print(f"  SKIP '{label}' — giữ CSV hiện có")
         return
+    note = args.note
 
     images = common.load_images(join(year_dir, "images"))
     if not images:
@@ -135,6 +156,12 @@ def process_target(year_dir: str, note: str, assume_yes: bool):
     )
     # Bỏ cột UniversityCode khỏi mỗi dòng — file ngành chỉ gồm các cột trong HEADER.
     rows = [{c: r.get(c, "") for c in HEADER} for r in rows]
+    # Flag riêng ghi đè -s; -s là shortcut khi cả hai chung một trang (đề án).
+    tuition_src = args.tuition_source_url or args.source_url
+    quota_src = args.quota_source_url or args.source_url
+    for r in rows:
+        r[COL_TUITION_SRC] = tuition_src
+        r[COL_QUOTA_SRC] = quota_src
     review_path, n_flag = common.write_outputs(out_csv, rows, flags, HEADER)
     print(f"    → {os.path.relpath(out_csv, common.BASE_DIR)} ({len(rows)} dòng)")
     if n_flag:
@@ -150,6 +177,7 @@ def run():
         targets_help="trường-năm cần xử lý: 'QSC-UIT/2026' hay 'QSC-UIT-2026' (1 năm), 'QSC-UIT' (mọi năm); bỏ trống = tất cả",
         note_help="hướng dẫn riêng nối vào prompt cho lần chạy này (vd 'bỏ các CTĐT liên kết quốc tế')",
         process_target=process_target,
+        add_args=add_args,
     )
 
 

@@ -1,21 +1,22 @@
-MajorCode,OldCode,MajorName,EnrollmentQuota,TuitionFeeMin,TuitionFeeMax,TuitionFeeUnit
-7480101,,Khoa học Máy tính,280,41.800.000,,PerYear
-7480101TA,,Khoa học Máy tính (Chương trình đào tạo bằng tiếng Anh),50,80.000.000,,PerYear
-7480102,,Mạng máy tính và truyền thông dữ liệu,200,41.800.000,,PerYear
-7480103,,Kỹ thuật phần mềm,240,41.800.000,,PerYear
-7480103TA,,Kỹ thuật phần mềm (Chương trình đào tạo bằng tiếng Anh),50,80.000.000,,PerYear
-7480104,,Hệ thống thông tin,180,41.800.000,,PerYear
-7480104TT,7480104_TT,Hệ thống thông tin (tiên tiến),80,60.000.000,,PerYear
-7480106,,Kỹ thuật máy tính,220,41.800.000,,PerYear
-7480201,,Công nghệ Thông tin,120,41.800.000,,PerYear
-7480201VN,7480201_N,Công nghệ Thông tin (Việt Nhật),130,41.800.000,,PerYear
-7480202,,An toàn thông tin,170,41.800.000,,PerYear
-7480202TA,,An toàn thông tin (Chương trình đào tạo bằng tiếng Anh),50,80.000.000,,PerYear
-7480107,,Trí tuệ nhân tạo,40,41.800.000,,PerYear
-75202a1,75202A1,Thiết kế vi mạch,70,52.000.000,,PerYear
-75202a1TA,,Thiết kế vi mạch (Chương trình đào tạo bằng tiếng Anh),40,85.000.000,,PerYear
-7340122,,Thương mại điện tử,140,41.800.000,,PerYear
-7460108,7480108,Khoa học dữ liệu,55,41.800.000,,PerYear
-7460108TA,,Khoa học dữ liệu (Chương trình đào tạo bằng tiếng Anh),30,80.000.000,,PerYear
-7320104,,Truyền thông đa phương tiện,60,41.800.000,,PerYear
-7480103QT,,Kỹ thuật phần mềm (Tuyển sinh sinh viên quốc tế theo phương thức riêng),50,,,
+MajorCode,OldCode,MajorName,EnrollmentQuota,TuitionFeeMin,TuitionFeeMax,TuitionFeeUnit,Note,TuitionSourceUrl,QuotaSourceUrl
+7480101,,Khoa học Máy tính,280,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480101TA,,Khoa học Máy tính (Chương trình đào tạo bằng tiếng Anh),50,80.000.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480102,,Mạng máy tính và truyền thông dữ liệu,200,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480103,,Kỹ thuật phần mềm,240,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480103TA,,Kỹ thuật phần mềm (Chương trình đào tạo bằng tiếng Anh),50,80.000.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480104,,Hệ thống thông tin,180,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480104TT,7480104_TT,Hệ thống thông tin (tiên tiến),80,60.000.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480106,,Kỹ thuật máy tính,220,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480201,,Công nghệ Thông tin,120,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480201VN,7480201_N,Công nghệ Thông tin (Việt Nhật),130,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480202,,An toàn thông tin,170,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480202TA,,An toàn thông tin (Chương trình đào tạo bằng tiếng Anh),50,80.000.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480107,,Trí tuệ nhân tạo,40,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+75202a1,75202A1,Thiết kế vi mạch,70,52.000.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+75202a1TA,,Thiết kế vi mạch (Chương trình đào tạo bằng tiếng Anh),40,85.000.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7340122,,Thương mại điện tử,140,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7460108,7480108,Khoa học dữ liệu,55,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7460108TA,,Khoa học dữ liệu (Chương trình đào tạo bằng tiếng Anh),30,80.000.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7320104,,Truyền thông đa phương tiện,60,41.800.000,,PerYear,,https://vnexpress.net/lo-trinh-tang-hoc-phi-dai-hoc-cong-nghe-thong-tin-tu-2026-den-2030-chi-tiet-5068928.html,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+7480103QT,,"Kỹ thuật phần mềm ",50,,,,(Tuyển sinh sinh viên quốc tế theo phương thức riêng),,https://tuyensinh.uit.edu.vn/2026-du-kien-phuong-huong-tuyen-sinh-dai-hoc-chinh-quy-nam-2026
+,,,,,,,,,
