@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Core.Models;
+using TimTruong.Core.Models;
 using TimTruong.ApiService.DataAccess;
 using TimTruong.ApiService.DTOs;
 

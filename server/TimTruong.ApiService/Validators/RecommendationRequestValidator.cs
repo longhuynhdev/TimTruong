@@ -1,4 +1,4 @@
-using Core.Models;
+using TimTruong.Core.Models;
 using TimTruong.ApiService.DTOs;
 
 namespace TimTruong.ApiService.Validators;

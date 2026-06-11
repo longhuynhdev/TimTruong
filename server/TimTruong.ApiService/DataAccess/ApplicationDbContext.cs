@@ -1,6 +1,6 @@
 using System;
-using Core;
-using Core.Models;
+using TimTruong.Core;
+using TimTruong.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace TimTruong.ApiService.DataAccess;

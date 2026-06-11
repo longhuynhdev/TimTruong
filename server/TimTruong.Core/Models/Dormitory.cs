@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Models;
+namespace TimTruong.Core.Models;
 
 public class Dormitory
 {

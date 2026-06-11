@@ -1,7 +1,7 @@
 <Solution>
-  <Project Path="Core/Core.csproj" />
   <Project Path="TimTruong.ApiService/TimTruong.ApiService.csproj" />
   <Project Path="TimTruong.AppHost/TimTruong.AppHost.csproj" />
+  <Project Path="TimTruong.Core\TimTruong.Core.csproj" />
   <Project Path="TimTruong.ServiceDefaults/TimTruong.ServiceDefaults.csproj" />
   <Project Path="TimTruong.Tests/TimTruong.Tests.csproj" />
 </Solution>

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Models;
+namespace TimTruong.Core.Models;
 
 /// <summary>
 /// A university's rank in a given ranking system for a specific year.

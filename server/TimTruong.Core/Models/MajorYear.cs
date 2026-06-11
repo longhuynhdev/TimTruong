@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Models;
+namespace TimTruong.Core.Models;
 
 /// <summary>
 /// A major's year-varying data for a specific academic year (tuition, enrollment quota).

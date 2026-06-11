@@ -1,4 +1,4 @@
-namespace Core.Models;
+namespace TimTruong.Core.Models;
 
 /// <summary>
 /// Vietnamese high school subject combinations for university admission

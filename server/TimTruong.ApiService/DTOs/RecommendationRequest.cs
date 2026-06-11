@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Core.Models;
+using TimTruong.Core.Models;
 
 namespace TimTruong.ApiService.DTOs;
 

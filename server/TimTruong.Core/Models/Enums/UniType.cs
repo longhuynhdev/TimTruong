@@ -1,4 +1,4 @@
-namespace Core.Models;
+namespace TimTruong.Core.Models;
 
 /// <summary>
 /// Type of the university

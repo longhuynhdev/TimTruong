@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Core.Models;
+using TimTruong.Core.Models;
 using TimTruong.ApiService.DTOs;
 
 namespace TimTruong.ApiService.Services;

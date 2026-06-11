@@ -1,4 +1,4 @@
-namespace Core.Models;
+namespace TimTruong.Core.Models;
 
 public enum ExamType
 {

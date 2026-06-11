@@ -1,4 +1,4 @@
-namespace Core.Models;
+namespace TimTruong.Core.Models;
 
 /// <summary>
 /// University ranking systems. Stored as integer in the database, so adding a new
