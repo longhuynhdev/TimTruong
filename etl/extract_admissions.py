@@ -99,13 +99,14 @@ def validate_row(row: dict):
     return warns
 
 
-def process_target(year_dir: str, note: str, assume_yes: bool, source_url: str):
+def process_target(year_dir: str, args):
     label = common.target_label(year_dir)
     uni_code = common.parse_uni_code(common.school_of(year_dir))
     out_csv = common.output_csv_path(year_dir, CATEGORY)
-    if not common.confirm_overwrite(out_csv, label, assume_yes):
+    if not common.confirm_overwrite(out_csv, label, args.yes):
         print(f"  SKIP '{label}' — giữ CSV hiện có")
         return
+    note = args.note
 
     images = common.load_images(join(year_dir, "images"))
     if not images:
@@ -134,7 +135,7 @@ def process_target(year_dir: str, note: str, assume_yes: bool, source_url: str):
 
     rows, flags = common.merge_passes(passes, row_key, validate_row, diverge_fields=[COL_SCORE])
     for r in rows:
-        r[COL_SOURCE] = source_url
+        r[COL_SOURCE] = args.source_url
     review_path, n_flag = common.write_outputs(out_csv, rows, flags, HEADER)
     print(f"    → {os.path.relpath(out_csv, common.BASE_DIR)} ({len(rows)} dòng)")
     if n_flag:

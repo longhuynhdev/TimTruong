@@ -18,7 +18,14 @@ namespace TimTruong.ApiService.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "SourceUrl",
+                name: "QuotaSourceUrl",
+                table: "MajorYears",
+                type: "character varying(500)",
+                maxLength: 500,
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "TuitionSourceUrl",
                 table: "MajorYears",
                 type: "character varying(500)",
                 maxLength: 500,
@@ -40,7 +47,11 @@ namespace TimTruong.ApiService.Migrations
                 table: "MajorYears");
 
             migrationBuilder.DropColumn(
-                name: "SourceUrl",
+                name: "QuotaSourceUrl",
+                table: "MajorYears");
+
+            migrationBuilder.DropColumn(
+                name: "TuitionSourceUrl",
                 table: "MajorYears");
 
             migrationBuilder.DropColumn(

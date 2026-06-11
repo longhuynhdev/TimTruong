@@ -11,7 +11,7 @@ using TimTruong.ApiService.DataAccess;
 namespace TimTruong.ApiService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260611040759_MajorYearNoteAndSourceUrls")]
+    [Migration("20260611051145_MajorYearNoteAndSourceUrls")]
     partial class MajorYearNoteAndSourceUrls
     {
         /// <inheritdoc />
@@ -188,7 +188,7 @@ namespace TimTruong.ApiService.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<string>("SourceUrl")
+                    b.Property<string>("QuotaSourceUrl")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -200,6 +200,10 @@ namespace TimTruong.ApiService.Migrations
 
                     b.Property<int?>("TuitionFeeUnit")
                         .HasColumnType("integer");
+
+                    b.Property<string>("TuitionSourceUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("Year")
                         .HasColumnType("integer");

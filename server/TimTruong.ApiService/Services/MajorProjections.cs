@@ -30,7 +30,8 @@ public static class MajorProjections
                 my.TuitionFeeUnit.HasValue ? my.TuitionFeeUnit.Value.ToString() : null,
                 my.EnrollmentQuota,
                 my.Note,
-                my.SourceUrl
+                my.TuitionSourceUrl,
+                my.QuotaSourceUrl
             ))
             .ToList(),
         m.AdmissionRequirements

@@ -185,7 +185,7 @@ namespace TimTruong.ApiService.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<string>("SourceUrl")
+                    b.Property<string>("QuotaSourceUrl")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -197,6 +197,10 @@ namespace TimTruong.ApiService.Migrations
 
                     b.Property<int?>("TuitionFeeUnit")
                         .HasColumnType("integer");
+
+                    b.Property<string>("TuitionSourceUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("Year")
                         .HasColumnType("integer");

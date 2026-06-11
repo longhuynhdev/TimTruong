@@ -10,7 +10,7 @@ etl/__pycache__/
 
 etl/data/schools/*/admissions/*/images/
 etl/data/schools/**/*.review.md
+etl/data/schools/*/majors/*/images/
 
 .claude/settings.local.json
 CLAUDE.md
-etl/data/schools/QSY-QSY/majors/2026/images/

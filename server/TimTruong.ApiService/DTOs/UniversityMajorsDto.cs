@@ -22,7 +22,8 @@ public record MajorYearDto(
     string? TuitionFeeUnit,
     int? EnrollmentQuota,
     string? Note,
-    string? SourceUrl
+    string? TuitionSourceUrl,
+    string? QuotaSourceUrl
 );
 
 /// <summary>

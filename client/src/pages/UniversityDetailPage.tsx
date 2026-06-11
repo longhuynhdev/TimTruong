@@ -358,13 +358,13 @@ const TuitionCell = ({ major }: { major: MajorWithRequirements }) => {
 				</p>
 				{fallback && latestYear != null && (
 					<p className="text-xs text-muted-foreground">
-						Năm {latestYear} trường chưa công bố học phí — hiển thị số của năm
+						Năm {latestYear} trường chưa công bố học phí — hiển thị học phí của năm
 						học {formatAcademicYear(t.year)} để tham khảo.
 					</p>
 				)}
-				{t.sourceUrl && (
+				{t.tuitionSourceUrl && (
 					<a
-						href={t.sourceUrl}
+						href={t.tuitionSourceUrl}
 						target="_blank"
 						rel="noopener noreferrer"
 						className="inline-flex items-center gap-1 text-xs text-primary hover:underline"

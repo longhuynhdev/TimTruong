@@ -76,8 +76,10 @@ export interface MajorYear {
 	enrollmentQuota: number | null;
 	// Chú thích tuyển sinh năm đó (vd "tuyển theo phương thức riêng")
 	note: string | null;
-	// Nguồn học phí/chỉ tiêu (đề án tuyển sinh)
-	sourceUrl: string | null;
+	// Nguồn học phí và nguồn chỉ tiêu — tách riêng vì có trường công bố ở 2 trang;
+	// chung 1 đề án thì hai field cùng một URL
+	tuitionSourceUrl: string | null;
+	quotaSourceUrl: string | null;
 }
 
 export interface MajorWithRequirements {

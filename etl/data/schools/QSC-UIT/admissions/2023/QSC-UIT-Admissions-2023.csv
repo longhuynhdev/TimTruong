@@ -1,65 +1,66 @@
-UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score
-QSC,7480101,Khoa học Máy tính,ĐGNL,,1200,915
-QSC,7480107,Trí tuệ Nhân tạo,ĐGNL,,1200,970
-QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,ĐGNL,,1200,845
-QSC,7480103,Kỹ thuật Phần mềm,ĐGNL,,1200,925
-QSC,7480104,Hệ thống Thông tin,ĐGNL,,1200,855
-QSC,7480104_TT,Hệ thống Thông tin (Tiên tiến),ĐGNL,,1200,825
-QSC,7340122,Thương mại Điện tử,ĐGNL,,1200,860
-QSC,7480201,Công nghệ Thông tin,ĐGNL,,1200,920
-QSC,7480201_N,Công nghệ Thông tin (Việt - Nhật),ĐGNL,,1200,845
-QSC,7480108,Khoa học Dữ liệu,ĐGNL,,1200,915
-QSC,7480202,An toàn Thông tin,ĐGNL,,1200,890
-QSC,7480106,Kỹ thuật Máy tính,ĐGNL,,1200,870
-QSC,7480106_IOT,Kỹ thuật Máy tính (chuyên ngành Hệ thống nhúng và IoT),ĐGNL,,1200,870
-QSC,7480106_TKVM,Kỹ thuật Máy tính (chuyên ngành Thiết kế Vi mạch),ĐGNL,,1200,810
-QSC,7340122,Thương mại Điện tử,THPTQG,A00,30,25.8
-QSC,7340122,Thương mại Điện tử,THPTQG,A01,30,25.8
-QSC,7340122,Thương mại Điện tử,THPTQG,D01,30,25.8
-QSC,7340122,Thương mại Điện tử,THPTQG,D07,30,25.8
-QSC,7460108,Khoa học Dữ liệu,THPTQG,A00,30,27.1
-QSC,7460108,Khoa học Dữ liệu,THPTQG,A01,30,27.1
-QSC,7460108,Khoa học Dữ liệu,THPTQG,D01,30,27.1
-QSC,7460108,Khoa học Dữ liệu,THPTQG,D07,30,27.1
-QSC,7480101,Khoa học Máy tính,THPTQG,A00,30,26.9
-QSC,7480101,Khoa học Máy tính,THPTQG,A01,30,26.9
-QSC,7480101,Khoa học Máy tính,THPTQG,D01,30,26.9
-QSC,7480101,Khoa học Máy tính,THPTQG,D07,30,26.9
-QSC,7480107,Trí tuệ Nhân tạo,THPTQG,A00,30,27.8
-QSC,7480107,Trí tuệ Nhân tạo,THPTQG,A01,30,27.8
-QSC,7480107,Trí tuệ Nhân tạo,THPTQG,D01,30,27.8
-QSC,7480107,Trí tuệ Nhân tạo,THPTQG,D07,30,27.8
-QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,THPTQG,A00,30,25.4
-QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,THPTQG,A01,30,25.4
-QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,THPTQG,D01,30,25.4
-QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,THPTQG,D07,30,25.4
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,A00,30,26.9
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,A01,30,26.9
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,D01,30,26.9
-QSC,7480103,Kỹ thuật Phần mềm,THPTQG,D07,30,26.9
-QSC,7480104,Hệ thống Thông tin,THPTQG,A00,30,26.1
-QSC,7480104,Hệ thống Thông tin,THPTQG,A01,30,26.1
-QSC,7480104,Hệ thống Thông tin,THPTQG,D01,30,26.1
-QSC,7480104,Hệ thống Thông tin,THPTQG,D07,30,26.1
-QSC,7480104_TT,Hệ thống Thông tin (Tiên tiến),THPTQG,A01,30,25.4
-QSC,7480104_TT,Hệ thống Thông tin (Tiên tiến),THPTQG,D01,30,25.4
-QSC,7480104_TT,Hệ thống Thông tin (Tiên tiến),THPTQG,D07,30,25.4
-QSC,7480106,Kỹ thuật Máy tính,THPTQG,A00,30,25.6
-QSC,7480106,Kỹ thuật Máy tính,THPTQG,A01,30,25.6
-QSC,7480106_IOT,Kỹ thuật Máy tính (Hệ thống nhúng và IoT),THPTQG,A00,30,25.6
-QSC,7480106_IOT,Kỹ thuật Máy tính (Hệ thống nhúng và IoT),THPTQG,A01,30,25.6
-QSC,7480106_TKVM,Kỹ thuật Máy tính (Thiết kế Vi mạch),THPTQG,A00,30,25.4
-QSC,7480106_TKVM,Kỹ thuật Máy tính (Thiết kế Vi mạch),THPTQG,A01,30,25.4
-QSC,7480201,Công nghệ Thông tin,THPTQG,A00,30,26.9
-QSC,7480201,Công nghệ Thông tin,THPTQG,A01,30,26.9
-QSC,7480201,Công nghệ Thông tin,THPTQG,D01,30,26.9
-QSC,7480201,Công nghệ Thông tin,THPTQG,D07,30,26.9
-QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,A00,30,25.9
-QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,A01,30,25.9
-QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,D01,30,25.9
-QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,D06,30,25.9
-QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,D07,30,25.9
-QSC,7480202,An toàn Thông tin,THPTQG,A00,30,26.3
-QSC,7480202,An toàn Thông tin,THPTQG,A01,30,26.3
-QSC,7480202,An toàn Thông tin,THPTQG,D01,30,26.3
-QSC,7480202,An toàn Thông tin,THPTQG,D07,30,26.3
+UniversityCode,MajorCode,MajorName,Method,SubjectCombination,MaxScore,Score,Note,SourceUrl
+QSC,7480101,Khoa học Máy tính,ĐGNL,,1200,915,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480107,Trí tuệ Nhân tạo,ĐGNL,,1200,970,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,ĐGNL,,1200,845,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480103,Kỹ thuật Phần mềm,ĐGNL,,1200,925,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480104,Hệ thống Thông tin,ĐGNL,,1200,855,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480104_TT,Hệ thống Thông tin (Tiên tiến),ĐGNL,,1200,825,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7340122,Thương mại Điện tử,ĐGNL,,1200,860,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480201,Công nghệ Thông tin,ĐGNL,,1200,920,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480201_N,Công nghệ Thông tin (Việt - Nhật),ĐGNL,,1200,845,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480108,Khoa học Dữ liệu,ĐGNL,,1200,915,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480202,An toàn Thông tin,ĐGNL,,1200,890,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480106,Kỹ thuật Máy tính,ĐGNL,,1200,870,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480106_IOT,Kỹ thuật Máy tính (chuyên ngành Hệ thống nhúng và IoT),ĐGNL,,1200,870,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7480106_TKVM,Kỹ thuật Máy tính (chuyên ngành Thiết kế Vi mạch),ĐGNL,,1200,810,,https://tuyensinh.uit.edu.vn/2023-thong-bao-diem-chuan-xet-tuyen-theo-phuong-thuc-xet-tuyen-dua-tren-ket-qua-ky-thi-danh-gia-nang-luc-do-dhqg-hcm-chuc-nam-2023
+QSC,7340122,Thương mại Điện tử,THPTQG,A00,30,25.8,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7340122,Thương mại Điện tử,THPTQG,A01,30,25.8,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7340122,Thương mại Điện tử,THPTQG,D01,30,25.8,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7340122,Thương mại Điện tử,THPTQG,D07,30,25.8,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7460108,Khoa học Dữ liệu,THPTQG,A00,30,27.1,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7460108,Khoa học Dữ liệu,THPTQG,A01,30,27.1,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7460108,Khoa học Dữ liệu,THPTQG,D01,30,27.1,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7460108,Khoa học Dữ liệu,THPTQG,D07,30,27.1,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480101,Khoa học Máy tính,THPTQG,A00,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480101,Khoa học Máy tính,THPTQG,A01,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480101,Khoa học Máy tính,THPTQG,D01,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480101,Khoa học Máy tính,THPTQG,D07,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480107,Trí tuệ Nhân tạo,THPTQG,A00,30,27.8,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480107,Trí tuệ Nhân tạo,THPTQG,A01,30,27.8,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480107,Trí tuệ Nhân tạo,THPTQG,D01,30,27.8,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480107,Trí tuệ Nhân tạo,THPTQG,D07,30,27.8,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,THPTQG,A00,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,THPTQG,A01,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,THPTQG,D01,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480102,Mạng máy tính và Truyền thông dữ liệu,THPTQG,D07,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,A00,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,A01,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,D01,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480103,Kỹ thuật Phần mềm,THPTQG,D07,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480104,Hệ thống Thông tin,THPTQG,A00,30,26.1,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480104,Hệ thống Thông tin,THPTQG,A01,30,26.1,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480104,Hệ thống Thông tin,THPTQG,D01,30,26.1,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480104,Hệ thống Thông tin,THPTQG,D07,30,26.1,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480104_TT,Hệ thống Thông tin (Tiên tiến),THPTQG,A01,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480104_TT,Hệ thống Thông tin (Tiên tiến),THPTQG,D01,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480104_TT,Hệ thống Thông tin (Tiên tiến),THPTQG,D07,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480106,Kỹ thuật Máy tính,THPTQG,A00,30,25.6,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480106,Kỹ thuật Máy tính,THPTQG,A01,30,25.6,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480106_IOT,Kỹ thuật Máy tính (Hệ thống nhúng và IoT),THPTQG,A00,30,25.6,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480106_IOT,Kỹ thuật Máy tính (Hệ thống nhúng và IoT),THPTQG,A01,30,25.6,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480106_TKVM,Kỹ thuật Máy tính (Thiết kế Vi mạch),THPTQG,A00,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480106_TKVM,Kỹ thuật Máy tính (Thiết kế Vi mạch),THPTQG,A01,30,25.4,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201,Công nghệ Thông tin,THPTQG,A00,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201,Công nghệ Thông tin,THPTQG,A01,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201,Công nghệ Thông tin,THPTQG,D01,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201,Công nghệ Thông tin,THPTQG,D07,30,26.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,A00,30,25.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,A01,30,25.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,D01,30,25.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,D06,30,25.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480201_N,Công nghệ Thông tin (Việt Nhật),THPTQG,D07,30,25.9,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480202,An toàn Thông tin,THPTQG,A00,30,26.3,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480202,An toàn Thông tin,THPTQG,A01,30,26.3,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480202,An toàn Thông tin,THPTQG,D01,30,26.3,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+QSC,7480202,An toàn Thông tin,THPTQG,D07,30,26.3,,https://www.facebook.com/UIT.Fanpage/posts/pfbid02eXyvjgwwPhsxePY8765Zuzj4d8vk3WN3ZBGgEFwGwtCnqEWD6EkWhERZukiMQRh1l
+,,,,,,,,

@@ -1,40 +1,40 @@
-MajorCode,OldCode,MajorName,EnrollmentQuota,TuitionFeeMin,TuitionFeeMax,TuitionFeeUnit,Note,SourceUrl
-7420101,,Sinh học,215,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7420101_DKD,7420101_CLC,Sinh học (Chương trình tăng cường tiếng Anh),90,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7420201,,Công nghệ Sinh học,200,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7420201_DKD,7420201_CLC,Công nghệ Sinh học (Chương trình tăng cường tiếng Anh),160,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440102_DKD,,Vật lý học (Chương trình tăng cường tiếng Anh),140,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440102_NN,,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 70)",220,"32,600,000","38,600,000",PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440107,,Công nghệ Vật lý điện tử và tin học (Chương trình tăng cường tiếng Anh) (dự kiến),60,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-74401a1,,Công nghệ bán dẫn,70,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440112,,Hoá học,230,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440112_DKD,7440112_CLC,Hóa học (Chương trình tăng cường tiếng Anh),150,"58,900,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440122,,Khoa học Vật liệu,150,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440122_DKD,,Khoa học Vật liệu (Chương trình tăng cường tiếng Anh),80,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440201_NN,7440201,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 100)",140,"32,600,000","38,600,000",PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440228,,Hải dương học,50,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440228_DKD,,Hải dương học (Chương trình tăng cường tiếng Anh) (dự kiến),40,"45,000,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440301,,Khoa học Môi trường,125,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7440301_DKD,7440301_CLC,Khoa học Môi trường (Chương trình tăng cường tiếng Anh),80,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7460101_NN,,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",180,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7460112_DKD,,Toán ứng dụng (Chương trình tăng cường tiếng Anh) (dự kiến),40,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7460117_DKD,,Toán tin (Chương trình tăng cường tiếng Anh) (dự kiến),40,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7460108_NN,7460108,"Nhóm ngành Khoa học dữ liệu (CT:40), Thống kê (CT:40)",80,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7460108_DKD,,Khoa học dữ liệu (Chương trình tăng cường tiếng Anh) (dự kiến),60,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7480101_TT,,Khoa học máy tính (Chương trình Tiên tiến),90,"70,000,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7480107,,Trí tuệ nhân tạo,90,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7480201_DKD,7480201_CLC,Công nghệ thông tin (Chương trình tăng cường tiếng Anh),530,"49,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7480201_NN,,"Nhóm ngành máy tính và Công nghệ thông tin (CNTT, Kỹ thuật phần mềm, Hệ thống thông tin, Khoa học máy tính)",490,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7510401_DKD,7510401_CLC,Công nghệ kỹ thuật Hoá học (Chương trình tăng cường tiếng Anh),155,"59,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7510402,,Công nghệ Vật liệu,180,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7510402_DKD,,Công nghệ Vật liệu (Chương trình tăng cường tiếng Anh) (dự kiến),60,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7510406,,Công nghệ Kỹ thuật Môi trường,125,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7520207,7520207_NN,Kỹ thuật điện tử – viễn thông,150,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-75202a1,,Thiết kế vi mạch,80,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7520207_DKD,7520207_CLC,Kỹ thuật điện tử – viễn thông (Chương trình tăng cường tiếng Anh),120,"49,000,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7520402,,Kỹ thuật hạt nhân,60,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7520403,,Vật lý y khoa,40,"37,000,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7520403_DKD,,Vật lý y khoa (chương trình tăng cường tiếng Anh) (dự kiến),40,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7520501,,Kỹ thuật địa chất,35,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7850101,,Quản lý tài nguyên và môi trường,110,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
-7140103,,Công nghệ giáo dục,100,"35,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/
+MajorCode,OldCode,MajorName,EnrollmentQuota,TuitionFeeMin,TuitionFeeMax,TuitionFeeUnit,Note,TuitionSourceUrl,QuotaSourceUrl
+7420101,,Sinh học,215,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7420101_DKD,7420101_CLC,Sinh học (Chương trình tăng cường tiếng Anh),90,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7420201,,Công nghệ Sinh học,200,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7420201_DKD,7420201_CLC,Công nghệ Sinh học (Chương trình tăng cường tiếng Anh),160,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440102_DKD,,Vật lý học (Chương trình tăng cường tiếng Anh),140,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440102_NN,,"Nhóm ngành Vật lý học (CT: 150), Công nghệ Vật lý điện tử và tin học (CT: 70)",220,"32,600,000","38,600,000",PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440107,,Công nghệ Vật lý điện tử và tin học (Chương trình tăng cường tiếng Anh) (dự kiến),60,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+74401a1,,Công nghệ bán dẫn,70,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440112,,Hoá học,230,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440112_DKD,7440112_CLC,Hóa học (Chương trình tăng cường tiếng Anh),150,"58,900,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440122,,Khoa học Vật liệu,150,"38,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440122_DKD,,Khoa học Vật liệu (Chương trình tăng cường tiếng Anh),80,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440201_NN,7440201,"Nhóm ngành Địa chất học (CT: 40), Kinh tế đất đai (CT: 100)",140,"32,600,000","38,600,000",PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440228,,Hải dương học,50,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440228_DKD,,Hải dương học (Chương trình tăng cường tiếng Anh) (dự kiến),40,"45,000,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440301,,Khoa học Môi trường,125,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7440301_DKD,7440301_CLC,Khoa học Môi trường (Chương trình tăng cường tiếng Anh),80,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7460101_NN,,"Nhóm ngành Toán học (Toán học, Toán ứng dụng, Toán tin)",180,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7460112_DKD,,Toán ứng dụng (Chương trình tăng cường tiếng Anh) (dự kiến),40,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7460117_DKD,,Toán tin (Chương trình tăng cường tiếng Anh) (dự kiến),40,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7460108_NN,7460108,"Nhóm ngành Khoa học dữ liệu (CT:40), Thống kê (CT:40)",80,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7460108_DKD,,Khoa học dữ liệu (Chương trình tăng cường tiếng Anh) (dự kiến),60,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7480101_TT,,Khoa học máy tính (Chương trình Tiên tiến),90,"70,000,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7480107,,Trí tuệ nhân tạo,90,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7480201_DKD,7480201_CLC,Công nghệ thông tin (Chương trình tăng cường tiếng Anh),530,"49,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7480201_NN,,"Nhóm ngành máy tính và Công nghệ thông tin (CNTT, Kỹ thuật phần mềm, Hệ thống thông tin, Khoa học máy tính)",490,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7510401_DKD,7510401_CLC,Công nghệ kỹ thuật Hoá học (Chương trình tăng cường tiếng Anh),155,"59,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7510402,,Công nghệ Vật liệu,180,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7510402_DKD,,Công nghệ Vật liệu (Chương trình tăng cường tiếng Anh) (dự kiến),60,"54,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7510406,,Công nghệ Kỹ thuật Môi trường,125,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7520207,7520207_NN,Kỹ thuật điện tử – viễn thông,150,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+75202a1,,Thiết kế vi mạch,80,"40,500,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7520207_DKD,7520207_CLC,Kỹ thuật điện tử – viễn thông (Chương trình tăng cường tiếng Anh),120,"49,000,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7520402,,Kỹ thuật hạt nhân,60,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7520403,,Vật lý y khoa,40,"37,000,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7520403_DKD,,Vật lý y khoa (chương trình tăng cường tiếng Anh) (dự kiến),40,"50,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7520501,,Kỹ thuật địa chất,35,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7850101,,Quản lý tài nguyên và môi trường,110,"32,600,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/
+7140103,,Công nghệ giáo dục,100,"35,800,000",,PerYear,,https://tuyensinh.hcmus.edu.vn/hoc-phi/,https://tuyensinh.hcmus.edu.vn/chi-tieu/

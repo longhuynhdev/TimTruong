@@ -36,6 +36,20 @@ interface TooltipDatum extends TuitionPoint {
 /** Đơn vị null hiển thị như "/năm" (xem formatTuition) — gộp chung khi xét vẽ chart. */
 const unitKey = (y: MajorYear) => y.tuitionFeeUnit ?? "PerYear";
 
+/** Icon link nguồn nhỏ cạnh một con số trong bảng — null thì không render. */
+const SourceLink = ({ url, title }: { url: string | null; title: string }) =>
+	url ? (
+		<a
+			href={url}
+			target="_blank"
+			rel="noopener noreferrer"
+			title={title}
+			className="ml-1 inline-flex align-middle text-muted-foreground hover:text-primary"
+		>
+			<ExternalLink className="h-3 w-3" />
+		</a>
+	) : null;
+
 const TuitionChart = ({
 	points,
 	unit,
@@ -251,20 +265,8 @@ const MajorTuitionHistory = ({ years }: MajorTuitionHistoryProps) => {
 								>
 									<td className="px-3 py-2 text-center font-medium text-foreground tabular-nums whitespace-nowrap">
 										{formatAcademicYear(y.year)}
-										{y.sourceUrl && (
-											<a
-												href={y.sourceUrl}
-												target="_blank"
-												rel="noopener noreferrer"
-												title="Nguồn (đề án tuyển sinh)"
-												onClick={(e) => e.stopPropagation()}
-												className="ml-1 inline-flex align-middle text-muted-foreground hover:text-primary"
-											>
-												<ExternalLink className="h-3 w-3" />
-											</a>
-										)}
 									</td>
-									<td className="border-l border-border px-3 py-2 text-center tabular-nums text-foreground">
+									<td className="border-l border-border px-3 py-2 text-center tabular-nums text-foreground whitespace-nowrap">
 										{y.tuitionFeeMin != null
 											? formatTuition(
 													y.tuitionFeeMin,
@@ -272,9 +274,17 @@ const MajorTuitionHistory = ({ years }: MajorTuitionHistoryProps) => {
 													y.tuitionFeeUnit,
 												)
 											: "—"}
+										<SourceLink
+											url={y.tuitionSourceUrl}
+											title="Nguồn học phí"
+										/>
 									</td>
-									<td className="border-l border-border px-3 py-2 text-center tabular-nums text-foreground">
+									<td className="border-l border-border px-3 py-2 text-center tabular-nums text-foreground whitespace-nowrap">
 										{y.enrollmentQuota ?? "—"}
+										<SourceLink
+											url={y.quotaSourceUrl}
+											title="Nguồn chỉ tiêu (đề án)"
+										/>
 									</td>
 								</tr>
 							))}

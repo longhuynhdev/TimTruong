@@ -58,7 +58,8 @@ erDiagram
         enum TuitionFeeUnit "Nullable — PerCredit/PerSemester/PerYear"
         int EnrollmentQuota "Nullable — chỉ tiêu năm đó"
         string Note "Nullable — chú thích tuyển sinh năm đó (vd phương thức riêng, điểm kết hợp)"
-        string SourceUrl "Nullable — nguồn học phí/chỉ tiêu (đề án), có thể dùng chung"
+        string TuitionSourceUrl "Nullable — nguồn học phí; trùng QuotaSourceUrl nếu chung 1 đề án"
+        string QuotaSourceUrl "Nullable — nguồn chỉ tiêu (đề án), có thể dùng chung"
     }
 
     AdmissionRequirements {
