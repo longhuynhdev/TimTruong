@@ -8,7 +8,7 @@ var postgres = builder.AddPostgres("postgres")
 
 var database = postgres.AddDatabase("timtruongdb");
 
-builder.AddProject<Projects.TimTruong_ApiService>("apiservice")
+var apiService =builder.AddProject<Projects.TimTruong_ApiService>("apiservice")
     .WithReference(database)
     .WaitFor(postgres)
     .WithHttpHealthCheck("/health");
