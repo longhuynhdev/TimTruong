@@ -13,12 +13,15 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { SUBJECT_COMBINATIONS } from "@/constants";
 import { normalizeVi } from "@/lib/utils";
 import { dgnlScoreSchema, thptqgScoreSchema } from "@/lib/validations";
 import { Route } from "@/routes/tim-kiem";
-import { searchUniversities } from "@/services/api";
-import type { ExamType, UniversityResult } from "@/types";
+import { fetchSubjectCombinations, searchUniversities } from "@/services/api";
+import type {
+	ExamType,
+	SubjectCombinationSummary,
+	UniversityResult,
+} from "@/types";
 
 const SearchPage = () => {
 	// Read URL search params — typed and validated by the schema in tim-kiem.tsx
@@ -40,6 +43,16 @@ const SearchPage = () => {
 	const [hasSearched, setHasSearched] = useState(false);
 	const [comboOpen, setComboOpen] = useState(false);
 	const [comboSearch, setComboSearch] = useState("");
+	// Subject combinations come from the server (single source of truth).
+	const [combos, setCombos] = useState<SubjectCombinationSummary[]>([]);
+
+	useEffect(() => {
+		fetchSubjectCombinations()
+			.then(setCombos)
+			.catch(() => {
+				/* combo picker stays empty; search still works without a combo */
+			});
+	}, []);
 
 	const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -172,7 +185,7 @@ const SearchPage = () => {
 
 	// Subject combos matching the popover search (accent-insensitive on code + subjects)
 	const comboQuery = normalizeVi(comboSearch);
-	const filteredCombos = SUBJECT_COMBINATIONS.filter(
+	const filteredCombos = combos.filter(
 		(combo) =>
 			normalizeVi(combo.code).includes(comboQuery) ||
 			combo.subjects.some((s) => normalizeVi(s).includes(comboQuery)),
@@ -265,7 +278,7 @@ const SearchPage = () => {
 											>
 												{selectedSubject
 													? (() => {
-															const combo = SUBJECT_COMBINATIONS.find(
+															const combo = combos.find(
 																(c) => c.code === selectedSubject,
 															);
 															return combo

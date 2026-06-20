@@ -3,6 +3,7 @@ using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 using TimTruong.ApiService.DataAccess;
 using TimTruong.ApiService.Endpoints;
+using TimTruong.ApiService.Features.SubjectCombinations;
 using TimTruong.ApiService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,7 @@ builder.Services.AddProblemDetails();
 builder.Services.AddScoped<IRecommendationService, RecommendationService>();
 builder.Services.AddScoped<IUniversityService, UniversityService>();
 builder.Services.AddScoped<ICampusService, CampusService>();
+builder.Services.AddScoped<ISubjectCombinationService, SubjectCombinationService>();
 
 builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -53,6 +55,7 @@ if (enableOpenApi)
 app.MapRecommendationEndpoints();
 app.MapUniversityEndpoints();
 app.MapCampusEndpoints();
+app.MapSubjectCombinationEndpoints();
 app.MapDefaultEndpoints(); // health checks
 
 if (enableAutoMigrations)

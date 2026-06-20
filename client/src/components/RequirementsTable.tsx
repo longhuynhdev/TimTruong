@@ -1,6 +1,63 @@
 import { ExternalLink } from "lucide-react";
+import { useMemo, useState } from "react";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { useSubjectCombinationSubjects } from "@/hooks/useSubjectCombinations";
 import { buildScoreSeries, formatScore } from "@/lib/majors";
 import type { AdmissionRequirement } from "@/types";
+
+/**
+ * A subject-combination code that reveals its subjects on hover (desktop) or tap
+ * (mobile). Uses a Popover — not a Tooltip — because Radix tooltips don't open on
+ * touch. On hover-capable devices we drive open state from mouse/focus; on touch
+ * devices we leave it to the trigger's tap (skipping the emulated mouse events that
+ * would otherwise open-then-close it).
+ */
+const ComboHint = ({ code, label }: { code: string; label: string }) => {
+	const [open, setOpen] = useState(false);
+	const canHover = useMemo(
+		() =>
+			typeof window !== "undefined" &&
+			window.matchMedia("(hover: hover)").matches,
+		[],
+	);
+
+	const hoverHandlers = canHover
+		? {
+				onMouseEnter: () => setOpen(true),
+				onMouseLeave: () => setOpen(false),
+				onFocus: () => setOpen(true),
+				onBlur: () => setOpen(false),
+			}
+		: {};
+
+	return (
+		<Popover open={open} onOpenChange={setOpen}>
+			<PopoverTrigger asChild>
+				<span
+					tabIndex={0}
+					{...hoverHandlers}
+					// Keep the tap/click from bubbling to any row toggle.
+					onClick={(e) => e.stopPropagation()}
+					className="cursor-help underline decoration-dotted underline-offset-2 outline-none focus-visible:text-foreground"
+				>
+					{code}
+				</span>
+			</PopoverTrigger>
+			<PopoverContent
+				side="top"
+				className="w-auto max-w-[90vw] px-3 py-1.5 text-xs"
+				onClick={(e) => e.stopPropagation()}
+				onOpenAutoFocus={(e) => e.preventDefault()}
+			>
+				{label}
+			</PopoverContent>
+		</Popover>
+	);
+};
 
 interface RequirementsTableProps {
 	requirements: AdmissionRequirement[];
@@ -15,6 +72,8 @@ const examTypeLabel = (examType: string) =>
  * the trend chart so columns and lines always agree).
  */
 export const RequirementsTable = ({ requirements }: RequirementsTableProps) => {
+	const comboSubjects = useSubjectCombinationSubjects();
+
 	if (requirements.length === 0) return null;
 
 	const blocks = buildScoreSeries(requirements);
@@ -76,9 +135,17 @@ export const RequirementsTable = ({ requirements }: RequirementsTableProps) => {
 													className="border-b border-l border-border px-3 py-1.5 text-center font-mono font-medium text-muted-foreground"
 												>
 													<div className="flex flex-wrap justify-center gap-x-1.5 gap-y-0.5">
-														{s.combos.map((c) => (
-															<span key={c}>{c}</span>
-														))}
+														{s.combos.map((c) => {
+															const subjects = comboSubjects.get(c);
+															if (!subjects) return <span key={c}>{c}</span>;
+															return (
+																<ComboHint
+																	key={c}
+																	code={c}
+																	label={`${c}: ${subjects.join(", ")}`}
+																/>
+															);
+														})}
 													</div>
 												</th>
 											))}
