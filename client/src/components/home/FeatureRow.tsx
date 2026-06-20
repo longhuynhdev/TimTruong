@@ -3,7 +3,8 @@ import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-export interface FeatureRowProps extends React.ComponentProps<"div"> {
+export interface FeatureRowProps
+	extends Omit<React.ComponentProps<"div">, "title"> {
 	/** Small mint uppercase label above the title (optional). */
 	eyebrow?: React.ReactNode;
 	/** Feature name. */

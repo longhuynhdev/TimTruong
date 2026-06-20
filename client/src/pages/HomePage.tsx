@@ -1,4 +1,5 @@
 import { LayoutGroup, motion } from "motion/react";
+import { FeaturesSection } from "@/components/home/FeaturesSection";
 import { LogoCloud } from "@/components/home/LogoCloud";
 import JsonLd from "@/components/JsonLd";
 import PageMetadata from "@/components/PageMetadata";
@@ -77,6 +78,9 @@ const HomePage = () => {
 
 				{/* Logo Cloud Section */}
 				<LogoCloud edgeOpacity={70} />
+
+				{/* Features Section */}
+				<FeaturesSection />
 			</div>
 		</>
 	);
