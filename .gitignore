@@ -12,5 +12,7 @@ etl/data/schools/*/admissions/*/images/
 etl/data/schools/**/*.review.md
 etl/data/schools/*/majors/*/images/
 
+.playwright-mcp
+
 .claude/settings.local.json
 CLAUDE.md
