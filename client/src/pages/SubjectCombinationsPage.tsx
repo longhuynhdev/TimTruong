@@ -1,14 +1,18 @@
+import { Link } from "@tanstack/react-router";
 import {
 	type ColumnDef,
+	type ExpandedState,
 	type FilterFn,
 	flexRender,
 	getCoreRowModel,
+	getExpandedRowModel,
 	getFilteredRowModel,
 	getSortedRowModel,
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import PageMetadata from "@/components/PageMetadata";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,11 +25,17 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { SUBJECT_COMBINATIONS } from "@/constants";
 import { normalizeVi } from "@/lib/utils";
-import type { SubjectCombinationDetail } from "@/types";
+import {
+	fetchSubjectCombinationDetail,
+	fetchSubjectCombinations,
+} from "@/services/api";
+import type {
+	SubjectCombinationDetailData,
+	SubjectCombinationSummary,
+} from "@/types";
 
-const subjectFilter: FilterFn<SubjectCombinationDetail> = (
+const subjectFilter: FilterFn<SubjectCombinationSummary> = (
 	row,
 	_columnId,
 	filterValue: string,
@@ -39,11 +49,72 @@ const subjectFilter: FilterFn<SubjectCombinationDetail> = (
 };
 
 const SubjectCombinationsPage = () => {
+	const [combinations, setCombinations] = useState<SubjectCombinationSummary[]>(
+		[],
+	);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [globalFilter, setGlobalFilter] = useState("");
+	const [expanded, setExpanded] = useState<ExpandedState>({});
 
-	const columns = useMemo<ColumnDef<SubjectCombinationDetail>[]>(
+	// Lazy-loaded detail per combination code (universities + majors using it).
+	const [details, setDetails] = useState<
+		Record<string, SubjectCombinationDetailData>
+	>({});
+	const [detailLoading, setDetailLoading] = useState<Record<string, boolean>>(
+		{},
+	);
+	const [detailError, setDetailError] = useState<Record<string, string>>({});
+
+	useEffect(() => {
+		fetchSubjectCombinations()
+			.then(setCombinations)
+			.catch(() =>
+				setError("Không thể tải danh sách tổ hợp môn. Vui lòng thử lại."),
+			)
+			.finally(() => setLoading(false));
+	}, []);
+
+	const loadDetail = useCallback((code: string) => {
+		setDetails((prev) => {
+			if (prev[code]) return prev; // already cached
+			setDetailLoading((l) => ({ ...l, [code]: true }));
+			setDetailError((e) => {
+				const { [code]: _omit, ...rest } = e;
+				return rest;
+			});
+			fetchSubjectCombinationDetail(code)
+				.then((d) => setDetails((p) => ({ ...p, [code]: d })))
+				.catch(() =>
+					setDetailError((e) => ({
+						...e,
+						[code]: "Không thể tải danh sách trường/ngành.",
+					})),
+				)
+				.finally(() => setDetailLoading((l) => ({ ...l, [code]: false })));
+			return prev;
+		});
+	}, []);
+
+	const columns = useMemo<ColumnDef<SubjectCombinationSummary>[]>(
 		() => [
+			{
+				id: "expander",
+				header: "",
+				cell: ({ row }) =>
+					row.getCanExpand() ? (
+						<span className="text-muted-foreground">
+							{row.getIsExpanded() ? (
+								<ChevronDown className="h-4 w-4" />
+							) : (
+								<ChevronRight className="h-4 w-4" />
+							)}
+						</span>
+					) : null,
+				enableSorting: false,
+			},
 			{
 				accessorKey: "code",
 				header: "Tên tổ hợp",
@@ -57,9 +128,9 @@ const SubjectCombinationsPage = () => {
 				accessorKey: "subjects",
 				header: "Các môn trong tổ hợp",
 				cell: ({ row }) => (
-					<div className="flex flex-wrap gap-2">
+					<div className="flex flex-wrap gap-x-1 gap-y-0.5">
 						{row.original.subjects.map((subject, index) => (
-							<span key={index} className="text-foreground">
+							<span key={subject} className="text-foreground">
 								{subject}
 								{index < row.original.subjects.length - 1 && (
 									<span className="text-muted-foreground">, </span>
@@ -70,42 +141,63 @@ const SubjectCombinationsPage = () => {
 				),
 				enableSorting: false,
 			},
+			{
+				accessorKey: "universityCount",
+				header: "Số trường xét tuyển",
+				cell: ({ row }) => (
+					<span className="tabular-nums font-medium">
+						{row.original.universityCount}
+					</span>
+				),
+			},
+			{
+				accessorKey: "majorCount",
+				header: "Số ngành xét tuyển",
+				cell: ({ row }) => (
+					<span className="tabular-nums font-medium">
+						{row.original.majorCount}
+					</span>
+				),
+			},
 		],
 		[],
 	);
 
 	const table = useReactTable({
-		// Cast needed: useReactTable expects TData[] (mutable), but our constant is readonly.
-		// Safe because TanStack Table only reads data — it never mutates it.
-		data: SUBJECT_COMBINATIONS as unknown as SubjectCombinationDetail[],
+		data: combinations,
 		columns,
 		state: {
 			sorting,
 			globalFilter,
+			expanded,
 		},
+		getRowCanExpand: (row) => row.original.universityCount > 0,
 		onSortingChange: setSorting,
 		onGlobalFilterChange: setGlobalFilter,
+		onExpandedChange: setExpanded,
 		globalFilterFn: subjectFilter,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
+		getExpandedRowModel: getExpandedRowModel(),
 	});
 
 	return (
 		<>
 			<PageMetadata
 				title="Danh sách tổ hợp môn"
-				description="Danh sách đầy đủ các tổ hợp môn thi THPTQG - Hệ thống tư vấn tuyển sinh TimTruong"
+				description="Danh sách đầy đủ các tổ hợp môn thi THPTQG cùng các trường và ngành đang dùng để xét tuyển - Hệ thống tư vấn tuyển sinh TimTruong"
 			/>
 			<div className="flex-1 bg-background p-4 md:p-8">
-				<div className="max-w-4xl mx-auto">
+				<div className="max-w-5xl mx-auto">
 					<Card className="shadow-lg bg-card border-border">
 						<CardHeader>
 							<CardTitle className="text-2xl text-center text-foreground">
 								Danh sách các tổ hợp môn THPTQG
 							</CardTitle>
 							<p className="text-center text-muted-foreground mt-2">
-								Các tổ hợp môn cho kỳ thi tốt nghiệp THPT quốc gia
+								Ấn vào một tổ hợp để xem các trường và ngành đang dùng để xét
+								tuyển
 							</p>
 						</CardHeader>
 						<CardContent className="space-y-4">
@@ -120,7 +212,7 @@ const SubjectCombinationsPage = () => {
 							</div>
 
 							{/* Table */}
-							<div className="rounded-md border border-border">
+							<div className="rounded-md border border-border overflow-x-auto">
 								<Table>
 									<TableHeader>
 										{table.getHeaderGroups().map((headerGroup) => (
@@ -139,22 +231,67 @@ const SubjectCombinationsPage = () => {
 										))}
 									</TableHeader>
 									<TableBody>
-										{table.getRowModel().rows?.length ? (
-											table.getRowModel().rows.map((row) => (
-												<TableRow
-													key={row.id}
-													data-state={row.getIsSelected() && "selected"}
+										{loading ? (
+											<TableRow>
+												<TableCell
+													colSpan={columns.length}
+													className="h-24 text-center text-muted-foreground"
 												>
-													{row.getVisibleCells().map((cell) => (
-														<TableCell key={cell.id}>
-															{flexRender(
-																cell.column.columnDef.cell,
-																cell.getContext(),
-															)}
-														</TableCell>
-													))}
-												</TableRow>
-											))
+													Đang tải...
+												</TableCell>
+											</TableRow>
+										) : error ? (
+											<TableRow>
+												<TableCell
+													colSpan={columns.length}
+													className="h-24 text-center text-destructive"
+												>
+													{error}
+												</TableCell>
+											</TableRow>
+										) : table.getRowModel().rows?.length ? (
+											table.getRowModel().rows.map((row) => {
+												const canExpand = row.getCanExpand();
+												const code = row.original.code;
+												return (
+													<Fragment key={row.id}>
+														<TableRow
+															className={
+																canExpand ? "cursor-pointer" : undefined
+															}
+															onClick={
+																canExpand
+																	? () => {
+																			const willExpand = !row.getIsExpanded();
+																			row.toggleExpanded();
+																			if (willExpand) loadDetail(code);
+																		}
+																	: undefined
+															}
+														>
+															{row.getVisibleCells().map((cell) => (
+																<TableCell key={cell.id}>
+																	{flexRender(
+																		cell.column.columnDef.cell,
+																		cell.getContext(),
+																	)}
+																</TableCell>
+															))}
+														</TableRow>
+														{row.getIsExpanded() && (
+															<TableRow className="bg-muted/30 hover:bg-muted/30">
+																<TableCell colSpan={columns.length}>
+																	<ComboDetail
+																		loading={detailLoading[code]}
+																		error={detailError[code]}
+																		detail={details[code]}
+																	/>
+																</TableCell>
+															</TableRow>
+														)}
+													</Fragment>
+												);
+											})
 										) : (
 											<TableRow>
 												<TableCell
@@ -170,14 +307,70 @@ const SubjectCombinationsPage = () => {
 							</div>
 
 							{/* Results Count */}
-							<div className="text-sm text-muted-foreground text-center">
-								Hiển thị {table.getFilteredRowModel().rows.length} tổ hợp môn
-							</div>
+							{!loading && !error && (
+								<div className="text-sm text-muted-foreground text-center">
+									Hiển thị {table.getFilteredRowModel().rows.length} tổ hợp môn
+								</div>
+							)}
 						</CardContent>
 					</Card>
 				</div>
 			</div>
 		</>
+	);
+};
+
+const ComboDetail = ({
+	loading,
+	error,
+	detail,
+}: {
+	loading?: boolean;
+	error?: string;
+	detail?: SubjectCombinationDetailData;
+}) => {
+	if (loading) {
+		return <p className="text-sm text-muted-foreground py-2">Đang tải...</p>;
+	}
+	if (error) {
+		return <p className="text-sm text-destructive py-2">{error}</p>;
+	}
+	if (!detail || detail.universities.length === 0) {
+		return (
+			<p className="text-sm text-muted-foreground py-2">
+				Chưa có trường nào dùng tổ hợp này.
+			</p>
+		);
+	}
+
+	return (
+		<div className="grid gap-4 py-2 sm:grid-cols-2">
+			{detail.universities.map((uni) => (
+				<div key={uni.id} className="space-y-1">
+					{uni.slug ? (
+						<Link
+							to="/danh-sach-truong/$slug"
+							params={{ slug: uni.slug }}
+							className="font-medium text-primary hover:underline"
+						>
+							{uni.name}
+						</Link>
+					) : (
+						<span className="font-medium text-foreground">{uni.name}</span>
+					)}
+					<ul className="list-disc list-inside text-sm text-muted-foreground">
+						{uni.majors.map((major) => (
+							<li key={major.id}>
+								{major.name}
+								{major.code ? (
+									<span className="text-xs"> ({major.code})</span>
+								) : null}
+							</li>
+						))}
+					</ul>
+				</div>
+			))}
+		</div>
 	);
 };
 

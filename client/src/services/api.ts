@@ -1,6 +1,8 @@
 import type {
 	ExamType,
 	MajorWithRequirements,
+	SubjectCombinationDetailData,
+	SubjectCombinationSummary,
 	UniversityListItem,
 	UniversityMajors,
 	UniversityResult,
@@ -70,6 +72,39 @@ export async function fetchUniversityMajors(
 	id: number,
 ): Promise<UniversityMajors> {
 	return getJson(`/api/v1/universities/${id}/majors`);
+}
+
+// Memoize the combinations list — both the subject-combinations page and the
+// search form's combo picker share it, so we only hit the API once per session.
+let subjectCombinationsPromise: Promise<SubjectCombinationSummary[]> | null =
+	null;
+
+/**
+ * Fetch all subject combinations (server enum) with usage counts. Cached after the
+ * first call; pass `force` to re-fetch.
+ */
+export function fetchSubjectCombinations(
+	force = false,
+): Promise<SubjectCombinationSummary[]> {
+	if (force || !subjectCombinationsPromise) {
+		subjectCombinationsPromise = getJson<SubjectCombinationSummary[]>(
+			"/api/v1/subject-combinations",
+		).catch((err) => {
+			// Don't cache a rejected promise — let the next call retry.
+			subjectCombinationsPromise = null;
+			throw err;
+		});
+	}
+	return subjectCombinationsPromise;
+}
+
+/**
+ * Fetch the universities + majors that admit by a given subject combination
+ */
+export async function fetchSubjectCombinationDetail(
+	code: string,
+): Promise<SubjectCombinationDetailData> {
+	return getJson(`/api/v1/subject-combinations/${encodeURIComponent(code)}`);
 }
 
 /**

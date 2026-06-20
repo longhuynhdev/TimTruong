@@ -97,10 +97,34 @@ export interface UniversityMajors {
 	majors: MajorWithRequirements[];
 }
 
-// Subject combination with full display information
-export interface SubjectCombinationDetail {
+// Subject combinations — sourced from the server (GET /api/v1/subject-combinations).
+// The server enum is the single source of truth for the list + subject names.
+
+// One combination with how many universities/majors currently admit by it.
+export interface SubjectCombinationSummary {
 	code: string;
-	// readonly: subject arrays are data — they should never be mutated
-	subjects: readonly string[];
-	description?: string;
+	subjects: string[];
+	universityCount: number;
+	majorCount: number;
+}
+
+export interface SubjectCombinationMajor {
+	id: number;
+	name: string;
+	code: string | null;
+}
+
+export interface SubjectCombinationUniversity {
+	id: number;
+	name: string;
+	slug: string | null;
+	code: string;
+	majors: SubjectCombinationMajor[];
+}
+
+// Detail for one combination — universities (each with their matching majors).
+export interface SubjectCombinationDetailData {
+	code: string;
+	subjects: string[];
+	universities: SubjectCombinationUniversity[];
 }
