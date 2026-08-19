@@ -40,7 +40,7 @@
 		"zod": "^4.1.9"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.6",
+		"@biomejs/biome": "2.5.9",
 		"@cloudflare/workers-types": "^4.20260530.1",
 		"@tanstack/router-plugin": "^1.168.14",
 		"@types/node": "^24.5.1",

@@ -2,6 +2,7 @@ import { Link, useParams } from "@tanstack/react-router";
 import {
 	type Column,
 	type ColumnDef,
+	type ExpandedState,
 	type FilterFn,
 	flexRender,
 	getCoreRowModel,
@@ -61,6 +62,7 @@ import {
 	majorTuition,
 } from "@/lib/majors";
 import { cn, normalizeVi } from "@/lib/utils";
+import { Route } from "@/routes/danh-sach-truong.$slug";
 import { fetchUniversityBySlug, fetchUniversityMajors } from "@/services/api";
 import type {
 	Dormitory,
@@ -482,16 +484,23 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 const MajorTableRow = ({
 	row,
 	columnCount,
+	highlighted,
 }: {
 	row: Row<MajorWithRequirements>;
 	columnCount: number;
+	highlighted?: boolean;
 }) => {
 	const m = row.original;
 	const canExpand = row.getCanExpand();
 	return (
 		<>
 			<TableRow
-				className={canExpand ? "cursor-pointer" : undefined}
+				id={`major-row-${m.id}`}
+				className={cn(
+					"scroll-mt-24",
+					canExpand && "cursor-pointer",
+					highlighted && "bg-primary/10 transition-colors duration-1000",
+				)}
 				onClick={canExpand ? row.getToggleExpandedHandler() : undefined}
 			>
 				{row.getVisibleCells().map((cell) => {
@@ -536,19 +545,45 @@ const MajorTableRow = ({
 	);
 };
 
-const MajorsTable = ({ majors }: { majors: MajorWithRequirements[] }) => {
+const MajorsTable = ({
+	majors,
+	highlightMajorId,
+}: {
+	majors: MajorWithRequirements[];
+	highlightMajorId?: number;
+}) => {
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [globalFilter, setGlobalFilter] = useState("");
+	// Pre-expand the deep-linked major (e.g. arriving from the subject-combination
+	// detail view) so it's already open once we scroll it into view below.
+	const [expanded, setExpanded] = useState<ExpandedState>(() =>
+		highlightMajorId != null ? { [String(highlightMajorId)]: true } : {},
+	);
+	// Fades a moment after landing so the highlight reads as "you are here", not a permanent style.
+	const [justArrived, setJustArrived] = useState(highlightMajorId != null);
+
+	useEffect(() => {
+		if (highlightMajorId == null) return;
+		// "start" (not "center") — lands at a fixed spot near the top every time,
+		// regardless of how tall the expanded detail below it turns out to be.
+		document
+			.getElementById(`major-row-${highlightMajorId}`)
+			?.scrollIntoView({ behavior: "smooth", block: "start" });
+		const timer = setTimeout(() => setJustArrived(false), 2000);
+		return () => clearTimeout(timer);
+	}, [highlightMajorId]);
 
 	const columns = useMemo(() => majorColumns, []);
 
 	const table = useReactTable({
 		data: majors,
 		columns,
-		state: { sorting, globalFilter },
+		state: { sorting, globalFilter, expanded },
 		onSortingChange: setSorting,
 		onGlobalFilterChange: setGlobalFilter,
+		onExpandedChange: setExpanded,
 		globalFilterFn: majorFilter,
+		getRowId: (m) => String(m.id),
 		// Mở rộng được khi có điểm chuẩn HOẶC có lịch sử học phí/chỉ tiêu (≥2 năm).
 		getRowCanExpand: (row) =>
 			row.original.admissionRequirements.length > 0 ||
@@ -617,6 +652,9 @@ const MajorsTable = ({ majors }: { majors: MajorWithRequirements[] }) => {
 									key={row.id}
 									row={row}
 									columnCount={columnCount}
+									highlighted={
+										justArrived && row.original.id === highlightMajorId
+									}
 								/>
 							))
 						) : (
@@ -652,6 +690,7 @@ type TabId = "majors" | "dormitory";
 
 const UniversityDetailPage = () => {
 	const { slug } = useParams({ from: "/danh-sach-truong/$slug" });
+	const { major: highlightMajorId } = Route.useSearch();
 
 	const [university, setUniversity] = useState<UniversityListItem | null>(null);
 	const [majorsData, setMajorsData] = useState<UniversityMajors | null>(null);
@@ -717,7 +756,7 @@ const UniversityDetailPage = () => {
 			)}
 
 			<div className="flex-1 bg-background p-4 md:p-8">
-				<div className="max-w-4xl mx-auto space-y-6">
+				<div className="max-w-6xl mx-auto space-y-6">
 					{/* Back link */}
 					<Link
 						to="/danh-sach-truong"
@@ -767,7 +806,10 @@ const UniversityDetailPage = () => {
 									) : errorMajors ? (
 										<p className="text-sm text-destructive">{errorMajors}</p>
 									) : majorsData && majorsData.majors.length > 0 ? (
-										<MajorsTable majors={majorsData.majors} />
+										<MajorsTable
+											majors={majorsData.majors}
+											highlightMajorId={highlightMajorId}
+										/>
 									) : (
 										<p className="text-sm text-muted-foreground py-8 text-center">
 											Chưa có thông tin ngành học.

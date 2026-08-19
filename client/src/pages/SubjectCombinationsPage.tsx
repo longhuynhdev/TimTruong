@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
 	type ColumnDef,
 	type ExpandedState,
@@ -25,7 +25,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { normalizeVi } from "@/lib/utils";
+import { cn, normalizeVi } from "@/lib/utils";
 import {
 	fetchSubjectCombinationDetail,
 	fetchSubjectCombinations,
@@ -189,7 +189,7 @@ const SubjectCombinationsPage = () => {
 				description="Danh sách đầy đủ các tổ hợp môn thi THPTQG cùng các trường và ngành đang dùng để xét tuyển - Hệ thống tư vấn tuyển sinh TimTruong"
 			/>
 			<div className="flex-1 bg-background p-4 md:p-8">
-				<div className="max-w-5xl mx-auto">
+				<div className="max-w-6xl mx-auto">
 					<Card className="shadow-lg bg-card border-border">
 						<CardHeader>
 							<CardTitle className="text-2xl text-center text-foreground">
@@ -329,6 +329,17 @@ const ComboDetail = ({
 	error?: string;
 	detail?: SubjectCombinationDetailData;
 }) => {
+	const navigate = useNavigate();
+	const [selectedUniId, setSelectedUniId] = useState<number | null>(null);
+
+	useEffect(() => {
+		setSelectedUniId((prev) => {
+			if (!detail) return null;
+			if (prev && detail.universities.some((u) => u.id === prev)) return prev;
+			return detail.universities[0]?.id ?? null;
+		});
+	}, [detail]);
+
 	if (loading) {
 		return <p className="text-sm text-muted-foreground py-2">Đang tải...</p>;
 	}
@@ -343,33 +354,92 @@ const ComboDetail = ({
 		);
 	}
 
+	const selectedUni =
+		detail.universities.find((u) => u.id === selectedUniId) ??
+		detail.universities[0];
+
 	return (
-		<div className="grid gap-4 py-2 sm:grid-cols-2">
-			{detail.universities.map((uni) => (
-				<div key={uni.id} className="space-y-1">
-					{uni.slug ? (
+		<div className="flex flex-col gap-3 py-2 sm:h-[420px] sm:flex-row sm:gap-0">
+			{/* University list */}
+			<div className="flex gap-1.5 overflow-x-auto pb-1 sm:w-64 sm:shrink-0 sm:flex-col sm:gap-0.5 sm:overflow-y-auto sm:overflow-x-visible sm:border-r sm:border-border sm:pb-0 sm:pr-3">
+				{detail.universities.map((uni) => {
+					const isSelected = uni.id === selectedUni.id;
+					return (
+						<button
+							key={uni.id}
+							type="button"
+							onClick={() => setSelectedUniId(uni.id)}
+							className={cn(
+								"shrink-0 whitespace-nowrap rounded-md px-3 py-2 text-left text-sm text-foreground transition-colors sm:whitespace-normal sm:rounded-none sm:border-l-2 sm:px-3",
+								isSelected
+									? "bg-accent sm:border-l-primary"
+									: "hover:bg-muted sm:border-l-transparent",
+							)}
+						>
+							<div className="font-medium">{uni.name}</div>
+							<Badge
+								variant={isSelected ? "default" : "secondary"}
+								className="mt-1 font-normal"
+							>
+								{uni.majors.length} ngành
+							</Badge>
+						</button>
+					);
+				})}
+			</div>
+
+			{/* Selected university's majors */}
+			<div className="min-w-0 flex-1 sm:overflow-y-auto sm:pl-4">
+				<div className="mb-2 font-medium">
+					{selectedUni.slug ? (
 						<Link
 							to="/danh-sach-truong/$slug"
-							params={{ slug: uni.slug }}
-							className="font-medium text-primary hover:underline"
+							params={{ slug: selectedUni.slug }}
+							className="text-primary hover:underline"
 						>
-							{uni.name}
+							{selectedUni.name}
 						</Link>
 					) : (
-						<span className="font-medium text-foreground">{uni.name}</span>
+						<span className="text-foreground">{selectedUni.name}</span>
 					)}
-					<ul className="list-disc list-inside text-sm text-muted-foreground">
-						{uni.majors.map((major) => (
-							<li key={major.id}>
-								{major.name}
-								{major.code ? (
-									<span className="text-xs"> ({major.code})</span>
-								) : null}
-							</li>
-						))}
-					</ul>
 				</div>
-			))}
+				<div className="overflow-hidden rounded-md border border-border">
+					<Table>
+						<TableHeader>
+							<TableRow>
+								<TableHead>Ngành</TableHead>
+								<TableHead className="text-right">Mã ngành</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
+							{selectedUni.majors.map((major) => {
+								const slug = selectedUni.slug;
+								return (
+									<TableRow
+										key={major.id}
+										className={slug ? "cursor-pointer" : undefined}
+										onClick={
+											slug
+												? () =>
+														navigate({
+															to: "/danh-sach-truong/$slug",
+															params: { slug },
+															search: { major: major.id },
+														})
+												: undefined
+										}
+									>
+										<TableCell>{major.name}</TableCell>
+										<TableCell className="text-right font-mono text-xs text-muted-foreground">
+											{major.code}
+										</TableCell>
+									</TableRow>
+								);
+							})}
+						</TableBody>
+					</Table>
+				</div>
+			</div>
 		</div>
 	);
 };
