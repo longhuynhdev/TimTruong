@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
 	type ColumnDef,
 	type ExpandedState,
@@ -329,6 +329,7 @@ const ComboDetail = ({
 	error?: string;
 	detail?: SubjectCombinationDetailData;
 }) => {
+	const navigate = useNavigate();
 	const [selectedUniId, setSelectedUniId] = useState<number | null>(null);
 
 	useEffect(() => {
@@ -411,14 +412,30 @@ const ComboDetail = ({
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{selectedUni.majors.map((major) => (
-								<TableRow key={major.id}>
-									<TableCell>{major.name}</TableCell>
-									<TableCell className="text-right font-mono text-xs text-muted-foreground">
-										{major.code}
-									</TableCell>
-								</TableRow>
-							))}
+							{selectedUni.majors.map((major) => {
+								const slug = selectedUni.slug;
+								return (
+									<TableRow
+										key={major.id}
+										className={slug ? "cursor-pointer" : undefined}
+										onClick={
+											slug
+												? () =>
+														navigate({
+															to: "/danh-sach-truong/$slug",
+															params: { slug },
+															search: { major: major.id },
+														})
+												: undefined
+										}
+									>
+										<TableCell>{major.name}</TableCell>
+										<TableCell className="text-right font-mono text-xs text-muted-foreground">
+											{major.code}
+										</TableCell>
+									</TableRow>
+								);
+							})}
 						</TableBody>
 					</Table>
 				</div>
