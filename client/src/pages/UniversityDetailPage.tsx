@@ -717,7 +717,7 @@ const UniversityDetailPage = () => {
 			)}
 
 			<div className="flex-1 bg-background p-4 md:p-8">
-				<div className="max-w-4xl mx-auto space-y-6">
+				<div className="max-w-6xl mx-auto space-y-6">
 					{/* Back link */}
 					<Link
 						to="/danh-sach-truong"

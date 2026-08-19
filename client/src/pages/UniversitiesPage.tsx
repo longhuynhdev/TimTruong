@@ -81,7 +81,7 @@ const UniversitiesPage = () => {
 			/>
 
 			<div className="flex-1 bg-background p-4 md:p-8">
-				<div className="max-w-4xl mx-auto">
+				<div className="max-w-6xl mx-auto">
 					<h1 className="text-2xl font-semibold text-foreground mb-6 text-center">
 						Danh sách các trường Đại học ở TP. HCM
 					</h1>

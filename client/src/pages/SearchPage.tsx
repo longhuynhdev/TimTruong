@@ -357,7 +357,7 @@ const SearchPage = () => {
 
 				{/* Results Section — wider than the form */}
 				{hasSearched && (
-					<div className="max-w-4xl mx-auto mt-8">
+					<div className="max-w-6xl mx-auto mt-8">
 						{searchResults.length > 0 ? (
 							<UniversityResults results={searchResults} examType={examType} />
 						) : (
