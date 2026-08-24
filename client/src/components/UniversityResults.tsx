@@ -92,14 +92,18 @@ const MajorResult = ({
 					</div>
 				</div>
 
-				{/* Toggle */}
+				{/* Toggle — icon-only on mobile so it doesn't float apart from the
+				 * text column above; full label returns from sm: up. */}
 				<button
 					type="button"
 					onClick={() => setOpen((v) => !v)}
 					aria-expanded={open}
-					className="inline-flex flex-shrink-0 items-center gap-1 whitespace-nowrap text-sm font-medium text-primary hover:underline"
+					aria-label={open ? "Ẩn" : isNew ? "Xem tổ hợp" : "Xem điểm chuẩn"}
+					className="inline-flex flex-shrink-0 items-center gap-1 whitespace-nowrap rounded-md p-1.5 text-sm font-medium text-primary hover:bg-primary/10 sm:p-0 sm:hover:bg-transparent sm:hover:underline"
 				>
-					{open ? "Ẩn" : isNew ? "Xem tổ hợp" : "Xem điểm chuẩn"}
+					<span className="hidden sm:inline">
+						{open ? "Ẩn" : isNew ? "Xem tổ hợp" : "Xem điểm chuẩn"}
+					</span>
 					<ChevronDown
 						className={cn("h-4 w-4 transition-transform", open && "rotate-180")}
 					/>
