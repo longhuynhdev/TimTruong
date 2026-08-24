@@ -211,100 +211,155 @@ const SubjectCombinationsPage = () => {
 								/>
 							</div>
 
-							{/* Table */}
-							<div className="rounded-md border border-border overflow-x-auto">
-								<Table>
-									<TableHeader>
-										{table.getHeaderGroups().map((headerGroup) => (
-											<TableRow key={headerGroup.id}>
-												{headerGroup.headers.map((header) => (
-													<TableHead key={header.id} className="font-semibold">
-														{header.isPlaceholder
-															? null
-															: flexRender(
-																	header.column.columnDef.header,
-																	header.getContext(),
+							{/* Results */}
+							{loading ? (
+								<div className="rounded-md border border-border p-8 text-center text-muted-foreground">
+									Đang tải...
+								</div>
+							) : error ? (
+								<div className="rounded-md border border-border p-8 text-center text-destructive">
+									{error}
+								</div>
+							) : !table.getRowModel().rows?.length ? (
+								<div className="rounded-md border border-border p-8 text-center">
+									Không tìm thấy kết quả.
+								</div>
+							) : (
+								<>
+									{/* Mobile: single-column stacked list (a wide multi-column table
+									 * doesn't fit narrow screens without horizontal scrolling). */}
+									<div className="divide-y divide-border rounded-md border border-border sm:hidden">
+										{table.getRowModel().rows.map((row) => {
+											const canExpand = row.getCanExpand();
+											const code = row.original.code;
+											return (
+												<div key={row.id}>
+													<button
+														type="button"
+														className="flex w-full items-start justify-between gap-3 p-3 text-left"
+														onClick={
+															canExpand
+																? () => {
+																		const willExpand = !row.getIsExpanded();
+																		row.toggleExpanded();
+																		if (willExpand) loadDetail(code);
+																	}
+																: undefined
+														}
+													>
+														<div className="min-w-0 flex-1 space-y-1.5">
+															<div className="flex flex-wrap items-center gap-2">
+																<Badge
+																	variant="outline"
+																	className="font-mono text-base px-3 py-1"
+																>
+																	{row.original.code}
+																</Badge>
+																{canExpand && (
+																	<span className="text-xs text-muted-foreground">
+																		{row.original.universityCount} trường ·{" "}
+																		{row.original.majorCount} ngành
+																	</span>
 																)}
-													</TableHead>
-												))}
-											</TableRow>
-										))}
-									</TableHeader>
-									<TableBody>
-										{loading ? (
-											<TableRow>
-												<TableCell
-													colSpan={columns.length}
-													className="h-24 text-center text-muted-foreground"
-												>
-													Đang tải...
-												</TableCell>
-											</TableRow>
-										) : error ? (
-											<TableRow>
-												<TableCell
-													colSpan={columns.length}
-													className="h-24 text-center text-destructive"
-												>
-													{error}
-												</TableCell>
-											</TableRow>
-										) : table.getRowModel().rows?.length ? (
-											table.getRowModel().rows.map((row) => {
-												const canExpand = row.getCanExpand();
-												const code = row.original.code;
-												return (
-													<Fragment key={row.id}>
-														<TableRow
-															className={
-																canExpand ? "cursor-pointer" : undefined
-															}
-															onClick={
-																canExpand
-																	? () => {
-																			const willExpand = !row.getIsExpanded();
-																			row.toggleExpanded();
-																			if (willExpand) loadDetail(code);
-																		}
-																	: undefined
-															}
-														>
-															{row.getVisibleCells().map((cell) => (
-																<TableCell key={cell.id}>
-																	{flexRender(
-																		cell.column.columnDef.cell,
-																		cell.getContext(),
-																	)}
-																</TableCell>
-															))}
-														</TableRow>
-														{row.getIsExpanded() && (
-															<TableRow className="bg-muted/30 hover:bg-muted/30">
-																<TableCell colSpan={columns.length}>
-																	<ComboDetail
-																		loading={detailLoading[code]}
-																		error={detailError[code]}
-																		detail={details[code]}
-																	/>
-																</TableCell>
-															</TableRow>
+															</div>
+															<p className="text-sm text-muted-foreground">
+																{row.original.subjects.join(", ")}
+															</p>
+														</div>
+														{canExpand && (
+															<span className="flex-shrink-0 pt-1 text-muted-foreground">
+																{row.getIsExpanded() ? (
+																	<ChevronDown className="h-4 w-4" />
+																) : (
+																	<ChevronRight className="h-4 w-4" />
+																)}
+															</span>
 														)}
-													</Fragment>
-												);
-											})
-										) : (
-											<TableRow>
-												<TableCell
-													colSpan={columns.length}
-													className="h-24 text-center"
-												>
-													Không tìm thấy kết quả.
-												</TableCell>
-											</TableRow>
-										)}
-									</TableBody>
-								</Table>
-							</div>
+													</button>
+													{row.getIsExpanded() && (
+														<div className="border-t border-border bg-muted/30 px-3">
+															<ComboDetail
+																loading={detailLoading[code]}
+																error={detailError[code]}
+																detail={details[code]}
+															/>
+														</div>
+													)}
+												</div>
+											);
+										})}
+									</div>
+
+									{/* Tablet+: full table */}
+									<div className="hidden rounded-md border border-border overflow-x-auto sm:block">
+										<Table>
+											<TableHeader>
+												{table.getHeaderGroups().map((headerGroup) => (
+													<TableRow key={headerGroup.id}>
+														{headerGroup.headers.map((header) => (
+															<TableHead
+																key={header.id}
+																className="font-semibold"
+															>
+																{header.isPlaceholder
+																	? null
+																	: flexRender(
+																			header.column.columnDef.header,
+																			header.getContext(),
+																		)}
+															</TableHead>
+														))}
+													</TableRow>
+												))}
+											</TableHeader>
+											<TableBody>
+												{table.getRowModel().rows.map((row) => {
+													const canExpand = row.getCanExpand();
+													const code = row.original.code;
+													return (
+														<Fragment key={row.id}>
+															<TableRow
+																className={
+																	canExpand ? "cursor-pointer" : undefined
+																}
+																onClick={
+																	canExpand
+																		? () => {
+																				const willExpand = !row.getIsExpanded();
+																				row.toggleExpanded();
+																				if (willExpand) loadDetail(code);
+																			}
+																		: undefined
+																}
+															>
+																{row.getVisibleCells().map((cell) => (
+																	<TableCell key={cell.id}>
+																		{flexRender(
+																			cell.column.columnDef.cell,
+																			cell.getContext(),
+																		)}
+																	</TableCell>
+																))}
+															</TableRow>
+															{row.getIsExpanded() && (
+																<TableRow className="bg-muted/30 hover:bg-muted/30">
+																	<TableCell colSpan={columns.length}>
+																		<ComboDetail
+																			loading={detailLoading[code]}
+																			error={detailError[code]}
+																			detail={details[code]}
+																		/>
+																	</TableCell>
+																</TableRow>
+															)}
+														</Fragment>
+													);
+												})}
+											</TableBody>
+										</Table>
+									</div>
+								</>
+							)}
 
 							{/* Results Count */}
 							{!loading && !error && (
@@ -360,8 +415,10 @@ const ComboDetail = ({
 
 	return (
 		<div className="flex flex-col gap-3 py-2 sm:h-[420px] sm:flex-row sm:gap-0">
-			{/* University list */}
-			<div className="flex gap-1.5 overflow-x-auto pb-1 sm:w-64 sm:shrink-0 sm:flex-col sm:gap-0.5 sm:overflow-y-auto sm:overflow-x-visible sm:border-r sm:border-border sm:pb-0 sm:pr-3">
+			{/* University list — min-w-0 lets this flex item shrink below its content's
+			 * intrinsic width so the chip strip scrolls within itself instead of the
+			 * long pill names forcing the whole page to overflow horizontally. */}
+			<div className="flex min-w-0 gap-1.5 overflow-x-auto pb-1 sm:w-64 sm:shrink-0 sm:flex-col sm:gap-0.5 sm:overflow-y-auto sm:overflow-x-visible sm:border-r sm:border-border sm:pb-0 sm:pr-3">
 				{detail.universities.map((uni) => {
 					const isSelected = uni.id === selectedUni.id;
 					return (
@@ -403,41 +460,40 @@ const ComboDetail = ({
 						<span className="text-foreground">{selectedUni.name}</span>
 					)}
 				</div>
-				<div className="overflow-hidden rounded-md border border-border">
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead>Ngành</TableHead>
-								<TableHead className="text-right">Mã ngành</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{selectedUni.majors.map((major) => {
-								const slug = selectedUni.slug;
-								return (
-									<TableRow
-										key={major.id}
-										className={slug ? "cursor-pointer" : undefined}
-										onClick={
-											slug
-												? () =>
-														navigate({
-															to: "/danh-sach-truong/$slug",
-															params: { slug },
-															search: { major: major.id },
-														})
-												: undefined
-										}
-									>
-										<TableCell>{major.name}</TableCell>
-										<TableCell className="text-right font-mono text-xs text-muted-foreground">
-											{major.code}
-										</TableCell>
-									</TableRow>
-								);
-							})}
-						</TableBody>
-					</Table>
+				{/* Single-column list (not a Ngành/Mã ngành table) — a long major name
+				 * next to a code column has no room to breathe on narrow screens. */}
+				<div className="divide-y divide-border overflow-hidden rounded-md border border-border">
+					{(() => {
+						const slug = selectedUni.slug;
+						return selectedUni.majors.map((major) => (
+							<div
+								key={major.id}
+								role={slug ? "button" : undefined}
+								tabIndex={slug ? 0 : undefined}
+								className={cn(
+									"px-3 py-2",
+									slug && "cursor-pointer hover:bg-muted",
+								)}
+								onClick={
+									slug
+										? () =>
+												navigate({
+													to: "/danh-sach-truong/$slug",
+													params: { slug },
+													search: { major: major.id },
+												})
+										: undefined
+								}
+							>
+								<div className="text-sm text-foreground">{major.name}</div>
+								{major.code && (
+									<div className="mt-0.5 font-mono text-xs text-muted-foreground">
+										Mã ngành: {major.code}
+									</div>
+								)}
+							</div>
+						));
+					})()}
 				</div>
 			</div>
 		</div>

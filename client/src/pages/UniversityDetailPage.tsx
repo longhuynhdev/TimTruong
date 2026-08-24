@@ -411,6 +411,20 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 							{m.years[0].note}
 						</p>
 					)}
+					{/* Mobile only — tuition/quota columns are hidden below sm: to keep
+					 * the table to one readable column, so surface them here instead. */}
+					<div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:hidden">
+						{majorTuition(m) != null && (
+							<span className="text-muted-foreground">
+								Học phí: <TuitionCell major={m} />
+							</span>
+						)}
+						{m.years[0]?.enrollmentQuota != null && (
+							<span className="text-muted-foreground tabular-nums">
+								Chỉ tiêu: {m.years[0].enrollmentQuota}
+							</span>
+						)}
+					</div>
 				</div>
 			);
 		},
@@ -423,6 +437,7 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 		sortUndefined: "last",
 		header: ({ column }) => <SortableHeader column={column} label="Học phí" />,
 		cell: ({ row }) => <TuitionCell major={row.original} />,
+		meta: { hideOnMobile: true },
 	},
 	{
 		id: "quota",
@@ -450,6 +465,7 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 				</span>
 			);
 		},
+		meta: { hideOnMobile: true },
 	},
 	{
 		id: "score",
@@ -465,9 +481,12 @@ const majorColumns: ColumnDef<MajorWithRequirements>[] = [
 						row.toggleExpanded();
 					}}
 					aria-expanded={row.getIsExpanded()}
-					className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+					aria-label={row.getIsExpanded() ? "Ẩn điểm chuẩn" : "Xem điểm chuẩn"}
+					className="inline-flex items-center gap-1 rounded-md p-1 text-sm font-medium text-primary hover:bg-primary/10 sm:p-0 sm:hover:bg-transparent sm:hover:underline"
 				>
-					{row.getIsExpanded() ? "Ẩn" : "Xem"}
+					<span className="hidden sm:inline">
+						{row.getIsExpanded() ? "Ẩn" : "Xem"}
+					</span>
 					<ChevronDown
 						className={cn(
 							"h-4 w-4 transition-transform",
@@ -504,15 +523,16 @@ const MajorTableRow = ({
 				onClick={canExpand ? row.getToggleExpandedHandler() : undefined}
 			>
 				{row.getVisibleCells().map((cell) => {
-					const align = (
-						cell.column.columnDef.meta as { align?: string } | undefined
-					)?.align;
+					const meta = cell.column.columnDef.meta as
+						| { align?: string; hideOnMobile?: boolean }
+						| undefined;
 					return (
 						<TableCell
 							key={cell.id}
 							className={cn(
 								"align-top py-3",
-								align === "right" && "text-right",
+								meta?.align === "right" && "text-right",
+								meta?.hideOnMobile && "hidden sm:table-cell",
 							)}
 						>
 							{flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -613,9 +633,11 @@ const MajorsTable = ({
 				{table.getFilteredRowModel().rows.length} ngành học
 			</p>
 
-			{/* Horizontal swipe on mobile keeps all columns (min-width forces overflow). */}
+			{/* Tuition/quota columns hide below sm: (surfaced inside the name cell
+			 * instead) so the table fits one column on mobile without needing to
+			 * scroll horizontally; min-w only kicks in once all columns show. */}
 			<div className="rounded-lg border border-border overflow-x-auto">
-				<Table className="min-w-[640px]">
+				<Table className="sm:min-w-[640px]">
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow
@@ -623,15 +645,16 @@ const MajorsTable = ({
 								className="bg-muted/40 hover:bg-muted/40"
 							>
 								{headerGroup.headers.map((header) => {
-									const align = (
-										header.column.columnDef.meta as
-											| { align?: string }
-											| undefined
-									)?.align;
+									const meta = header.column.columnDef.meta as
+										| { align?: string; hideOnMobile?: boolean }
+										| undefined;
 									return (
 										<TableHead
 											key={header.id}
-											className={cn(align === "right" && "text-right")}
+											className={cn(
+												meta?.align === "right" && "text-right",
+												meta?.hideOnMobile && "hidden sm:table-cell",
+											)}
 										>
 											{header.isPlaceholder
 												? null
